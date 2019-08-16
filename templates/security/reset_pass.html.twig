@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récuperation de compte{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 border rounded-0 my-3 shadow-sm bg-white">
+                {% if resetLinkIsSended %}
+                    <h6 class="text-center my-3">Vous ne pouvez pas vous connecter ?</h6>
+                    <p class="text-center">Nous vous avons envoyé un lien de récupération à votre adresse e-mail:</p>
+
+                    <h6 class="text-center">{{mail}} </h6>
+                    <div class="" style="background-image: url('{{ asset('cdn/images/check-your-email.svg') }}');background-size: cover;padding: 190px 50px;"></div>
+                    <hr class="my-1">
+                    <div class="my-3">
+                        <a href="{{ path('app_login') }}"class="text-decoration-none">Retour à la connexion</a>
+                        <a href="{{ path('app_reset_pass') }}" class="text-decoration-none float-right">Renvoyer le code de réinitialisation</a>
+                    </div>
+                {% else %}
+                <legend class="text-center my-2" id="log_form_legend">Mot de passe oublié ?</legend>
+                {% for message in app.session.flashbag.get('info') %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                <form action="{{ path('app_reset_pass') }}" method="post">
+                    <div class="input-group rounded-0">
+                        <div class="input-group-prepend rounded-0">
+                          <div class="input-group-text rounded-0" id="btnGroupAddon2"><i class="fas fa-user"></i></div>
+                        </div>
+                        <input type="text" name="mail" placeholder="Mail ou Téléphone" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2" required="required" value="{{mail}}">
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
+                    <button class="btn btn-block rounded-0 btn-login my-3">Envoyer le code réinitialisation</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/login.js') }}"></script>
+{% endblock %}

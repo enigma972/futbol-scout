@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récuperation de compte{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 border rounded-0 my-5 shadow-sm bg-white">
+                {% if isValideToken %}
+                    <legend class="text-center my-2">Entrez votre nouveau mot de passe</legend>
+
+                    <form action="{{ path('app_complete_reset_pass', {'mail': mail, 'token': token}) }}" method="post">
+                        <input type="password" name="password.first" placeholder="Nouveau mot de passe" class="form-control my-2 rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2" required="required">
+
+                        <input type="password" name="password.second" placeholder="Retapez le mot de passe" class="form-control my-2 rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2" required="required">
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        {#
+                            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                            See https://symfony.com/doc/current/security/remember_me.html
+
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" name="_remember_me"> Remember me
+                                </label>
+                            </div>
+                        #}
+                        <button class="btn btn-block rounded-0 btn-login my-3">Envoyer</button>
+                    </form>
+                {% else %}
+                    <div class="p-5 m-3">Ce lien a déjà expiré. <a href="{{ path('app_reset_pass') }}" class="text-decoration-none">Renvoyer le code réinitialisation</a></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/login.js') }}"></script>
+{% endblock %}

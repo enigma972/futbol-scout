@@ -3,10 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('cdn/bootstrap4/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('cdn/fontawesome/css/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+		
+		<script src="{{ asset('cdn/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('cdn/bootstrap4/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

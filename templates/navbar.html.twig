@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand navbar-light" style="background-color: #e44d3a;">
+  <div class="container">
+    <a class="navbar-brand font-weight-bold" href="/" style="color: white;">futbol-scout</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- <div class="collapse navbar-collapse foat-right" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+  </div> -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      {% if app.user %}
+      <a href="{{ path('app_logout') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Déconnexion</a>
+      {% else %}
+      <a href="{{ path('app_login') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Connexion</a>
+      <a href="{{ path('app_register') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Inscription</a>
+      {% endif %}
+    </li>
+  </ul>
+  </div>
+</nav>

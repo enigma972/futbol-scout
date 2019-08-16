@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 border rounded-0 my-5 shadow-sm bg-white">
+                <legend class="text-center my-2" id="log_form_legend">Se connecter avec</legend>
+                <div class="social-connect d-flex visible">
+                    <a class="btn btn-outline-info rounded-0 flex-fill d-inline-block" style="cursor: pointer;">Facebook</a>
+                    <span class="align-middle mx-2">ou</span>
+                    <a class="btn btn-outline-info rounded-0 flex-fill d-inline-block" style="cursor: pointer;">Google</a>
+                </div>
+                <hr>
+                {% if error %}
+                    <div class="alert alert-warning rounded-0">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <form action="{{ path('app_login') }}" method="post" class="my-2">
+                    <label for="mail">Mail</label><br>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text rounded-0" id="btnGroupAddon2"><i class="fas fa-user"></i></div>
+                        </div>
+                        <input type="text" name="mail" placeholder="Mail ou Téléphone" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                    </div>
+                    
+                    <label for="password">Mot de passe  <a href="{{ path('app_reset_pass') }}" style="font-size: small; text-decoration-line: underline; text-decoration-style: none;
+                        text-decoration-color: none;" class="text-secondary">Oublié?</a></label><br>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text rounded-0" id="btnGroupAddon2"><i class="fas fa-lock"></i></div>
+                        </div>
+                        <input type="password" name="password" placeholder="Mot de passe" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html 
+                    #}
+                    <div class="input-group my-1">
+                            <label>
+                                <input type="checkbox" name="_remember_me" class=""> Rester connecté
+                            </label>
+                        </div>
+                    <br>
+                    <button class="btn btn-block rounded-0 btn-login my-3">Se connecter</button>
+                </form>
+                <p class="text-center">Pas encore membre ? <a href="{{ path('app_register') }}">Inscrivez-vous</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/login.js') }}"></script>
+{% endblock %}

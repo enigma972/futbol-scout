@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/register.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 border rounded-0 my-5 shadow-sm bg-white">
+                <legend class="text-center my-2" id="reg_form_legend">Inscrivez-vous avec</legend>
+
+                <div class="social-connect d-flex visible">
+                    <a class="btn btn-outline-info rounded-0 flex-fill d-inline-block" style="cursor: pointer;">Facebook</a>
+                    <span class="align-middle mx-2">ou</span>
+                    <a class="btn btn-outline-info rounded-0 flex-fill d-inline-block" style="cursor: pointer;">Google</a>
+                </div>
+                <hr>
+                {% for message in app.session.flashbag.get('info') %}
+                    <div class="alert alert-warning alert-dismissible fade show rounded-0" role="alert">
+                        {{message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                <form action="{{ path('app_register') }}" method="post" id="registration_form"  class="my-2">
+                    <div class="form-row">
+                        <div class="col">
+                            {{ form_label(registrationForm.firstname, "Prenom") }}
+                            {% if form_errors(registrationForm.firstname) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.firstname) }}
+                                </div>
+                            {% endif %}
+                            {{ form_widget(registrationForm.firstname)}}
+                        </div>
+                        <div class="col">
+                            {{ form_label(registrationForm.lastname, "Nom de famille") }}
+                            {% if form_errors(registrationForm.lastname) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.lastname) }}
+                                </div>
+                            {% endif %}
+                            {{ form_widget(registrationForm.lastname)}}
+                        </div>
+                    </div>
+                    
+                    {{ form_label(registrationForm.mail, "Mail") }}
+                    {% if form_errors(registrationForm.mail) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.mail) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.mail)}}
+
+                    {{ form_label(registrationForm.password.first, "Mot de passe") }}
+                    {% if form_errors(registrationForm.password.first) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.password.first) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.password.first)}}
+
+                    {{ form_label(registrationForm.password.second, "Retapez le mot de passe") }}
+                    {% if form_errors(registrationForm.password.second) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.password.second) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.password.second)}}
+
+                    {{ form_widget(registrationForm.agreeTerms)}}
+                    {% if form_errors(registrationForm.agreeTerms) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.agreeTerms) }}
+                                </div>
+                    {% endif %}
+                    {{ form_label(registrationForm.agreeTerms, "En cochant cette case vous acceptez notre ") }} <a href="#">CGU</a>
+
+                    {{ form_rest(registrationForm) }}
+                    <br>
+                    <br>
+                    <div>
+                        <button class="btn btn-block rounded-0 my-3 btn-register">S'inscrire</button>
+                    </div>
+                </form>
+                <p class="text-center">Déjà membre ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/register.js') }}"></script>
+{% endblock %}

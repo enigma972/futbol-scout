@@ -1,0 +1,13 @@
+.btn-login {
+	color: #e44d3a;
+	border: 1px solid #e44d3a;
+}
+
+.btn-login:hover {
+	color: white;
+	background-color: #e44d3a;
+}
+
+.social-connect *{
+	
+}
