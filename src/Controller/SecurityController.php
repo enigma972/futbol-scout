@@ -182,7 +182,6 @@ class SecurityController extends AbstractController
                         $rp->setIsUsed(true);
 
                         $entityManager = $this->getDoctrine()->getManager();
-                        $entityManager->persist($user);
                         $entityManager->flush();
 
                         // When triggering an event, you can optionally pass some information.
