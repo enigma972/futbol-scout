@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -26,6 +30,26 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom de famille',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Genre',
+                'attr'  => ['class' =>  'form-control rounded-0'],
+                'choices' => [
+                    'Homme' => 'M',
+                    'Femme' => 'F'
+                ]
+            ])
+            ->add('birthday', BirthdayType::class, [
+                'label' => 'Date de naissance',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('country', CountryType::class, [
+                'label' => 'Pays de résidence',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('phone', TelType::class, [
+                'label' => 'Téléphone',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('mail', EmailType::class, [
@@ -54,6 +78,23 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Repetez mot de passe'
                 ],
             ])
+            ->add('category', ChoiceType::class, [
+                'mapped'   => false,
+                'label' => 'Vous êtes ?',
+                'attr'  => ['class' =>  'form-control rounded-0'],
+                'choices' => [
+                    'Joueur' => 'player',
+                    'Fans' => 'fans',
+                    'Autre' => 'other'
+                ]
+            ])
+            /*->add('reservation', EntityType::class, [
+                'mapped'        =>  false,
+                'label'         =>  'Le client ayant réservé',
+                'attr'  => ['class' =>  'form-control'],
+                'class'         =>  Reservation::class,
+                'choice_label'  =>  'client.name'
+            ])*/
             /* TODO: Add the captcha system
              * ->add('captcha', CaptchaType::class)
              */

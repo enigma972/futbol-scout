@@ -17,6 +17,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\UserRepository;
 use App\Repository\ResetPasswordRepository;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use App\Entity\AbstractUserCategory;
+use App\Entity\Player;
+use App\Entity\Fans;
+use App\Entity\Other;
 
 class SecurityController extends AbstractController
 {
@@ -36,11 +40,26 @@ class SecurityController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $userOld = $userRepository->findOneByMail($form->get('mail')->getData());
 
             if (!$userOld instanceOf User) {
+                // set the user in category
+                $category = $form->get('category')->getData();
+                
+                if ($category == AbstractUserCategory::PLAYER) {
+                    $category = new Player();
+                }elseif ($category == AbstractUserCategory::FANS) {
+                    $category = new Fans();
+                }elseif ($category == AbstractUserCategory::OTHER) {
+                    $category = new Other();
+                }else{
+                    $category = new Other();
+                }
+
+                $category->setUser($user);
+
                 // encode the plain password
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
@@ -48,9 +67,10 @@ class SecurityController extends AbstractController
                         $form->get('password')->getData()
                     )
                 );
-
+                
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
+                $entityManager->persist($category);
                 $entityManager->flush();
 
                 // When triggering an event, you can optionally pass some information.
@@ -68,7 +88,9 @@ class SecurityController extends AbstractController
                 $this->eventDispatcher->dispatch($event, Events::USER_CREATED);
 
                 return $this->redirectToRoute('app_login');
-            }else{$flashBag->add('info', 'Cette adresse email est déjà utiliser par un autre compte !');}
+            }else{
+                $flashBag->add('info', 'Cette adresse email est déjà utiliser par un autre compte !');
+            }
         }
 
         return $this->render('security/register.html.twig', [

@@ -1,0 +1,174 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Page d'acceuil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/complete_player_data.css') }}">
+{% endblock %}
+
+{% block section %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 offset-md-3 my-4">
+				<form action="{{ path('complete_player_data') }}" enctype="multipart/form-data" method="post">
+						
+					<div class="row bg-white border shadow-sm my-2">
+						<div class="col p-4 m-2">
+							<div class="row mx-1 mb-3">
+								<h6 class="font-weight-bold">Votre photo de profil</h6>
+								<p style="font-size: small;">Veuillez choisir une photo pour que vos fans puissent vous reconnaître</p>
+							</div>
+							<div class="row">
+								<div class="col">
+									<img src=" {{ asset('cdn/images/avatar-4.png') }} " alt="" style="width: 150px; heigth: 150px;" class="img-thumbnail">
+								</div>
+								<div class="col">
+									{#
+										{% if form_errors(playerDataFormType.avatar) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.avatar) }}
+				                        </div>
+							            {% endif %}
+							            {{ form_widget(playerDataFormType.avatar)}}
+							    		{{ form_label(playerDataFormType.avatar, "Choisissez un fichier") }}
+									#}
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row bg-white border shadow-sm">
+						<div class="col p-4 m-2">
+							<div class="row mx-1 mb-3">
+								<h6 class="font-weight-bold">Informations personnelle</h6>
+								<p style="font-size: small;">En renseignant ces données vous permettez aux recruteurs des mieux vous ...</p>
+							</div>
+							<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.length, "Taille (en cm)") }}
+						    	</div>
+							    <div class="col-md-9">
+							      	{% if form_errors(playerDataFormType.length) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.length) }}
+				                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.length)}}
+							    </div>
+						  	</div>
+							
+							<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.weight, "Poids (en Kg)") }}
+						    	</div>
+							    <div class="col-md-9">
+							    	{% if form_errors(playerDataFormType.weight) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.weight) }}
+				                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.weight)}}
+							    </div>
+						  	</div>
+				            
+							<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.strongFeets, "Pieds fort") }}
+						    	</div>
+							    <div class="col-md-9">
+							    	{% if form_errors(playerDataFormType.strongFeets) %}
+			                        <div class="alert alert-warning">
+			                            {{ form_errors(playerDataFormType.strongFeets) }}
+			                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.strongFeets)}}
+							    </div>
+						  	</div>
+							
+				            
+							<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.postes, "Postes") }}
+						    	</div>
+							    <div class="col-md-9">
+							      	{% if form_errors(playerDataFormType.postes) %}
+			                        <div class="alert alert-warning">
+			                            {{ form_errors(playerDataFormType.postes) }}
+			                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.postes)}}
+							    </div>
+						  	</div>
+							
+				            
+							<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.currentClub, "Club actuel") }}
+						    	</div>
+							    <div class="col-md-9">
+							    	{% if form_errors(playerDataFormType.currentClub) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.currentClub) }}
+				                        </div>
+				            {% endif %}
+				            {{ form_widget(playerDataFormType.currentClub)}}
+							    </div>
+						  	</div>
+							
+				            <div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.status, "Statut") }}
+						    	</div>
+							    <div class="col-md-4">
+							    	{% if form_errors(playerDataFormType.status) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.status) }}
+				                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.status)}}
+							    </div>
+						  	</div>
+
+						  	 <div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.level, "Niveau") }}
+						    	</div>
+							    <div class="col-md-4">
+							    	{% if form_errors(playerDataFormType.level) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.level) }}
+				                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.level)}}
+							    </div>
+						  	</div>
+
+						  	<div class="form-group row">
+						    	<div class="col-md-3 text-right">
+						    		{{ form_label(playerDataFormType.ambition, "ambition") }}
+						    	</div>
+							    <div class="col-md-9">
+							    	{% if form_errors(playerDataFormType.ambition) %}
+				                        <div class="alert alert-warning">
+				                            {{ form_errors(playerDataFormType.ambition) }}
+				                        </div>
+						            {% endif %}
+						            {{ form_widget(playerDataFormType.ambition)}}
+							    </div>
+						  	</div>
+
+						  	<div class="row">
+						  		<button class="col-4 btn rounded-0 btn-custom-outline-danger my-3">Enregister</button>
+						  	</div>
+							
+						</div>
+					</div>
+					
+		            {{ form_rest(playerDataFormType)}}
+
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

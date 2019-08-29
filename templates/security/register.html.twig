@@ -49,6 +49,38 @@
                         </div>
                     </div>
                     
+                    {{ form_label(registrationForm.gender, "Genre") }}
+                    {% if form_errors(registrationForm.gender) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.gender) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.gender)}}
+
+                    {{ form_label(registrationForm.birthday, "Date de naissance") }}
+                    {% if form_errors(registrationForm.birthday) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.birthday) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.birthday)}}
+
+                    {{ form_label(registrationForm.country, "Pays de résidence") }}
+                    {% if form_errors(registrationForm.country) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.country) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.country)}}
+
+                    {{ form_label(registrationForm.phone, "Téléphone") }}
+                    {% if form_errors(registrationForm.phone) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.phone) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.phone)}}
+
                     {{ form_label(registrationForm.mail, "Mail") }}
                     {% if form_errors(registrationForm.mail) %}
                                 <div class="alert alert-warning">
@@ -72,6 +104,14 @@
                                 </div>
                     {% endif %}
                     {{ form_widget(registrationForm.password.second)}}
+
+                    {{ form_label(registrationForm.category, "Vous êtes ?") }}
+                    {% if form_errors(registrationForm.category) %}
+                                <div class="alert alert-warning">
+                                    {{ form_errors(registrationForm.category) }}
+                                </div>
+                    {% endif %}
+                    {{ form_widget(registrationForm.category)}}
 
                     {{ form_widget(registrationForm.agreeTerms)}}
                     {% if form_errors(registrationForm.agreeTerms) %}
