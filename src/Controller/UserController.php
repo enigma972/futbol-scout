@@ -9,16 +9,17 @@ use App\Entity\Player;
 use App\Form\PlayerDataFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/{slug}-{id}", name="user_profil")
      */
-    public function index()
+    public function profil(User $user)
     {
-        return $this->render('user/index.html.twig', [
-            
+        return $this->render('user/profil.html.twig', [
+            'user'  =>  $user
         ]);
     }
 
@@ -34,6 +35,7 @@ class UserController extends AbstractController
     	$form->handleRequest($request);
 
     	if ($form->isSubmitted() && $form->isValid()) {
+            $user->setIsComplete(true);
     		$em->flush();
             return $this->redirectToRoute('home');
     	}
