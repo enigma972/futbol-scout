@@ -19,6 +19,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use App\Entity\AbstractUserCategory;
 
 class AppAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -84,7 +85,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator
     {
         $user = $token->getUser();
         
-        if (!$user->getIsComplete()) {
+        if ($user->getCategory() == AbstractUserCategory::PLAYER && !$user->getIsComplete()) {
             return new RedirectResponse($this->urlGenerator->generate('complete_player_data'));
         }
 

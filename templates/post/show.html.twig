@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Page d'acceuil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href=" {{ asset('build/flux.css') }} ">
+{% endblock %}
+
+{% block section %}
+	<div class="custom-container container-fluid">
+		<div class="row my-2">
+			<div class="col-3">
+				{% include 'user/user-summary.html.twig' %}
+			</div>
+			<div class="col-5">
+				<div class="row">
+					<div class="col">
+						{% include 'post/post-form.html.twig' %}
+					</div>
+				</div>
+				<hr>
+				{% if post %}
+					{% include 'post/post-card.html.twig' %}
+				{% else %}
+					 <div class="row">
+					 	<div class="col">
+					 		<div class="shadow border p-4 my-2 text-center rounded-0">Cette publication n'existe pas ou a été supprimé !</div>
+					 	</div>
+					 </div>   
+				{% endif %}
+			</div>
+			<div class="col-4 shadow-sm border jumbotron rounded-0"></div>
+		</div>
+	</div>
+{% endblock %}

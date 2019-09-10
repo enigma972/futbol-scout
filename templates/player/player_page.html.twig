@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Page d'acceuil{% endblock %}
+
+{% block section %}
+<div class="container-fluid" id="user-cover-img" style="background: url('/cdn/images/cover-img.jpg');background-size: cover; height: 380px;">
+	<a href="#" class="btn rounded-0 btn-custom-outline-danger bg-white mt-3 p-2 float-right" id="p-c-i"><i class="fas fa-camera fa-lg"></i> <span class="font-weight-bold">Changer l'image</span></a>
+	<style>
+		#p-c-i:hover {
+			color: black !important;
+		}
+	</style>
+</div>
+<div class="custom-container container-fluid">
+	<div class="row -my-2">
+		<div class="col-3 rounded-0">
+			<div class="card shadow-sm rounded-0 -position-fixed">
+				<div class="card-body text-center">
+					<img src="{{ asset(player.user.avatar.path) }}" alt="" class="rounded-circle card-custom-user-img border-white shodow-sm" style="width: 50px; height: 50px;">
+					<div class="h6">{{ player.user.username }}</div>
+					{% if app.user == player.user %}
+					<div><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
+					{% endif %}
+					{% if app.user != player.user %}
+					<div class="mt-2">
+						<a href="{{path('user_follow', {'id': player.user.id})}}" class="font-weight-bold text-decoration-none">S'abonner <i class="fas fa-plus fa-sm"></i></a>
+					</div>
+					{% endif %}
+				</div>
+				<div class="card-footer" style="color: #696c6f;">
+					<div class="row">
+						<div class="col font-weight-bold">Abonné(e)s</div>
+						<div class="col text-right"><a href="#" class="text-decoration-none font-weight-bold">{{ player.user.nbFollowers}}</a></div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Suivi(e)s</div>
+						<div class="col text-right"><a href="#" class="text-decoration-none font-weight-bold">{{ player.user.nbFollows}}</a></div>
+					</div>
+				</div>
+			</div>
+			{# include 'user/user-summary.html.twig' #}
+		</div>
+		<div class="col-5 mt-2">
+			{#
+			<div class="row">
+				<div class="col">
+					{% include 'post/post-form.html.twig' %}
+				</div>
+			</div>
+			<hr>
+			#}
+			
+		</div>
+		<div class="col-4">
+			{% include 'user/user_suggetion.html.twig' %}
+		</div>
+	</div>
+</div>
+{% endblock %}

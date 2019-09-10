@@ -77,10 +77,17 @@ class PlayerDataFormType extends AbstractType
                     'Professionel'     => 'pro',
                 ]
             ])
-            /*->add('avatar', FileType::class, [
+            ->add('file', FileType::class, [
                 'mapped'    =>  false,
-                'attr'      => ['class' =>  'align-middle form-control rounded-0']
-            ])*/
+                'attr'      =>  [
+                    'class' =>  'custom-file-input',
+                    'id'    =>  'customFile'
+                ],
+                'label_attr'=>  [
+                    'class' =>  'custom-file-label',
+                    'for'   =>  'customFile'
+                ]
+            ])
         ;
     }
 

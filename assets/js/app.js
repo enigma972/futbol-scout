@@ -9,11 +9,9 @@
 require('../css/app.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
+const $ = require('jquery');
+console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
-//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
-var $ = require('../../public/cdn/jquery/jquery.min.js');
 
 /*$("#navbar").each(function () {
 	$a = $(this).children();
@@ -23,4 +21,13 @@ var $ = require('../../public/cdn/jquery/jquery.min.js');
 		$a.parent().addClass('active');
 		console.log($link);
 	}
-})*/
+})
+*/
+
+/*$(function () {
+	alert('Test ...');
+})
+
+function like() {
+	alert('I like this');
+}*/

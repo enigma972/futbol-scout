@@ -27,6 +27,7 @@ Encore
     .addEntry('register', './assets/js/register.js')
     .addEntry('login', './assets/js/login.js')
     .addEntry('complete_player_data', './assets/js/complete_player_data.js')
+    .addEntry('flux', './assets/js/flux.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -66,7 +67,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

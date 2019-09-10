@@ -23,17 +23,27 @@
 								<div class="col">
 									<img src=" {{ asset('cdn/images/avatar-4.png') }} " alt="" style="width: 150px; heigth: 150px;" class="img-thumbnail">
 								</div>
-								<div class="col">
-									{#
-										{% if form_errors(playerDataFormType.avatar) %}
-				                        <div class="alert alert-warning">
-				                            {{ form_errors(playerDataFormType.avatar) }}
-				                        </div>
-							            {% endif %}
-							            {{ form_widget(playerDataFormType.avatar)}}
-							    		{{ form_label(playerDataFormType.avatar, "Choisissez un fichier") }}
-									#}
-									
+								<div class="col my-auto">
+									<div class="row">
+										<div class="col-9">
+											<div class="custom-file">
+												{% if form_errors(playerDataFormType.file) %}
+						                        <div class="alert alert-warning">
+						                            {{ form_errors(playerDataFormType.file) }}
+						                        </div>
+									            {% endif %}
+									            {{ form_widget(playerDataFormType.file)}}
+									    		{{ form_label(playerDataFormType.file, "Choisissez") }}
+											</div>
+										</div>
+									</div>
+									<div class="row my-3">
+										<div class="col-9">
+											<button class="btn btn-custom-danger btn-block shadow-sm" disabled="disabled">
+												<i class="fas fa-camera fa-lg"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

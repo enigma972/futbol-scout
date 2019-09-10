@@ -1,0 +1,3 @@
+.not-caret::after {
+	display: none;
+}

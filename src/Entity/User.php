@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\AbstractUserCategory;
+use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"mail", "phone"}, message="There is already an account with this mail or phone number")
+ * @UniqueEntity(fields={"mail"}, message="Cet email est déjà utilisé par un autre compte !")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -81,11 +85,40 @@ class User implements UserInterface
      */
     private $isComplete;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist"}, fetch="EAGER")
+     */
+    private $avatar;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="follows")
+     */
+    private $followers;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbFollowers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="followers")
+     */
+    private $follows;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbFollows;        
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->isComplete = false;
+        $this->followers = new ArrayCollection();
+        $this->follows = new ArrayCollection();
+        $this->nbFollowers = 0;
+        $this->nbFollows = 0;
     }
 
     public function getId(): ?int
@@ -277,5 +310,128 @@ class User implements UserInterface
         $this->isComplete = $isComplete;
 
         return $this;
+    }
+
+    public function getSlug()
+    {
+        return Slugger::slugify($this->getUsername(), '.');
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Avatar $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    public function addFollower(self $follower): self
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers[] = $follower;
+            $this->increaseFollowers();
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(self $follower): self
+    {
+        if ($this->followers->contains($follower)) {
+            $this->followers->removeElement($follower);
+            $this->decreaseFollowers();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollows(): Collection
+    {
+        return $this->follows;
+    }
+
+    public function addFollow(self $follow): self
+    {
+        if (!$this->follows->contains($follow)) {
+            $this->follows[] = $follow;
+            $follow->addFollower($this);
+            $this->increaseFollows();
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(self $follow): self
+    {
+        if ($this->follows->contains($follow)) {
+            $this->follows->removeElement($follow);
+            $follow->removeFollower($this);
+            $this->decreaseFollows();
+        }
+
+        return $this;
+    }
+
+    public function getNbFollowers(): ?int
+    {
+        return $this->nbFollowers;
+    }
+
+    public function setNbFollowers(int $nbFollowers): self
+    {
+        $this->nbFollowers = $nbFollowers;
+
+        return $this;
+    }
+
+    public function increaseFollowers()
+    {
+        $nbFollowers = $this->getNbFollowers();
+        $this->setNbFollowers($nbFollowers+1);
+    }
+
+    public function decreaseFollowers()
+    {
+        $nbFollowers = $this->getNbFollowers();
+        $this->setNbFollowers($nbFollowers-1);
+    }
+
+    public function getNbFollows(): ?int
+    {
+        return $this->nbFollows;
+    }
+
+    public function setNbFollows(int $nbFollows): self
+    {
+        $this->nbFollows = $nbFollows;
+
+        return $this;
+    }
+
+    public function increaseFollows()
+    {
+        $nbFollows = $this->getNbFollows();
+        $this->setNbFollows($nbFollows+1);
+    }
+
+    public function decreaseFollows()
+    {
+        $nbFollows = $this->getNbFollows();
+        $this->setNbFollows($nbFollows-1);
     }
 }

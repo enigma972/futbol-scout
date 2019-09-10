@@ -1,0 +1,68 @@
+<div class="row mb-2">
+	<div class="col">
+		<div class="card rounded-0 shadow-sm border">
+			<div class="mx-3 my-2">
+				<div class="row">
+					<div class="col-10">
+						<img src="{{ asset(post.author.avatar.path) }}" alt="{{ post.author.avatar.alt }}" class="rounded-circle m-0 float-left" style="width: 50px;height: 50px;"/>
+						<h6 class="d-inline mb-0 mx-2"> <a href="{{ path('user_profil', {'slug': post.author.slug, 'id': post.author.id})}}" class="text-decoration-none">{{ post.author.username|capitalize }}</a></h6>
+					    <br>
+					    <span class="pt-0 mx-2"  style="font-size: small;">
+					    	{% if post.author.nbFollowers > 0 %}
+					    	{{post.author.nbFollowers}} abonnés
+					    	{% else %}
+					    	Aucun abonné
+					    	{% endif %}
+					    </span>
+					</div>
+					<div class="col-2 text-right">
+						<button class="btn btn-not-focus dropdown-toggle not-caret my-0" data-toggle="dropdown">
+							<i class="fas fa-ellipsis-h fa-sm align-text-top"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
+						  	<a class="dropdown-item" href="{{ path('post_show', {'id': post.id}) }}"><i class="fas fa-eye"></i> Voir la publication</a>
+						  	<a class="dropdown-item" href="{{ path('post_update', {'id': post.id}) }}"><i class="fas fa-pencil-alt"></i> Modifier la publication</a>
+						  	<div class="dropdown-divider"></div>
+						  	<a class="dropdown-item" href="{{ path('post_is_abuse', {'id': post.id}) }}"><i class="fas fa-flag"></i> Singaler la publication</a>
+						  	<a 
+						  	class="dropdown-item" 
+						  	href="{{ path('post_remove', {'id': post.id, '_token': csrf_token('delete' ~ post.id) }) }}"
+						  	><i class="fas fa-trash-alt"></i> Supprimer la publication</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						{{ post.content }}
+					</div>
+				</div>
+			</div>
+			{% if post.attachement %}
+			<div class="card-img-top">
+				<img src="{{ asset(post.attachement.path) }}"  style="width: 100%;height: 100%;"/>
+			</div>
+			{% endif %}
+			
+			<div class="mx-3 my-2">
+				<div>
+					{% if post.nbLikes > 0 %}
+					<a href="#" class="text-decoration-none"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; color: #42a6d7; font-size: medium;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
+					{% else %}
+				    <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; font-size: medium;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
+					{% endif %}
+					
+				</div>
+				<hr>				
+				<div>
+					<a href="{{ path('like_add', {'id': post.id})}}" class="text-decoration-none" onclick="$like(this, {{""}}); return false;" style="color: #696c6f;" id="like-link-{{ post.id }}"><i class="fas fa-thumbs-up" style=""></i>  J'aime</a> <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-comment-alt"> </i>  Commentaires</a>
+				</div>
+			</div>
+			<div class="card-footer">
+				<form action="#" class="form-inline">
+					<input type="text" class="form-control" placeholder="Ajouter un commentaire" style="width: 80%;" />
+					<button class="btn font-weight-bold" style="color: #0056b3;">Publier</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

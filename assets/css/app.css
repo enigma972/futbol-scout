@@ -6,6 +6,10 @@ body {
 	background-color: white;
 }
 
+.bg-custom-red {
+	background-color: #e44d3a;
+}
+
 .nav-btn:hover {
 	/* color: #e44d3a; */
 }
@@ -26,4 +30,58 @@ body {
 .btn-custom-outline-danger:hover {
 	color: white;
 	background-color: #e44d3a;
+}
+
+.btn-custom-outline {
+	color: #e44d3a;
+	border: 1px solid #e44d3a;
+}
+
+.btn-custom-outline:hover {
+	color: white;
+	background-color: #e44d3a;
+}
+
+.btn-custom-danger {
+	color: white;
+	background-color: #e44d3a;
+}
+
+.btn-custom-danger:hover {
+	color: white;
+	background-color: #e44d3a;
+}
+
+.btn-not-focus:focus {
+	box-shadow: 0 0 0 0;
+}
+
+.custom-container {
+	width: 85%;
+}
+
+.not-caret::after {
+	display: none;
+}
+
+.not-focus:focus {
+	box-shadow: 0 0 0 0;
+}
+
+.card-custom-img {
+	width: 100px !important;
+	height: 100px !important;
+	position: relative !important;
+	bottom: 50px !important;
+}
+
+.border-white {
+	border: 5px white solid !important;
+}
+
+.card-custom-user-img {
+	width: 150px !important;
+	height: 150px !important;
+	position: relative !important;
+	bottom: 60px !important;
 }

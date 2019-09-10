@@ -10,38 +10,84 @@ use App\Form\PlayerDataFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 
+
+/**
+ * @Route("/accounts/user")
+ */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/user/{slug}-{id}", name="user_profil")
-     */
-    public function profil(User $user)
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
     {
-        return $this->render('user/profil.html.twig', [
-            'user'  =>  $user
-        ]);
+        $this->em = $em;
     }
 
     /**
-     * @Route("/user/complete/registration", name="complete_player_data")
+     * @Route("/{slug}-{id}", name="user_profil")
      */
-    public function completePlayerData(Request $request, PlayerRepository $playerRepot, EntityManagerInterface $em)
+    public function profil(PostRepository $posts, User $user, UserRepository $users)
     {
-    	$user = $this->getUser();
+        if (null !== $user) {
+            $posts = $posts->findByAuthor($user, ['postedAt' => 'DESC']);
+            $usersSuggest = $users->findByUserForSuggest($user);
 
-    	$player = $playerRepot->findOneByUser($user);
-    	$form = $this->createForm(PlayerDataFormType::class, $player);
-    	$form->handleRequest($request);
+            return $this->render('user/profil.html.twig', [
+                'posts'        => $posts,
+                'user'         => $user,
+                'usersSuggest' =>   $usersSuggest,
+            ]);
+        }
+    }
 
-    	if ($form->isSubmitted() && $form->isValid()) {
-            $user->setIsComplete(true);
-    		$em->flush();
-            return $this->redirectToRoute('home');
-    	}
+    /**
+     * @Route("/avatar/change", name="user_change_avatar", methods={"GET", "POST"})
+     */
+    public function changeAvatar(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $user = $this->getUser();
+            $avatar = $user->getAvatar();
+            $file = $request->files->get('avatar');
+            $avatar->preUpload($file);
 
-    	return $this->render('user/complete_player_data.html.twig', [
-    		'playerDataFormType'	=>	$form->createView()
-    	]);
+            if (!null == $avatar->file()) {
+                $this->em->flush();
+
+                $avatar->upload();
+
+                return $this->redirectToRoute('user_profil',[
+                    'slug'  =>  $user->getSlug(),
+                    'id'    =>  $user->getId()
+                ]);
+            }
+
+        }
+        return $this->render('user/change_avatar.html.twig');
+    }
+
+    /**
+     * @Route("/{id}/follow", name="user_follow")
+     */
+    public function follow(User $user)
+    {
+        /**
+         * @var connectedUser $connectedUser the current user
+         */
+        $connectedUser = $this->getUser();
+        
+        if (null !== $user and $connectedUser != $user) {
+            $connectedUser->addFollow($user);
+            
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('user_profil', [
+            'id'    =>     $user->getId(),
+            'slug'  =>     $user->getSlug()
+        ]);
     }
 }

@@ -1,0 +1,18 @@
+<div class="card shadow-sm rounded-0 -position-fixed">
+	<div class="card-header p-5"></div>
+	<div class="card-body text-center">
+		<img src="{{ asset(app.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
+		<div class="h6">Bonjour {{ app.user.username }}</div>
+		<div><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
+	</div>
+	<div class="card-footer" style="color: #696c6f;">
+		<div class="row">
+			<div class="col font-weight-bold">Abonné(e)s</div>
+			<div class="col text-right"><a href="#" class="text-decoration-none font-weight-bold">{{ app.user.nbFollowers}}</a></div>
+		</div>
+		<div class="row">
+			<div class="col font-weight-bold">Suivi(e)s</div>
+			<div class="col text-right"><a href="#" class="text-decoration-none font-weight-bold">{{ app.user.nbFollows}}</a></div>
+		</div>
+	</div>
+</div>

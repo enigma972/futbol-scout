@@ -9,5 +9,9 @@ use App\Entity\AbstractUserCategory;
  */
 class Fans extends AbstractUserCategory
 {
-	
+	public function __construct()
+    {
+        // set the user category label with the constant defined in AbstractUserCategory
+    	$this->setLabel(self::FANS);
+    }
 }

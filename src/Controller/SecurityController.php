@@ -21,6 +21,7 @@ use App\Entity\AbstractUserCategory;
 use App\Entity\Player;
 use App\Entity\Fans;
 use App\Entity\Other;
+use App\Entity\Avatar;
 
 class SecurityController extends AbstractController
 {
@@ -52,11 +53,12 @@ class SecurityController extends AbstractController
                     $category = new Player();
                 }elseif ($category == AbstractUserCategory::FANS) {
                     $category = new Fans();
-                }elseif ($category == AbstractUserCategory::OTHER) {
-                    $category = new Other();
                 }else{
                     $category = new Other();
                 }
+
+                $avatar = new Avatar();
+                $user->setAvatar($avatar);
 
                 $category->setUser($user);
 
@@ -67,8 +69,10 @@ class SecurityController extends AbstractController
                         $form->get('password')->getData()
                     )
                 );
+
                 
                 $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($avatar);
                 $entityManager->persist($user);
                 $entityManager->persist($category);
                 $entityManager->flush();

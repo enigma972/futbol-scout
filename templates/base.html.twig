@@ -11,10 +11,43 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-		
-		<script src="{{ asset('cdn/jquery/jquery.min.js') }}"></script>
+		<br class="mb-3">
+		<script src="{{ asset('cdn/jquery/jquery.js') }}"></script>
         <script src="{{ asset('cdn/bootstrap4/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('cdn/bootstrap4/plugins/bs-custom-input.js') }}"></script>
         <script src="{{ asset('build/app.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                bsCustomFileInput.init();
+            })
+
+            /*$(function() {
+                $like = function(a, isLiked) {
+                    let $a = $(a);
+                    let $link = $a.attr('href');
+
+
+                    if (!isLiked) {
+                        $a.css('color', '#42a6d7');
+                    
+                        $.get($link, {})
+                            .done(function(data, textStatus, jqxhr) {
+                                if (data.status == 'postLiked') {
+                                    $a.parents.hide();
+                                }
+                            })
+                            .fail(function(jqxhr) {
+                                console.log(jqxhr.responseText);
+                            })
+                            .always(function () {
+                                // body...
+                            });
+                    }else{
+
+                    }
+                }
+            });*/
+        </script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
