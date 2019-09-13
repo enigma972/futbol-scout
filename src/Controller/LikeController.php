@@ -51,7 +51,6 @@ class LikeController extends AbstractController
             $jsonResponse = $this->json(['status' => 'error']);
         }
 
-        dump($jsonResponse);
         if ($isAjax) return $jsonResponse;
 
         return $this->redirectToRoute('post_show', ['id' => $id]);

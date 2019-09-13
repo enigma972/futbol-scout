@@ -154,4 +154,13 @@ class Post
 
         return $this;
     }
+
+    public function isAuthor(User $user)
+    {
+        if ($user == $this->getAuthor()) {
+            return true;
+        }
+
+        return false;
+    }
 }
