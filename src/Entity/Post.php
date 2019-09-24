@@ -52,12 +52,20 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", orphanRemoval=true)
+     */
+    private $likes;
+
+    
+
 
     public function __construct()
     {
         $this->postedAt = new \DateTime();
         $this->nbLikes = 0;
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -162,5 +170,45 @@ class Post
         }
 
         return false;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasLike(User $user): ?bool
+    {
+        return $this->likes->exists(function($key, $element) use ($user) {
+            if ($user === $element->getAuthor()) {
+                return true;
+            }
+        });
     }
 }

@@ -59,23 +59,28 @@ class LikeController extends AbstractController
     /**
      * @Route("/{id}/dislike", name="like_remove", methods={"GET"})
      */
-    public function remove(Post $post, EntityManagerInterface $em)
+    public function remove(Post $post, EntityManagerInterface $em, LikeRepository $likes)
     {
 
 
         $connectedUser = $this->getUser();
 
         if (null !== $connectedUser) {
-            if ($post instanceOf Post) {
+            if ($post instanceOf Post and $post->hasLike($connectedUser)) {
                 $like = new Like();
 
-                $like
-                    ->setAuthor($connectedUser)
-                    ->setPost($post);
+                $like = $likes->findOneByPostAndAuthor($post, $connectedUser);
 
-                $em->persist($like);
+                if (null !== $like) {
+                    $em->remove($like);
+                }
+
                 $em->flush();
+
+                return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
             }
         }
+
+        return $this->redirectToRoute('home');
     }
 }

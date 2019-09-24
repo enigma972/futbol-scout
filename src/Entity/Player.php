@@ -45,9 +45,20 @@ class Player extends AbstractUserCategory
     private $ambition;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $biographie;
+
+    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $level;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PlayerPromoClip", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $promoClip;
 
 
     public function __construct()
@@ -148,6 +159,30 @@ class Player extends AbstractUserCategory
     public function setLevel(?string $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getPromoClip(): ?PlayerPromoClip
+    {
+        return $this->promoClip;
+    }
+
+    public function setPromoClip(?PlayerPromoClip $promoClip): self
+    {
+        $this->promoClip = $promoClip;
+
+        return $this;
+    }
+
+    public function getBiographie(): ?string
+    {
+        return $this->biographie;
+    }
+
+    public function setBiographie(?string $biographie): self
+    {
+        $this->biographie = $biographie;
 
         return $this;
     }

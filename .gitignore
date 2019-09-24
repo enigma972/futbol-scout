@@ -1,4 +1,5 @@
-
+### NewsLetter
+src/NewsLetter/
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

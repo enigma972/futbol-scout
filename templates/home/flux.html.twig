@@ -9,10 +9,10 @@
 {% block section %}
 	<div class="custom-container container-fluid">
 		<div class="row my-2">
-			<div class="col-md-3">
+			<div class="col-lg-3 mb-2 .d-none .d-lg-block .d-xl-none">
 				{% include 'user/user-summary.html.twig' %}
 			</div>
-			<div class="col-md-5">
+			<div class="col-lg-5">
 				<div class="row">
 					<div class="col">
 						{% include 'post/post-form.html.twig' %}
@@ -35,7 +35,7 @@
 					{% include 'post/post-card.html.twig' %}
 				{% else %}
 				<div class="row">
-					<div class="col-md-10 bg-white mx-auto text-center p-4 font-weight-bold">
+					<div class="col-lg-10 bg-white mx-auto text-center p-4 font-weight-bold">
 						Aucune publication pour le moment
 					</div>
 				</div>  
@@ -44,12 +44,12 @@
 				{% if page <= nbParPage %}
 				<div class="row my-4">
 					<div class="col">
-						<a href="{{ path('home', {'page': page}) }}" class="btn btn-block btn-custom-outline-danger rounded-0 text-decoration-none">Suivant</a>
+						<a href="{{ path('home', {'page': page}) }}" class="btn btn-block btn-custom-outline-danger rounded-0 text-decoration-none">Voir plus</a>
 					</div>
 				</div>
 				{% endif %}
 			</div>
-			<div class="col-md-4">
+			<div class="col-lg-4 .d-none .d-lg-block .d-xl-none">
 				{% include 'user/user_suggetion.html.twig' %}
 			</div>
 		</div>

@@ -26,6 +26,7 @@ use App\Entity\Avatar;
 class SecurityController extends AbstractController
 {
     private $eventDispatcher;
+    private $redirectIfIsLogin;
     
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -38,6 +39,10 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository,FlashBagInterface $flashBag): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }                
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -106,10 +111,11 @@ class SecurityController extends AbstractController
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
-    {
+    {    
         if ($this->getUser()) {
-           $this->redirectToRoute('home');
+            return $this->redirectToRoute('home');
         }
+
 
         // get the login error if there is one
         if ($error = $authenticationUtils->getLastAuthenticationError()) {
@@ -134,7 +140,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/reset/password", name="app_reset_pass")
      */
-    public function resetpass(Request $request, UserRepository $userRepository, FlashBagInterface $flashBag)
+    public function resetPass(Request $request, UserRepository $userRepository, FlashBagInterface $flashBag)
     {
         $resetLinkIsSended = false;
         $mail = '';
@@ -183,7 +189,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/reset/password/complete/{mail}/{token}", name="app_complete_reset_pass")
      */
-    public function completeresetpass($mail, $token, ResetPasswordRepository $resetPasswordRepository, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function completeResetPass($mail, $token, ResetPasswordRepository $resetPasswordRepository, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             $rp = $resetPasswordRepository->findOneForValidateReseting($token, $mail);

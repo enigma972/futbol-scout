@@ -70,6 +70,10 @@ class PlayerDataFormType extends AbstractType
                 'label' => 'Status',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
+            ->add('biographie', TextareaType::class, [
+                'label' => 'Status',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
             ->add('level', ChoiceType::class, [
                 'attr'      => ['class' =>  'form-control rounded-0'],
                 'choices'   => [

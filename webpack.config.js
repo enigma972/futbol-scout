@@ -28,6 +28,7 @@ Encore
     .addEntry('login', './assets/js/login.js')
     .addEntry('complete_player_data', './assets/js/complete_player_data.js')
     .addEntry('flux', './assets/js/flux.js')
+    .addEntry('profil', './assets/js/profil.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -48,7 +49,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    //.enableVersioning(Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
     .configureBabel(() => {}, {

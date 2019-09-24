@@ -1,11 +1,8 @@
-<nav class="navbar navbar-expand navbar-light sticky-top shadow bg-custom-red" style="" id="navbar">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow bg-custom-red" id="navbar">
 	<div class="container">
-		<a class="navbar-brand font-weight-bold" href="/" style="color: white;">fs</a>
-		<!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button> -->
-
-		<form action="#" class="form-inline position-absolute" style="left: 15%;">
+		<a class="navbar-brand font-weight-bold" href="{{ path('home') }}" style="color: white;">futbol-scout</a>
+		{% if app.user %}
+		<form action="#" class="form-inline justify-content-start">
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Recherche" />
 				<div class="input-group-append">
@@ -13,15 +10,19 @@
 				</div>
 			</div>
 		</form>
-
-		<ul class="navbar-nav" id="navbar">
-		{% if app.user %}
-			<li class="nav-item mx-2 text-center"><a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-"> {{ app.user.firstname|capitalize }} </a></li>
-			<li class="nav-item mx-2 text-center"><a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a></li>
-			<li class="nav-item mx-2 text-center"><a href="#" class="nav-link border-right-">Notifications</a></li>
-			{% if app.user.category == 'player' %}
-			<li class="nav-item mx-2 text-center"><a href="{{ path('player', {'slug': app.user.slug, 'id': app.user.id})}}" class="nav-link">Ma page (Joueur)</a></li>
-			{% endif %}
+		{% endif %}
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul class="navbar-nav">
+			   {% if app.user %}
+				<li class="nav-item mx-2 text-center"><a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-"> {{ app.user.firstname|capitalize }} </a></li>
+				<li class="nav-item mx-2 text-center"><a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a></li>
+				<li class="nav-item mx-2 text-center"><a href="#" class="nav-link border-right-">Notifications</a></li>
+				{% if app.user.category == 'player' %}
+				<li class="nav-item mx-2 text-center"><a href="{{ path('player', {'slug': app.user.slug, 'id': app.user.id})}}" class="nav-link">Ma page (Joueur)</a></li>
+				{% endif %}
 			{% endif %}
 			<li class="nav-item">
 				{% if app.user %}
@@ -38,6 +39,7 @@
 				<a href="{{ path('app_register') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Inscription</a>
 				{% endif %}
 			</li>
-		</ul>
+			</ul>
+		</div>
 	</div>
 </nav>

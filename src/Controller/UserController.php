@@ -90,4 +90,26 @@ class UserController extends AbstractController
             'slug'  =>     $user->getSlug()
         ]);
     }
+
+    /**
+     * @Route("/{id}/disfollow", name="user_disfollow")
+     */
+    public function disFollow(User $user)
+    {
+        /**
+         * @var connectedUser $connectedUser the current user
+         */
+        $connectedUser = $this->getUser();
+        
+        if (null !== $user and $connectedUser != $user) {
+            $connectedUser->removeFollow($user);
+            
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('user_profil', [
+            'id'    =>     $user->getId(),
+            'slug'  =>     $user->getSlug()
+        ]);
+    }
 }

@@ -20,7 +20,7 @@ class Like
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;
@@ -29,6 +29,7 @@ class Like
      * @ORM\Column(type="datetime")
      */
     private $time;
+    
 
     public function __construct()
     {

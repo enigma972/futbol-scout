@@ -11,6 +11,7 @@ use App\Form\PlayerDataFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Entity\PlayerPromoClip;
 
 
 /**
@@ -32,14 +33,18 @@ class PlayerController extends AbstractController
     {
         if ($user instanceOf User) {
             $player = $players->findOneByUser($user);
+            
+            if (!$player) {
+                return $this->redirectToRoute('home');
+            }
+
+            $usersSuggest = $users->findByUserForSuggest($this->getUser());
+
+            return $this->render('player/player_page.html.twig', [
+                'player'    =>      $player,
+                'usersSuggest' =>   $usersSuggest,
+            ]);
         }
-
-        $usersSuggest = $users->findByUserForSuggest($this->getUser());
-
-        return $this->render('player/player_page.html.twig', [
-            'player'    =>      $player,
-            'usersSuggest' =>   $usersSuggest,
-        ]);
     }
 
     /**
@@ -71,5 +76,42 @@ class PlayerController extends AbstractController
     	return $this->render('player/complete_player_data.html.twig', [
     		'playerDataFormType'	=>	$form->createView()
     	]);
+    }
+
+    /**
+     * @Route("/joueur/ajouter/clip-de-promo", name="add_promo_clip")
+     */
+    public function addPromoClip(Request $request, PlayerRepository $players)
+    {
+        $user = $this->getUser();
+
+        if ($request->isMethod('POST')) {
+            $file = $request->files->get('promo_clip');
+            if ($file) {
+                $promoClip = new PlayerPromoClip();
+                $promoClip->preUpload($file);
+
+                if ($promoClip->getSize() <= 70) {
+                    $player = $players->findOneByUser($user);
+                
+                    if ($player) {
+                        $player->setPromoClip($promoClip);
+
+                        $this->em->flush();
+                        $promoClip->upload();
+                        
+                        return $this->redirectToRoute('player', [
+                            'id'    =>  $user->getId(),
+                            'slug'  =>  $user->getSlug(),
+                        ]);
+                        
+                    }
+                }
+                
+            }
+            
+        }
+
+        return $this->render('player/add_promo_clip.html.twig');
     }
 }

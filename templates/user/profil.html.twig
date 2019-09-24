@@ -2,6 +2,10 @@
 
 {% block title %}Page d'acceuil{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/profil.css') }}">
+{% endblock %}
+
 {% block section %}
 	<div class="container-fluid" id="user-cover-img" style="background: url('/cdn/images/cover-img.jpg');background-size: cover; height: 380px;">
 		<a href="#" class="btn rounded-0 btn-custom-outline-danger bg-white mt-3 p-2 float-right" id="p-c-i"><i class="fas fa-camera fa-lg"></i> <span class="font-weight-bold">Changer l'image</span></a>
@@ -13,17 +17,24 @@
 	</div>
 	<div class="custom-container container-fluid">
 		<div class="row -my-2">
-			<div class="col-3 rounded-0">
+			<div class="col-md-3 rounded-0">
 				<div class="card shadow-sm rounded-0 -position-fixed">
 					<div class="card-body text-center">
 						<img src="{{ asset(user.avatar.path) }}" alt="" class="rounded-circle card-custom-user-img border-white shodow-sm" style="width: 50px; height: 50px;">
-						<div class="h6">{{ user.username }}</div>
+						<div class="h6">{{ user.username|capitalize }}</div>
+						{% if user.category == 'player' %}
+						<div class="mx-2 text-center"><a href="{{ path('player', {'slug': user.slug, 'id': user.id})}}" class="text-decoration-none">Voir la page de joueur</a></div>
+						{% endif %}
 						{% if app.user == user %}
 						<div><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
 						{% endif %}
-						{% if app.user != user %}
+						{% if app.user != user and user not in app.user.follows %}
 						<div class="mt-2">
 							<a href="{{path('user_follow', {'id': user.id})}}" class="font-weight-bold text-decoration-none">S'abonner <i class="fas fa-plus fa-sm"></i></a>
+						</div>
+						{% else %}
+						    <div class="mt-2">
+							<a href="{{path('user_disfollow', {'id': user.id})}}" class="font-weight-bold text-decoration-none">Se désabonner</a>
 						</div>
 						{% endif %}
 					</div>
@@ -40,7 +51,7 @@
 				</div>
 				{# include 'user/user-summary.html.twig' #}
 			</div>
-			<div class="col-5 mt-2">
+			<div class="col-md-5 mt-2">
 				{#
 				<div class="row">
 					<div class="col">
@@ -49,6 +60,7 @@
 				</div>
 				<hr>
 				#}
+
 				{% for post in posts %}
 					{% include 'post/post-card.html.twig' %}
 				{% else %}
@@ -59,9 +71,13 @@
 				    </div>
 				{% endfor %}
 			</div>
-			<div class="col-4">
+			<div class="col-md-4">
 				{% include 'user/user_suggetion.html.twig' %}
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/profil.js') }}"></script>
 {% endblock %}

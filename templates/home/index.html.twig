@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('lp/css/bootstrap.css')}}"> -->
     <link rel="stylesheet" type="text/css" href="{{asset('lp/css/style.css')}}">
      <link rel="stylesheet" type="text/css" href="{{asset('lp/css/font-awesome.css')}}">
-    <link rel="shortcut icon" href="{{asset('favicon/favicon-futbol-scout-transparent.png')}}">
+    <link rel="shortcut icon" href="{{asset('lp/favicon/favicon-futbol-scout-transparent.png')}}">
     <link rel="stylesheet" href="{{ asset('cdn/bootstrap4/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 </head>
@@ -39,17 +39,66 @@
 						Promouvoir votre talent de footballeur, Mise en place d'un ecosystème pour le football, Un outil pour recruter des jeunes talents au niveau local et international, un média sportive qui vous connecte aux informations de vos clubs favoris, une plateforme qui oeuvre pour le dévéloppement du football au milieu des jeunes.
 						</b>
 					</p>
-					<h3 class="text-center" style="color:#fff;">
-						<b>
-							Site web en construction
-						</b>
-					</h3>
+					<div class="">
+						<h3 class="h4" style="color: white;">Connectez-vous! Des bonnes choses vous attendent</h3>
+						<form action="{{ path('app_login') }}" class="form-inline justify-content-center" method="post">
+							<input type="text" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mail" name="mail">
+							<input type="password" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mot de passe" name="password">
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+							<button type="submit" class="btn btn-primary btn-lg rounded-0 mr-1">Se connecter</button>
+							<a href="{{ path('app_register') }}" class="btn btn-primary btn-lg rounded-0">S'inscrire</a>
+						</form>
+					</div>
 				</div>
 			</div>
 			<br><br><br>
 		</div>
 	</div>
-	{% include 'navbar.html.twig' %}
+	<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-custom-red" id="navbar">
+	<div class="container">
+		<a class="navbar-brand font-weight-bold" href="{{ path('home') }}" style="color: white;">futbol-scout</a>
+		{% if app.user %}
+		<form action="#" class="form-inline justify-content-start">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Recherche" />
+				<div class="input-group-append">
+					<div class="input-group-text"><i class="fas fa-search"></i></div>
+				</div>
+			</div>
+		</form>
+		{% endif %}
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul class="navbar-nav">
+			   {% if app.user %}
+				<li class="nav-item mx-2 text-center"><a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-"> {{ app.user.firstname|capitalize }} </a></li>
+				<li class="nav-item mx-2 text-center"><a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a></li>
+				<li class="nav-item mx-2 text-center"><a href="#" class="nav-link border-right-">Notifications</a></li>
+				{% if app.user.category == 'player' %}
+				<li class="nav-item mx-2 text-center"><a href="{{ path('player', {'slug': app.user.slug, 'id': app.user.id})}}" class="nav-link">Ma page (Joueur)</a></li>
+				{% endif %}
+			{% endif %}
+			<li class="nav-item">
+				{% if app.user %}
+				<a href="#" class="btn btn-not-focus dropdown-toggle not-caret my-0 nav-btn" data-toggle="dropdown">
+					<img src="{{ asset(app.user.avatar.path)}}" alt="{{app.user.avatar.alt}}" class="rounded-circle" style="width: 30px;height: 30px;">
+				</a>
+				<div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
+					<a class="dropdown-item" href="{{ '' }}"><i class="fas fa-user"></i> Modifier le profil</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnecxion <i class="fas fa-sign-out-alt"></i></a>
+				</div>
+				{% else %}
+				<a href="{{ path('app_login') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Connexion</a>
+				<a href="{{ path('app_register') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Inscription</a>
+				{% endif %}
+			</li>
+			</ul>
+		</div>
+	</div>
+</nav>
 	<section id="">
 		<div class="container">
 			<div class="row" id="network">
@@ -203,7 +252,7 @@
 		        <h4 class="font-weight-bold dark-grey-text mt-4"><b>Anna Deynah</b></h4>
 		        <h6 class="font-weight-bold blue-text my-3">Analyste sportif</h6>
 		        <p class="font-weight-normal dark-grey-text">
-		         Un très bon concept pour la promotion des footballeurs, une nouvelle façon de faire les choses peut</p>
+		         Un très bon concept pour la promotion des footballeurs, une nouvelle façon de faire les choses peut etre</p>
 		        <!--Review-->
 		      </div>
 		    </div>
