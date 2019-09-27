@@ -48,6 +48,42 @@ class PlayerController extends AbstractController
     }
 
     /**
+     * @Route("/joueur/{id}/follow", name="player_follow")
+     */
+    public function follow(Player $player)
+    {
+        $connectedUser = $this->getUser();
+
+        if($player) {
+            $player->addFan($connectedUser);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('player', [
+            'id'    =>  $connectedUser->getId(),
+            'slug'  =>  $connectedUser->getSlug(),
+            ]);
+    }
+
+     /**
+     * @Route("/joueur/{id}/disfollow", name="player_disfollow")
+     */
+    public function disfollow(Player $player)
+    {
+        $connectedUser = $this->getUser();
+
+        if($player) {
+            $player->removeFan($connectedUser);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('player', [
+            'id'    =>  $connectedUser->getId(),
+            'slug'  =>  $connectedUser->getSlug(),
+            ]);
+    }
+
+    /**
      * @Route("/complete/registration", name="complete_player_data")
      */
     public function completePlayerData(Request $request, PlayerRepository $playerRepot)
