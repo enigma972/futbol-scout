@@ -3,6 +3,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\AbstractUserCategory;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
@@ -60,11 +62,23 @@ class Player extends AbstractUserCategory
      */
     private $promoClip;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="favoritesPlayer")
+     */
+    private $fans;
+
+    /**
+     * @ORM\Column(type="integer") 
+     */
+    private $nbFans;
+
 
     public function __construct()
     {
         // set the user category label with the constant defined in AbstractUserCategory
-    	$this->setLabel(self::PLAYER);
+        $this->setLabel(self::PLAYER);
+        $this->fans = new ArrayCollection();
+        $this->nbFans = 0;
     }
 
     public function getLength(): ?int
@@ -185,5 +199,59 @@ class Player extends AbstractUserCategory
         $this->biographie = $biographie;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFans(): Collection
+    {
+        return $this->fans;
+    }
+
+    public function addFan(User $fan): self
+    {
+        if (!$this->fans->contains($fan)) {
+            $this->fans[] = $fan;
+            $this->increaseFans();
+            $fan->addFavoritesPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFan(User $fan): self
+    {
+        if ($this->fans->contains($fan)) {
+            $this->fans->removeElement($fan);
+            $this->decreaseFans();
+            $fan->removeFavoritesPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function getNbFans(): ?int
+    {
+        return $this->nbFans;
+    }
+
+    public function setNbFans(int $nbFans): self
+    {
+        $this->nbFans = $nbFans;
+
+        return $this;
+    }
+
+    public function increaseFans()
+    {
+        $nbFans = $this->getNbFans();
+        $this->setNbFans($nbFans+1);
+    }
+
+    public function decreaseFans()
+    {
+        $nbFans = $this->getNbFans();
+        $this->setNbFans($nbFans-1);
     }
 }

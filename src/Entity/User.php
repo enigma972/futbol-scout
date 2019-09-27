@@ -108,7 +108,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbFollows;        
+    private $nbFollows;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Player", inversedBy="fans")
+     */
+    private $favoritesPlayer;
 
 
     public function __construct()
@@ -119,6 +124,7 @@ class User implements UserInterface
         $this->follows = new ArrayCollection();
         $this->nbFollowers = 0;
         $this->nbFollows = 0;
+        $this->favoritesPlayer = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -433,5 +439,23 @@ class User implements UserInterface
     {
         $nbFollows = $this->getNbFollows();
         $this->setNbFollows($nbFollows-1);
+    }
+
+    public function addFavoritesPlayer(Player $favoritesPlayer): self
+    {
+        if (!$this->favoritesPlayer->contains($favoritesPlayer)) {
+            $this->favoritesPlayer[] = $favoritesPlayer;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritesPlayer(Player $favoritesPlayer): self
+    {
+        if ($this->favoritesPlayer->contains($favoritesPlayer)) {
+            $this->favoritesPlayer->removeElement($favoritesPlayer);
+        }
+
+        return $this;
     }
 }

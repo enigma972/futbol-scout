@@ -29,6 +29,7 @@ Encore
     .addEntry('complete_player_data', './assets/js/complete_player_data.js')
     .addEntry('flux', './assets/js/flux.js')
     .addEntry('profil', './assets/js/profil.js')
+    .addEntry('player', './assets/js/player.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -52,13 +53,13 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
-        useBuiltIns: 'usage',
-        corejs: 3
-    })
+    //.configureBabel(() => {}, {
+    //    useBuiltIns: 'usage',
+    //    corejs: 3
+    //})
 
     // enables Sass/SCSS support
-    .enableSassLoader()
+    //.enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -68,7 +69,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    .autoProvidejQuery()
+    //.autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

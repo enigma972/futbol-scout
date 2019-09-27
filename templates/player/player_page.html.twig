@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Page d'acceuil{% endblock %}
+{% block title %}Page de joueur | {{ player.user.firstname }} {{ player.user.lastname }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/player.css') }}">
+{% endblock %}
 
 {% block section %}
 <div class="container-fluid" id="user-cover-img" style="background: url('/cdn/images/cover-img.jpg');background-size: cover; height: 380px;">
@@ -13,69 +17,96 @@
 </div>
 
 <div class="container-fluid">
-	<div class="row invisible">
-		<div class="col">
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
+	<div class="row">
+		<div class="col-md-2 offset-md-1" >
+			<div class="card mb-2 shadow-sm rounded-0 -position-fixed">
+				<div class="card-header p-5"></div>
+				<div class="card-body text-center">
+					<img src="{{ asset(app.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
+					
+					<div>
+						{% if app.user in player.fans %}
+						<a href="{{ path('player_disfollow', {'id': player.id}) }}" class="btn btn-primary rounded-0">Je ne suis plus fan</a>
+						{% else %}
+						<a href="{{ path('player_follow', {'id': player.id}) }}" class="btn btn-primary rounded-0">Devenir fan</a>
+						{% endif %}
+					</div>
+				</div>
+				<div class="card-footer" style="color: #696c6f;">
+					<div class="row">
+						<div class="col font-weight-bold">Fans</div>
+						<div class="col text-right"><a href="#" class="text-decoration-none font-weight-bold">{{ player.nbFans}}</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<ul class="nav nav-tabs -justify-content-center mb-4" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+					<a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Infos personnelles</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+					<a class="nav-link" id="video-tab" data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Vidéos</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+					<a class="nav-link" id="statistique-tab" data-toggle="tab" href="#statistique" role="tab" aria-controls="statistique" aria-selected="false">Statistiques</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="avi-tab" data-toggle="tab" href="#avi" role="tab" aria-controls="avi" aria-selected="false">Avis</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
-			  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-10 offset-md-1">
-			<div class="row">
-				<div class="col-md-7">
-					<h3 class="h4">Vidéo de présentation</h3>
-					<div class="alert alert-info alert-dismissible fade show" role="alert">
-					  <p>Il est vital pour vous d'avoir une vidéo promo. La vidéo promotionnelle est un court clip, réalisé à partir de differents jeux, où un joueur se présente et souligne ses attributs. <a href="{{ path('add_promo_clip') }}">cliquer ici pour ajouter une vidéo promotionnelle</a></p>
-					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					    <span aria-hidden="true">&times;</span>
-					  </button>
+				<div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+					<div class="row">
+						<div class="col-md-7">
+							<h3 class="h4">Vidéo de présentation</h3>
+							<div class="alert alert-info alert-dismissible fade show" role="alert">
+							<p>Il est vital pour vous d'avoir une vidéo promo. La vidéo promotionnelle est un court clip, réalisé à partir de differents jeux, où un joueur se présente et souligne ses attributs. <a href="{{ path('add_promo_clip') }}">cliquer ici pour ajouter une vidéo promotionnelle</a></p>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							</div>
+							
+							<video src="{% if player.promoclip %}{{ asset(player.promoclip.path)}}{% else %}{{ asset('cdn/videos/certification.mp4') }}{% endif %}" controls class="w-100"></video>
+						</div>
+						<div class="col-md-5 boerder shadow-sm bg-white p-4">
+							<h3 class="h4">Informations personnelles</h3>
+							<ul class="list-unstyled">
+								<li>Nom complet : <strong>{{ player.user.firstname }} {{ player.user.lastname }}</strong></li>
+								<li>Date de Naissance : <strong>{{ player.user.birthday | date('d/m/y') }}</strong></li>
+								<li>Lieu de Naissance : <strong>{{ player.user.country }}</strong></li>
+								<li>Age : <strong>{{ 'x' }} Ans</strong></li>
+								<li>Taille : <strong>{{ player.length }} Cm</strong></li>
+								<li>Poids : <strong>{{ player.weight }} Kg</strong></li>
+								<li>Position : <strong>{% for poste in player.postes %}{{ poste }}{% endfor %}</strong></li>
+								<li>Pieds : <strong>{% for strongFeet in player.strongFeets %}{{ strongFeet }}{% endfor %}</strong></li>
+								<li>Club Actuel : <strong>{{ player.currentClub }}</strong></li>
+								<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
+								<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
+								<li>Niveau : <strong>{{ player.level }}</strong></li>
+							</ul>
+							<h3 class="h4">Biographie</h3>
+							<p>
+								{{ player.biographie }}
+							</p>
+							<h3 class="h4">Ambitions</h3>
+							<p>
+								{{ player.ambition }}
+							</p>
+							<h3 class="h4">Langues parlées</h3>
+							<p></p>
+						</div>
 					</div>
-					
-					<video src="{% if player.promoclip %}{{ asset(player.promoclip.path)}}{% else %}{{ asset('cdn/videos/certification.mp4') }}{% endif %}" controls class="w-100"></video>
 				</div>
-				<div class="col-md-5 boerder shadow-sm bg-white p-4">
-					<h3 class="h4">Informations personnelles</h3>
-					<ul class="list-unstyled">
-						<li>Nom complet : <strong>{{ player.user.firstname }} {{ player.user.lastname }}</strong></li>
-						<li>Date de Naissance : <strong>{{ player.user.birthday | date('d/m/y') }}</strong></li>
-						<li>Lieu de Naissance : <strong>{{ player.user.country }}</strong></li>
-						<li>Age : <strong>{{ 'x' }} Ans</strong></li>
-						<li>Taille : <strong>{{ player.length }} Cm</strong></li>
-						<li>Poids : <strong>{{ player.weight }} Kg</strong></li>
-						<li>Position : <strong>{% for poste in player.postes %}{{ poste }}{% endfor %}</strong></li>
-						<li>Pieds : <strong>{% for strongFeet in player.strongFeets %}{{ strongFeet }}{% endfor %}</strong></li>
-						<li>Club Actuel : <strong>{{ player.currentClub }}</strong></li>
-						<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
-						<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
-						<li>Niveau : <strong>{{ player.level }}</strong></li>
-					</ul>
-					<h3 class="h4">Biographie</h3>
-					<p>
-						{{ player.biographie }}
-					</p>
-					<h3 class="h4">Ambitions</h3>
-					<p>
-						{{ player.ambition }}
-					</p>
-					<h3 class="h4">Langues parlées</h3>
-					<p></p>
-				</div>
+				<div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">Les vidéos du joueurs</div>
+				<div class="tab-pane fade" id="statistique" role="tabpanel" aria-labelledby="statistique-tab">Il y pas encore des statistiques sur ce joueur</div>
+				<div class="tab-pane fade" id="avi" role="tabpanel" aria-labelledby="avi-tab">Il y a pas encore d'avis pour ce joueur</div>
 			</div>
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/player.js') }}"></script>
 {% endblock %}
