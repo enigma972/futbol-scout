@@ -29,7 +29,9 @@
 					 </div>   
 				{% endif %}
 			</div>
-			<div class="col-md-4 shadow-sm border jumbotron rounded-0"></div>
+			<div class="col-md-4 shadow-sm border rounded-0">
+				{{ render(path('user_suggestions', {'id': app.user.id}))}}
+			</div>
 		</div>
 	</div>
 {% endblock %}

@@ -33,12 +33,10 @@ class UserController extends AbstractController
     {
         if (null !== $user) {
             $posts = $posts->findByAuthor($user, ['postedAt' => 'DESC']);
-            $usersSuggest = $users->findByUserForSuggest($user);
 
             return $this->render('user/profil.html.twig', [
                 'posts'        => $posts,
                 'user'         => $user,
-                'usersSuggest' =>   $usersSuggest,
             ]);
         }
     }
@@ -111,5 +109,17 @@ class UserController extends AbstractController
             'id'    =>     $user->getId(),
             'slug'  =>     $user->getSlug()
         ]);
+    }
+
+    /**
+     * @Route("/{id}/users-suggestion", name="user_suggestions")
+     */
+    public function userSuggestion(User $user, UserRepository $users)
+    {
+        $usersSuggest = $users->findByUserForSuggest($user);
+
+        return $this->render('user/user_suggestions.html.twig', [
+            'usersSuggest'  => $usersSuggest
+            ]);
     }
 }

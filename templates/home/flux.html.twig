@@ -50,7 +50,7 @@
 				{% endif %}
 			</div>
 			<div class="col-lg-4 .d-none .d-lg-block .d-xl-none">
-				{% include 'user/user_suggetion.html.twig' %}
+				{{ render(path('user_suggestions', {'id': app.user.id }))}}
 			</div>
 		</div>
 	</div>

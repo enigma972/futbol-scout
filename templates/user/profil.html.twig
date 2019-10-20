@@ -72,7 +72,7 @@
 				{% endfor %}
 			</div>
 			<div class="col-md-4">
-				{% include 'user/user_suggetion.html.twig' %}
+				{{ render(path('user_suggestions', {'id': app.user.id }))}}
 			</div>
 		</div>
 	</div>
