@@ -41,22 +41,25 @@ class Post
      */
     private $attachement;
 
-
-     /**
-     * @ORM\Column(type="integer")
-     */
-    private $nbLikes;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PostComment", mappedBy="post", orphanRemoval=true)
      */
     private $comments;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbComments;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", orphanRemoval=true)
      */
     private $likes;
 
+     /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbLikes;
     
 
 
@@ -159,6 +162,18 @@ class Post
                 $comment->setPosts(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbComments(): ?int
+    {
+        return $this->nbComments;
+    }
+
+    public function setNbComments(?int $nbComments): self
+    {
+        $this->nbComments = $nbComments;
 
         return $this;
     }

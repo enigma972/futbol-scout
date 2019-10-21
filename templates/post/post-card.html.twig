@@ -54,7 +54,12 @@
 					{% else %}
 				    <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; font-size: medium;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
 					{% endif %}
-					
+					<span class="mx-1">|</span>
+					<a href="{{ path('post_show', {'id': post.id}) }}" class="text-decoration-none" style="color: #696c6f;">
+						{# <i class="fas fa-comment-alt" style="width: 10px;height: 10px; font-size: medium;"></i> #}
+						<span class="align-middle" style="color: #696c6f;">{{post.nbComments}} commentaires</span>
+					</a>
+
 				</div>
 				<hr>				
 				<div>
@@ -63,12 +68,26 @@
 					{% else %}
 					    {% set path = 'like_add' %}
 					{% endif %}
-					<a href="{{ path(path, {'id': post.id})}}" class="text-decoration-none" onclick="$like(this, {{""}}); return false;" style="color: {% if post.hasLike(app.user) %}#42a6d7{% else %}#696c6f{% endif %};" id="like-link-{{ post.id }}"><i class="fas fa-thumbs-up" style=""></i>  J'aime</a> <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-comment-alt"> </i>  Commentaires</a>
+					<a href="{{ path(path, {'id': post.id})}}" class="text-decoration-none" onclick="$like(this, {{" "}}); return false;" style="color: {% if post.hasLike(app.user) %}#42a6d7{% else %}#696c6f{% endif %};" id="like-link-{{ post.id }}">
+						<i class="fas fa-thumbs-up" style=""></i>
+						J'aime</a>
+					<a href="{{ path('post_show', {'id': post.id}) }}" class="text-decoration-none" style="color: #696c6f;">
+						<i class="fas fa-comment-alt"></i>
+						Commentaires</a>
 				</div>
 			</div>
+			<div class="mx-3 my-2">
+				{% for comment in post.comments %}
+					{% include "post_comment/comments.html.twig" %}
+				{% else %}
+				<div class="" style="font-size: small;">
+					Soyez le premier à commenter ceci
+				</div>  
+				{% endfor %}
+			</div>
 			<div class="card-footer">
-				<form action="#" class="form-inline">
-					<input type="text" class="form-control" placeholder="Ajouter un commentaire" style="width: 75%;" />
+				<form action="{{ path('post_comment_new', {'id': post.id}) }}" class="form-inline" method="post">
+					<input type="text" class="form-control" name="post_comment_content" placeholder="Ajouter un commentaire" style="width: 75%;" />
 					<button class="btn font-weight-bold" style="color: #0056b3;">Publier</button>
 				</form>
 			</div>

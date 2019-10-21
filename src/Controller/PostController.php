@@ -54,7 +54,7 @@ class PostController extends AbstractController
 			$this->em->flush();
 
 			return $this->redirectToRoute('post_show', [
-				'id'=>$post->getId()
+				'id'	=>	$post->getId()
 			]);
 		}
 		

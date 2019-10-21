@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostCommentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class PostComment
 {
@@ -62,6 +63,15 @@ class PostComment
         return $this;
     }
 
+    public function isAuthor(User $user)
+    {
+        if ($user == $this->getAuthor()) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getPost(): ?Post
     {
         return $this->post;
@@ -97,16 +107,22 @@ class PostComment
 
         return $this;
     }
-
-    public function getPosts(): ?Post
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function increase()
     {
-        return $this->posts;
+        $nbComments = $this->getPost()->getNbComments();
+        $this->getPost()->setNbComments($nbComments + 1);
     }
 
-    public function setPosts(?Post $posts): self
+    /**
+     * @ORM\PreRemove
+     */
+    public function decrease()
     {
-        $this->posts = $posts;
-
-        return $this;
+        $nbComments = $this->getPost()->getNbComments();
+        $this->getPost()->setNbComments($nbComments - 1);
     }
 }

@@ -1,5 +1,38 @@
-<div class="row">
-    <div class="col">
-        
+<div class="row mb-2">
+    <div class="col-1">
+        <img src="{{ asset(comment.author.avatar.path) }}" alt="{{ comment.author.avatar.alt }}" class="rounded-circle m-0 float-left" style="width: 25px;height: 25px;"/>
+    </div>
+    <div class="col mx-2">
+        <div class="row py-1 rounded-lg" style="background-color: #f2f2f2;">
+            <div class="col-10">
+                <h6 class="mb-0">
+                    <a href="{{ path('user_profil', {'slug': comment.author.slug, 'id': comment.author.id})}}" class="text-decoration-none" style="font-size: small; color: black;">{{ comment.author.username|capitalize }}</a>
+                </h6>
+                <p class="pt-0" style="font-size: small;">
+                    {{ comment.content }}
+                </p>
+            </div>
+            <div class="col-2 text-right">
+                <button class="btn btn-not-focus dropdown-toggle not-caret my-0" data-toggle="dropdown">
+                    <i class="fas fa-ellipsis-h fa-sm align-text-top"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
+                    {% if comment.isAuthor(app.user) %}
+                        <a class="dropdown-item" href="{{ path('comment_edit', {'id': comment.id}) }}">
+                            <i class="fas fa-pencil-alt fa-sm"></i>
+                            Modifier la publication</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('comment_is_abuse', {'id': comment.id}) }}">
+                        <i class="fas fa-flag fa-sm"></i>
+                        Singaler un abus</a>
+                    {% if comment.isAuthor(app.user) %}
+                        <a class="dropdown-item" href="{{ path('comment_remove', {'id': comment.id, '_token': csrf_token('delete' ~ comment.id) }) }}">
+                            <i class="fas fa-trash-alt fa-sm"></i>
+                            Supprimer la publication</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>

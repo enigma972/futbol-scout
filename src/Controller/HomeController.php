@@ -28,14 +28,11 @@ class HomeController extends AbstractController
         $connectedUser = $this->getUser();
 
     	if (null != $connectedUser) {
-            //$posts = $posts->findForFlux($connectedUser);
             $follows = $connectedUser->getFollows();
-            $usersSuggest = $users->findByUserForSuggest($connectedUser);
             $posts = $posts->findByFollows($connectedUser, $follows, $page);
 
     		return $this->render('home/flux.html.twig', [
             	'posts' => $posts,
-                'usersSuggest' =>   $usersSuggest,
                 'page'         =>   $page+1,
                 'nbParPage'    =>   ceil(count($posts)/10),
         	]);
