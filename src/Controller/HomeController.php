@@ -16,6 +16,8 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, AuthorizationCheckerInterface $authChecker, PostRepository $posts, UserRepository $users)
     {
+        throw new \Exception("Error Processing Request", 1);
+        
         $page = $request->query->get('page');
         //$nbParPage = $request->query->get('nbParPage');
 
@@ -42,4 +44,6 @@ class HomeController extends AbstractController
             
         ]);
     }
+
+
 }
