@@ -60,14 +60,26 @@
 					<div class="row">
 						<div class="col-md-7">
 							<h3 class="h4">Vidéo de présentation</h3>
-							<div class="alert alert-info alert-dismissible fade show" role="alert">
-							<p>Il est vital pour vous d'avoir une vidéo promo. La vidéo promotionnelle est un court clip, réalisé à partir de differents jeux, où un joueur se présente et souligne ses attributs. <a href="{{ path('add_promo_clip') }}">cliquer ici pour ajouter une vidéo promotionnelle</a></p>
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							</div>
+							{% if not player.promoclip and player.user == app.user %}
+								<div class="alert alert-info alert-dismissible fade show" role="alert">
+									<p>Il est vital pour vous d'avoir une vidéo promo. La vidéo promotionnelle est un court clip, réalisé à partir de differents jeux, où un joueur se présente et souligne ses attributs.
+										<a href="{{ path('add_promo_clip') }}">cliquer ici pour ajouter une vidéo promotionnelle</a>
+									</p>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							{% endif %}
 							
-							<video src="{% if player.promoclip %}{{ asset(player.promoclip.path)}}{% else %}{{ asset('cdn/videos/certification.mp4') }}{% endif %}" controls class="w-100"></video>
+							{% if player.promoclip %}
+								<video src="{{ asset(player.promoclip.path)}}" controls class="w-100"></video>
+							{% else %}
+								<div class="h6">{% if app.user != player.user %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
+							{% endif %}
+							
+							{% if player.promoclip and player.user == app.user %}
+								<a href="{{ path('update_promo_clip') }}" class="btn btn-block btn-primary">Mettre a jour ma video promo</a>
+							{% endif %}
 						</div>
 						<div class="col-md-5 boerder shadow-sm bg-white p-4">
 							<h3 class="h4">Informations personnelles</h3>
@@ -75,7 +87,7 @@
 								<li>Nom complet : <strong>{{ player.user.firstname }} {{ player.user.lastname }}</strong></li>
 								<li>Date de Naissance : <strong>{{ player.user.birthday | date('d/m/y') }}</strong></li>
 								<li>Lieu de Naissance : <strong>{{ player.user.country }}</strong></li>
-								<li>Age : <strong>{{ 'x' }} Ans</strong></li>
+								<li>Age : <strong>{{ player.age }} Ans</strong></li>
 								<li>Taille : <strong>{{ player.length }} Cm</strong></li>
 								<li>Poids : <strong>{{ player.weight }} Kg</strong></li>
 								<li>Position : <strong>{% for poste in player.postes %}{{ poste }}{% endfor %}</strong></li>
@@ -105,6 +117,7 @@
 		</div>
 	</div>
 </div>
+
 {% endblock %}
 
 {% block javascripts %}

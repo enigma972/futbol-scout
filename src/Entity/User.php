@@ -441,6 +441,11 @@ class User implements UserInterface
         $this->setNbFollows($nbFollows-1);
     }
 
+    public function getFavoritesPlayer(): Collection
+    {
+        return $this->favoritesPlayer;
+    }
+
     public function addFavoritesPlayer(Player $favoritesPlayer): self
     {
         if (!$this->favoritesPlayer->contains($favoritesPlayer)) {

@@ -9,6 +9,7 @@ use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\PostAttachement;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * @Route("/accounts/posts")
@@ -98,8 +99,12 @@ class PostController extends AbstractController
 	/**
 	 * @Route("/{id}/is_abuse", name="post_is_abuse")
 	 */
-	public function isAbuse(Request $request, Post $post)
+	public function isAbuse(Request $request, Post $post, FlashBagInterface $flashBag)
 	{
-		
+		$flashBag->add('info', 'Vous avez signalé un contenu abusif.');
+
+		return $this->redirectToRoute('post_show', [
+			'id'	=>	$post->getId()
+		]);
 	}
 }

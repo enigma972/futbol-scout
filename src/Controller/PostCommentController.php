@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 
 /**
@@ -98,6 +99,12 @@ class PostCommentController extends AbstractController
     /**
      * @Route("/{id}/is_abuse", name="comment_is_abuse")
      */
-    public function isAbuse(Request $request, Post $comment)
-    { }
+    public function isAbuse(Request $request, PostComment $comment, FlashBagInterface $flashBag)
+    {
+        $flashBag->add('info', 'Vous avez signalé un contenu abusif.');
+
+        return $this->redirectToRoute('post_show', [
+            'id'    =>    $comment->getId()
+        ]);
+    }
 }

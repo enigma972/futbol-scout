@@ -22,16 +22,16 @@
 		<div class="container">
 			<br>
 			<div class="row">
-				<div class="col-md-12 col-lg-12 col-xs-12">
+				<div class="col-md-12 col-lg-12 col-xs-12 mb-0">
 					<p class="text-center">
-						<img src="{{asset('lp/images/logo-futbol-scout.png')}}" alt="" title="" width="50%" />
+						<img src="{{asset('lp/images/logo-futbol-scout.png')}}" alt="" title="" height=300 />
 					</p>
 				</div>
 
 			 	<div class="col-md-12 col-lg-12 col-xs-12" id="connect">
-					<h1 class="text-center" style="color:#fff;font-size:4em">
+					<h1 class="text-center" style="color:#fff;font-size:3em">
 						<b>
-							Futbol- scout plateforme de football
+							Futbol-Scout plateforme de football
 						</b>
 					</h1>
 					<p class="text-center" style="font-size: 1.2em;color:#fff">
@@ -43,7 +43,7 @@
 						<h3 class="h4" style="color: white;">Connectez-vous! Des bonnes choses vous attendent</h3>
 						<form action="{{ path('app_login') }}" class="form-inline justify-content-center" method="post">
 							<input type="text" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mail" name="mail">
-							<input type="password" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mot de passe" name="password">
+							<input type="password" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mot de passe" current-password name="password">
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 							<button type="submit" class="btn btn-primary btn-lg rounded-0 mr-1">Se connecter</button>
 							<a href="{{ path('app_register') }}" class="btn btn-primary btn-lg rounded-0">S'inscrire</a>

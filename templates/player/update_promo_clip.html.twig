@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Page d'acceuil
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/complete_player_data.css') }}">
+{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 my-4">
+                <div class="row">
+                    <div class="col shadow p-2">
+                        <h3 class="h3 text-center mb-4">Veuillez ajouter une vidéo promotionnelle</h3>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <h6 class="h6">Conseils :</h6>
+                            <ol>
+                                <li>La vidéo ne doit pas dépasser 50 Mégabytes.</li>
+                                <li>Pour une meilleur efficacité votre vidéo promotionnelle doit avoir une durée d'au plus ou moins 4 minutes</li>
+                                <li>Séléctionnez des séquences pertinentes de vos moments de jeux</li>
+                            </ol>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('update_promo_clip') }}" enctype="multipart/form-data" method="post">
+                            <div id="custom-file" class="row col mx-auto form-group">
+                                <input type="file" class="custom-file-input" name="promo_clip" id="customFile">
+                                <label for="customFile" class="custom-file-label">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                            </div>
+                            <button class="btn btn-primary btn-block">Modifier</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

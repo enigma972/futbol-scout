@@ -254,4 +254,13 @@ class Player extends AbstractUserCategory
         $nbFans = $this->getNbFans();
         $this->setNbFans($nbFans-1);
     }
+
+    public function getAge(): ?int
+    {
+        $birthYear = $this->getUser()->getBirthday()->format('Y');
+        $currentYear = date('Y');
+        $age = $currentYear - $birthYear;
+
+        return $age;
+    }
 }

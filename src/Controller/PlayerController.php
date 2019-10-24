@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Entity\PlayerPromoClip;
-
+use App\Repository\PlayerPromoClipRepository;
 
 /**
  * @Route("/accounts")
@@ -149,5 +149,42 @@ class PlayerController extends AbstractController
         }
 
         return $this->render('player/add_promo_clip.html.twig');
+    }
+
+    /**
+     * @Route("/joueur/modifier/clip-de-promo", name="update_promo_clip")
+     */
+    public function updatePromoClip(Request $request, PlayerRepository $players)
+    {
+        $user = $this->getUser();
+
+        if ($request->isMethod('post')) {
+            $file = $request->files->get('promo_clip');
+
+            if ($file) {
+                $player = $players->findOneByUser($user);
+
+                if ($player) {
+                    $promoClip = $player->getPromoClip();
+
+                    if (null === $promoClip) {
+                        $promoClip = new PlayerPromoClip();
+                        $player->setPromoClip($promoClip);                 
+                    }
+                    
+                    $promoClip->preUpload($file);
+
+                    $this->em->flush();
+                    $promoClip->upload();
+
+                    return $this->redirectToRoute('player', [
+                        'id'    =>  $user->getId(),
+                        'slug'  =>  $user->getSlug(),
+                    ]);
+                }
+            }
+        }
+
+        return $this->render('player/update_promo_clip.html.twig');
     }
 }

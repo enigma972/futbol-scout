@@ -18,18 +18,7 @@
 						{% include 'post/post-form.html.twig' %}
 					</div>
 				</div>
-				{% for message in app.session.flashbag.get('info') %}
-                <div class="row mt-2">
-                	<div class="col">
-                		<div class="alert alert-success alert-dismissible fade show rounded-0" role="alert">
-	                        {{message}}
-	                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	                            <span aria-hidden="true">&times;</span>
-	                        </button>
-	                    </div>
-                	</div>
-                </div>
-                {% endfor %}
+				{% include "default/_flash-message.html.twig" %}
 				<hr>
 				{% for post in posts %}
 					{% include 'post/post-card.html.twig' %}
