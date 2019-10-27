@@ -66,9 +66,10 @@ class Post
     public function __construct()
     {
         $this->postedAt = new \DateTime();
+        $this->likes = new ArrayCollection();
         $this->nbLikes = 0;
         $this->comments = new ArrayCollection();
-        $this->likes = new ArrayCollection();
+        $this->nbComments = 0;
     }
     public function getId(): ?int
     {
