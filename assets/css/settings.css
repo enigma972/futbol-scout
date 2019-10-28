@@ -1,0 +1,166 @@
+.acc-setting h5 {
+    color: #000000;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.acc-setting > h5 {
+    
+    width: 100%;
+    /**text-transform: capitalize; */
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 20px;
+}
+
+.notbar {
+    -webkit-tap-highlight-color: transparent;
+    color: #212529;
+    box-sizing: inherit;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.save-stngs {
+    -webkit-tap-highlight-color: transparent;
+    color: #212529;
+    box-sizing: inherit;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    width: 100%;
+    padding: 30px 0px 50px 0px;
+}
+
+.save-stngs > ul {
+    list-style: none;
+}
+
+.save-stngs > ul li {
+    -webkit-tap-highlight-color: transparent;
+    color: #212529;
+    list-style: none;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    display: inline-block;
+    margin-right: 17px;
+}
+
+.save-stngs > ul li button {
+    -webkit-tap-highlight-color: transparent;
+    list-style: none;
+    box-sizing: inherit;
+    touch-action: manipulation;
+    margin: 0;
+    font-family: inherit;
+    overflow: visible;
+    text-transform: none;
+    outline: none;
+    -webkit-appearance: button;
+    transition: all 0.4s ease-in;
+    border-radius: 4px;
+    display: inline-block;
+    color: #000000;
+    font-size: 16px;
+    border: 1px solid #e5e5e5;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 22px;
+    font-weight: 600;
+    background: none;
+    cursor: pointer;
+}
+
+.save-stngs > ul li button:hover {
+    -webkit-tap-highlight-color: transparent;
+    list-style: none;
+    box-sizing: inherit;
+    touch-action: manipulation;
+    margin: 0;
+    font-family: inherit;
+    overflow: visible;
+    text-transform: none;
+    outline: none;
+    -webkit-appearance: button;
+    transition: all 0.4s ease-in;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 16px;
+    border: 1px solid #e5e5e5;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 22px;
+    font-weight: 600;
+    background: none;
+    cursor: pointer;
+    background-color: #e44d3a;
+    color: #fff;
+    border-color: transparent;
+}
+
+.toggle-btn {
+    -webkit-tap-highlight-color: transparent;
+    color: #212529;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    position: absolute;
+    top: 35px;
+    right: 20px;
+}
+
+.toggle-btn a {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: inherit;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.toggle-btn img {
+    -webkit-tap-highlight-color: transparent;
+    color: #007bff;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    float: left;
+}
+
+.list-group-item {
+    font-weight: 600; 
+}
+
+.list-group-item.active {
+    background-color: transparent;
+    border-color: transparent; 
+    color: #e44d3a;
+    border-bottom: 1px #e44d3a solid;
+}

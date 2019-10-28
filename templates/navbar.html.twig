@@ -29,8 +29,13 @@
 				<a href="#" class="btn btn-not-focus dropdown-toggle not-caret my-0 nav-btn" data-toggle="dropdown">
 					<img src="{{ asset(app.user.avatar.path)}}" alt="{{app.user.avatar.alt}}" class="rounded-circle" style="width: 30px;height: 30px;">
 				</a>
-				<div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
-					<a class="dropdown-item" href="{{ '' }}"><i class="fas fa-user"></i> Modifier le profil</a>
+				<div class="dropdown-menu dropdown-menu-right rounded-0  my-0" style="font-size: small;">
+					<h6 class="dropdown-header">Préférences</h6>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{{ path('account_settings') }}">Préférences du Compte</a>
+					<a class="dropdown-item disabled" href="#">Vie privée</a>
+					<a class="dropdown-item disabled" href="#">Foire aux questions</a>
+					<a class="dropdown-item disabled" href="#">Termes & Conditions</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnecxion <i class="fas fa-sign-out-alt"></i></a>
 				</div>

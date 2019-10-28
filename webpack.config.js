@@ -30,6 +30,7 @@ Encore
     .addEntry('flux', './assets/js/flux.js')
     .addEntry('profil', './assets/js/profil.js')
     .addEntry('player', './assets/js/player.js')
+    .addEntry('settings', './assets/js/settings.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

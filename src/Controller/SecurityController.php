@@ -22,15 +22,18 @@ use App\Entity\Player;
 use App\Entity\Fans;
 use App\Entity\Other;
 use App\Entity\Avatar;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SecurityController extends AbstractController
 {
     private $eventDispatcher;
     private $redirectIfIsLogin;
+    private $em;
     
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager)
     {
+        $this->em = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }  
 
@@ -76,11 +79,10 @@ class SecurityController extends AbstractController
                 );
 
                 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($avatar);
-                $entityManager->persist($user);
-                $entityManager->persist($category);
-                $entityManager->flush();
+                $this->em->persist($avatar);
+                $this->em->persist($user);
+                $this->em->persist($category);
+                $this->em->flush();
 
                 // When triggering an event, you can optionally pass some information.
                 // For simple applications, use the GenericEvent object provided by Symfony
@@ -158,9 +160,9 @@ class SecurityController extends AbstractController
                 if ($user instanceOf User) {
                     $resetpass = (new ResetPassword())->setUser($user);
 
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->persist($resetpass);
-                    $entityManager->flush();
+
+                    $this->em->persist($resetpass);
+                    $this->em->flush();
 
                     // When triggering an event, you can optionally pass some information.
                     // For simple applications, use the GenericEvent object provided by Symfony
@@ -218,8 +220,8 @@ class SecurityController extends AbstractController
                         //Invalidate reset password token
                         $rp->setIsUsed(true);
 
-                        $entityManager = $this->getDoctrine()->getManager();
-                        $entityManager->flush();
+    
+                        $this->em->flush();
 
                         // When triggering an event, you can optionally pass some information.
                         // For simple applications, use the GenericEvent object provided by Symfony
@@ -251,5 +253,45 @@ class SecurityController extends AbstractController
             'token'        => $token,
             'mail'          => $mail
         ]);
+    }
+
+    /**
+     * @Route("/accounts/change/password", name="app_change_pass")
+     */
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder, FlashBagInterface $flashBag)
+    {
+        if ($request->isMethod('post')) {
+            $user = $this->getUser();
+
+            $oldPassorwd = $request->request->get('old_password');
+            $newPasswordFirst = $request->request->get('new_password_first');
+            $newPasswordSecond = $request->request->get('new_password_second');
+
+            if ($encoder->isPasswordValid($user, $oldPassorwd)) {
+                if ($newPasswordFirst === $newPasswordSecond) {
+                    if (strlen($newPasswordFirst) >= 6) {
+                        $user->setPassword($encoder->encodePassword($user, $newPasswordFirst));
+
+                        $this->em->flush();
+
+                        $flashBag->add('success', 'Votre mot de passe a bien été changé.');
+
+                        return $this->redirectToRoute('account_settings');
+                    }else {
+                        $flashBag->add('warning', 'Votre nouveau mot de passe est trop faible !');
+                    }
+                }else {
+                    $flashBag->add('warning', 'Les nouveaux mots de passe saisi ne sont pas pareil !');
+                }
+            }else{
+                // TODO: add reset password link in message
+                $flashBag->add('danger', 'Le mot de passe saisi est incorrect !');
+            }
+        }else {
+            $flashBag->add('warning', 'Un problème est survenu lors du traitement de votre requête. Veuillez reesayer plus tard !');
+        }
+
+        
+        return $this->redirectToRoute('account_settings');
     }
 }

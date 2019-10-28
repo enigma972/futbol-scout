@@ -1,0 +1,125 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Reglages du Compte{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/settings.css') }}"/>
+{% endblock %}
+
+{% block section %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-3 mb-3">
+                <!-- List group -->
+                <div class="list-group bg-white shadow-sm rounded-0" id="myList" role="tablist">
+                    <a class="list-group-item list-group-item-action active  rounded-0" data-toggle="list" href="#pref" role="tab"><i class="fas fa-cogs mr-2"></i> Préférences du Compte</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Statistiques</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#chngpass" role="tab"><i class="fas fa-lock mr-2"></i> Changer de Mot de Passe</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Notifications</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#profile" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Requetes</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-user-secret mr-2"></i> Sécurité & Connexion</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#profile" role="tab"><i class="fas fa-paw mr-2"></i> Vie Privée</a>
+                    <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Liste noir (blocages)</a>
+                    <a class="list-group-item disabled list-group-item-action  rounded-0" data-toggle="list" href="#settings" role="tab"><i class="fas fa-random mr-2"></i> Désactivation du Compte</a>
+                </div>
+
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        {% include "default/_flash-message.html.twig" %}
+                    </div>
+                </div>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="pref" role="tabpanel">
+                        <div class="acc-setting bg-white shadow-sm">
+                            <h5>Préférences du Compte</h5>
+                            <form action="" method="">
+                                <div class="notbar">
+                                    <h5>Notification par mail</h5>
+                                    
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                        <label class="custom-control-label" for="customSwitch1">Rester informé en recevant par mail les dernieres actualites sur l'avancement de la plateforme ainsi que sur les personnes et pages que vous suivez.</label>
+                                    </div>
+
+                                </div>
+                                {# <div class="notbar">
+                                    <h5>Notification Sound</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium nulla quis erat dapibus, varius hendrerit neque suscipit. Integer in ex euismod, posuere lectus id</p>
+                                    <div class="toggle-btn">
+                                        <a href="#" title=""><img src="images/up-btn.png" alt=""></a>
+                                    </div>
+                                </div> #}
+                                <div class="save-stngs">
+                                    <ul>
+                                        <li>
+                                            <button type="submit" class="mb-2">Enregister les préférences</button>
+                                        </li>
+                                        <li>
+                                            <button class="disabled" type="submit">Restorer les valeurs défauts</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="chngpass" role="tabpanel">
+                        <div class="acc-setting bg-white shadow-sm">
+                            <h5>Préférences du Compte</h5>
+                            {# TODO: add CSRF Token #}
+                            
+                            <form action="{{ path('app_change_pass')}}" method="post">
+                                <div class="notbar">
+                                    <h5>Ancien mot de passe <a href="{{ path('app_reset_pass') }}" style="font-size: small; text-decoration-line: underline;  text-decoration-style: none; text-decoration-color: none;" class="text-secondary">Oublié?</a></h5>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-lock"></i>
+                                            </div>
+                                        </div>
+                                        <input type="password" required class="form-control rounded-0" placeholder="Ancien mot de passe" aria-label="Text input with checkbox" name="old_password">
+                                    </div>
+                                    <h5>Nouveau mot de passe</h5>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-lock"></i>
+                                            </div>
+                                        </div>
+                                        <input type="password" required class="form-control rounded-0" placeholder="Nouveau mot de passe" aria-label="Text input with checkbox" name="new_password_first">
+                                    </div>
+                                    <h5>Retapez le nouveau mot de passe</h5>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-lock"></i>
+                                            </div>
+                                        </div>
+                                        <input type="password" required class="form-control rounded-0" placeholder="Retapez le nouveau mot de passe" aria-label="Text input with checkbox" name="new_password_second">
+                                    </div>
+                                </div>
+                                <div class="save-stngs">
+                                    <ul>
+                                        <li>
+                                            <button type="submit" class="mb-2">Enregister les préférences</button>
+                                        </li>
+                                        <li>
+                                            <button class="disabled" type="submit">Restorer les valeurs défauts</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="messages" role="tabpanel">Messages</div>
+                    <div class="tab-pane" id="settings" role="tabpanel">Settings</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
