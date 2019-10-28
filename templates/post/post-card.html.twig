@@ -19,7 +19,7 @@
 						<button class="btn btn-not-focus dropdown-toggle not-caret my-0" data-toggle="dropdown">
 							<i class="fas fa-ellipsis-h fa-sm align-text-top"></i>
 						</button>
-						<div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
+						<div class="dropdown-menu dropdown-menu-right rounded-0  my-0" style="font-size: small;">
 						  	<a class="dropdown-item" href="{{ path('post_show', {'id': post.id}) }}"><i class="fas fa-eye"></i> Voir la publication</a>
 						  	{% if post.isAuthor(app.user) %}
 							<a class="dropdown-item" href="{{ path('post_update', {'id': post.id}) }}"><i class="fas fa-pencil-alt"></i> Modifier la publication</a>
@@ -47,12 +47,12 @@
 			</div>
 			{% endif %}
 			
-			<div class="mx-3 my-2">
+			<div class="mx-3 my-2" style="font-size: small;">
 				<div>
 					{% if post.nbLikes > 0 %}
-					<a href="#" class="text-decoration-none"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; color: #42a6d7; font-size: medium;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
+					<a href="#" class="text-decoration-none"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; color: #42a6d7;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
 					{% else %}
-				    <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px; font-size: medium;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
+				    <a href="#" class="text-decoration-none" style="color: #696c6f;"><i class="fas fa-thumbs-up"  style="width: 10px;height: 10px;"></i> <span class="align-middle ml-2" style="color: #696c6f;">{{post.nbLikes}}</span> </a>
 					{% endif %}
 					<span class="mx-1">|</span>
 					<a href="{{ path('post_show', {'id': post.id}) }}" class="text-decoration-none" style="color: #696c6f;">
@@ -73,7 +73,7 @@
 						J'aime</a>
 					<a href="{{ path('post_show', {'id': post.id}) }}" class="text-decoration-none" style="color: #696c6f;">
 						<i class="fas fa-comment-alt"></i>
-						Commentaires</a>
+						Commenter</a>
 				</div>
 			</div>
 			<div class="mx-3 my-2">
