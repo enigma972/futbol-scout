@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\PlayerRepository;
+use App\Entity\User;
 use App\Entity\Player;
+use App\Entity\PlayerPromoClip;
+use App\Form\PlayerDataFormType;
+use App\Repository\UserRepository;
+use App\Repository\PlayerRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PlayerPromoClipRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\PlayerDataFormType;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Repository\UserRepository;
-use App\Entity\PlayerPromoClip;
-use App\Repository\PlayerPromoClipRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/accounts")
@@ -45,6 +45,8 @@ class PlayerController extends AbstractController
                 'usersSuggest' =>   $usersSuggest,
             ]);
         }
+
+        $this->createNotFoundException();
     }
 
     /**

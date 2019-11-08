@@ -46,9 +46,8 @@ class PostCommentController extends AbstractController
                         ->setPost($post)
                         ;
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($postComment);
-            $entityManager->flush();
+            $this->em->persist($postComment);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('post_show', [
@@ -104,7 +103,7 @@ class PostCommentController extends AbstractController
         $flashBag->add('info', 'Vous avez signalé un contenu abusif.');
 
         return $this->redirectToRoute('post_show', [
-            'id'    =>    $comment->getId()
+            'id'    =>    $comment->getPost()->getId()
         ]);
     }
 }

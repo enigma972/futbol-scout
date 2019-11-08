@@ -1,0 +1,41 @@
+<div class="row mb-2">
+    <div class="col-1">
+        <img src="{{ asset(notice.author.avatar.path) }}" alt="{{ notice.author.avatar.alt }}" class="rounded-circle m-0 float-left" style="width: 50px;height: 50px;"/>
+    </div>
+    <div class="col mx-2">
+        <div class="row py-1 rounded-lg" style="background-color: #f2f2f2;">
+            <div class="col-10">
+                <h6 class="mb-0">
+                    <a href="{{ path('user_profil', {'slug': notice.author.slug, 'id': notice.author.id})}}" class="text-decoration-none" style="font-size: small; color: black;">{{ notice.author.username|capitalize }}</a>
+                </h6>
+                <p class="pt-0" style="font-size: small;">
+                    {{ notice.content }}
+                </p>
+            </div>
+            <div class="col-2 text-right">
+                <button class="btn btn-not-focus dropdown-toggle not-caret my-0" data-toggle="dropdown">
+                    <i class="fas fa-ellipsis-h fa-sm align-text-top"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right rounded-0  my-0"  style="font-size: small;">
+                    {% if notice.isAuthor(app.user) %}
+                        <a class="dropdown-item" href="{{ path('player_notice_edit', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('edit' ~ notice.author.id) }) }}">
+                            <i class="fas fa-pencil-alt fa-sm"></i> Modifier la publication</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    {# <a class="dropdown-item" href="{{ path('player_notice_is_abuse', {'author_id': notice.author.id}) }}">
+                        <i class="fas fa-flag fa-sm"></i>
+                        Singaler un abus</a> #}
+                    {% if notice.isAuthor(app.user) %}
+                        <a class="dropdown-item" href="{{ path('player_notice_delete', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('delete' ~ notice.author.id) }) }}">
+                            <i class="fas fa-trash-alt fa-sm"></i> Supprimer la publication</a>
+                    {% endif %}
+                    {% if app.user == player.user %}
+                        <a class="dropdown-item" href="{{ path('player_notice_lock', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('lock' ~ notice.author.id) }) }}">
+                            <i class="fas fa-trash-alt fa-sm"></i> Bloquer cette avis</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

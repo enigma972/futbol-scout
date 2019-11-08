@@ -72,6 +72,16 @@ class Player extends AbstractUserCategory
      */
     private $nbFans;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PlayerNotice", mappedBy="player", orphanRemoval=true)
+     */
+    private $notices;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbNotices;
+
 
     public function __construct()
     {
@@ -79,6 +89,8 @@ class Player extends AbstractUserCategory
         $this->setLabel(self::PLAYER);
         $this->fans = new ArrayCollection();
         $this->nbFans = 0;
+        $this->notices = new ArrayCollection();
+        $this->nbNotices = 0;
     }
 
     public function getLength(): ?int
@@ -262,5 +274,57 @@ class Player extends AbstractUserCategory
         $age = $currentYear - $birthYear;
 
         return $age;
+    }
+
+    public function getNbNotices(): ?int
+    {
+        return $this->nbNotices;
+    }
+
+    public function setNbNotices(int $nbNotices): self
+    {
+        $this->nbNotices = $nbNotices;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlayerNotice[]
+     */
+    public function getNotices(): Collection
+    {
+        return $this->notices;
+    }
+
+    public function addNotice(PlayerNotice $notice): self
+    {
+        if (!$this->notices->contains($notice)) {
+            $this->notices[] = $notice;
+            $notice->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotice(PlayerNotice $notice): self
+    {
+        if ($this->notices->contains($notice)) {
+            $this->notices->removeElement($notice);
+            // set the owning side to null (unless already changed)
+            if ($notice->getPlayer() === $this) {
+                $notice->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasNotice(User $user): bool
+    {
+        return $this->notices->exists(function ($key, $notice) use ($user) {
+            if ($user === $notice->getAuthor()) {
+                return true;
+            }
+        });
     }
 }

@@ -22,7 +22,7 @@
 			<div class="card mb-2 shadow-sm rounded-0 -position-fixed">
 				<div class="card-header p-5"></div>
 				<div class="card-body text-center">
-					<img src="{{ asset(app.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
+					<img src="{{ asset(player.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
 					
 					<div>
 						{% if app.user in player.fans %}
@@ -52,7 +52,7 @@
 					<a class="nav-link" id="statistique-tab" data-toggle="tab" href="#statistique" role="tab" aria-controls="statistique" aria-selected="false">Statistiques</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="avi-tab" data-toggle="tab" href="#avi" role="tab" aria-controls="avi" aria-selected="false">Avis</a>
+					<a class="nav-link" id="avi-tab" data-toggle="tab" href="#avi" role="tab" aria-controls="avi" aria-selected="false">Avis <span class="badge badge-light">{{ player.nbnotices }}</span> </a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
@@ -112,7 +112,33 @@
 				</div>
 				<div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">Les vidéos du joueurs</div>
 				<div class="tab-pane fade" id="statistique" role="tabpanel" aria-labelledby="statistique-tab">Il y pas encore des statistiques sur ce joueur</div>
-				<div class="tab-pane fade" id="avi" role="tabpanel" aria-labelledby="avi-tab">Il y a pas encore d'avis pour ce joueur</div>
+				<div class="tab-pane fade" id="avi" role="tabpanel" aria-labelledby="avi-tab">
+					<div class="row">
+						<div class="col">
+							<div class="card rounded-0">
+								<div class="mx-3 my-2">
+									{% for notice in player.notices %}
+										{% if not notice.isLocked %}
+											{% include "player_notice/notices.html.twig" %}
+										{% endif %}
+									{% else %}
+										<div class="" style="font-size: small;">
+											Soyez le premier à laisser un avis sur ce joueur
+										</div>
+									{% endfor %}
+								</div>
+									{% if not player.hasNotice(app.user) %}
+										<div class="card-footer">
+											<form action="{{ path('player_notice_new', {'player_id': player.id}) }}" class="form-inline" method="post">
+												<input type="text" class="form-control" name="player_notice_content" placeholder="Ajouter un avis" style="width: 80%;"/>
+												<button class="btn font-weight-bold" style="color: #0056b3;">Laisser un avis</button>
+											</form>
+										</div>
+									{% endif %}
+							</div>
+						</div>
+					</div>	
+				</div>
 			</div>
 		</div>
 	</div>

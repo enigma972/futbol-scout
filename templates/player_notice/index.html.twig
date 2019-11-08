@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlayerNotice index{% endblock %}
+
+{% block body %}
+    <h1>PlayerNotice index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player_notice in player_notices %}
+            <tr>
+                <td>{{ player_notice.time ? player_notice.time|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ player_notice.content }}</td>
+                <td>
+                    <a href="{{ path('player_notice_show', {'author': player_notice.author}) }}">show</a>
+                    <a href="{{ path('player_notice_edit', {'author': player_notice.author}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('player_notice_new') }}">Create new</a>
+{% endblock %}
