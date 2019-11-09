@@ -1,4 +1,4 @@
-<div class="card rounded-0 shadow-sm border">
+<div class="card rounded-0 border">
 	<div class="card-body row" style="color: #696c6f;">
 		<button style="color: #696c6f;" class="btn btn-not-focus col-8 border-right font-weight-bolder text-left" data-toggle="modal" data-target="#postModal"><i class="fas fa-edit pencil-alt"></i> Ecrire une publication
 		</button>
@@ -26,7 +26,31 @@
 		    </div>
 		  </div>
 		</div>
-		<button style="color: #696c6f;" class="btn btn-not-focus col text-center border-right"><i class="fas fa-camera fa-lg"></i></button>
+		<button style="color: #696c6f;" class="btn btn-not-focus col text-center border-right" data-toggle="modal" data-target="#postAttachModal"><i class="fas fa-camera fa-lg"></i></button>
+		<div class="modal fade" id="postAttachModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="postModalLabel">Poster une publication</h5>
+		        <button type="button" class="close btn-not-focus" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form action="{{ path('post_add') }}" method="post" enctype="multipart/form-data">
+		        	<div id="custom-file" class="row col mx-auto form-group">
+		        		<input type="file" class="custom-file-input" name="post_attach" id="customFile">
+		        		<label for="customFile" class="custom-file-label"><i class="fas fa-camera"></i></label>
+		        	</div>
+		        	<div class="form-group">
+		        		<textarea name="post_content" id="" cols="" rows="" class="form-control"></textarea>
+		        	</div>
+		        	<button type="submit" class="btn btn-custom-outline mt-1 rounded-0"><i class="fas fa-envelop"></i>Publier</button>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<button style="color: #696c6f;" class="btn btn-not-focus col text-center"><i class="fas fa-video fa-lg"></i></button>
 	</div>
 	<div class="card-footer" style="font-size: small;">
