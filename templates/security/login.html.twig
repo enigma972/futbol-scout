@@ -46,10 +46,12 @@
                         See https://symfony.com/doc/current/security/remember_me.html 
                     #}
                     <div class="input-group my-1">
-                            <label>
-                                <input type="checkbox" name="_remember_me" class=""> Rester connecté
-                            </label>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
+                            <label class="custom-control-label" for="customCheck1">Rester connecté</label>
                         </div>
+                    </div>
+
                     <br>
                     <button class="btn btn-block rounded-0 btn-login my-3">Se connecter</button>
                 </form>
