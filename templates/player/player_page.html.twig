@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Page de joueur | {{ player.user.firstname }} {{ player.user.lastname }} {% endblock %}
+{% block title %}Page de joueur | {{ player.name }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('build/player.css') }}">
@@ -16,13 +16,13 @@
 	</style>
 </div>
 
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
-		<div class="col-md-2 offset-md-1" >
+		<div class="col-md-3 -offset-md-1" >
 			<div class="card mb-2 shadow-sm rounded-0 -position-fixed">
 				<div class="card-header p-5"></div>
 				<div class="card-body text-center">
-					<img src="{{ asset(player.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
+					<img src="{{ asset(player.picture.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
 					
 					<div>
 						{% if app.user in player.fans %}
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<ul class="nav nav-tabs -justify-content-center mb-4" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Infos personnelles</a>
@@ -60,10 +60,10 @@
 					<div class="row">
 						<div class="col-md-7">
 							<h3 class="h4">Vidéo de présentation</h3>
-							{% if not player.promoclip and player.user == app.user %}
+							{% if player.promoclip is null and player.page.isGranted(app.user, "ADMIN") %}
 								<div class="alert alert-info alert-dismissible fade show" role="alert">
 									<p>Il est vital pour vous d'avoir une vidéo promo. La vidéo promotionnelle est un court clip, réalisé à partir de differents jeux, où un joueur se présente et souligne ses attributs.
-										<a href="{{ path('add_promo_clip') }}">cliquer ici pour ajouter une vidéo promotionnelle</a>
+										<a href="{{ path('add_promo_clip', {'id': player.id}) }}">cliquer ici pour ajouter une vidéo promotionnelle</a>
 									</p>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -71,28 +71,29 @@
 								</div>
 							{% endif %}
 							
-							{% if player.promoclip %}
+							{% if player.promoclip is not null %}
 								<video src="{{ asset(player.promoclip.path)}}" controls class="w-100"></video>
 							{% else %}
-								<div class="h6">{% if app.user != player.user %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
+								<div class="h6">{% if app.user not in player.page.managers %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
 							{% endif %}
 							
-							{% if player.promoclip and player.user == app.user %}
+							{% if player.promoclip and app.user in player.page.managers %}
 								<a href="{{ path('update_promo_clip') }}" class="btn btn-block btn-primary">Mettre a jour ma video promo</a>
 							{% endif %}
 						</div>
 						<div class="col-md-5 boerder shadow-sm bg-white p-4">
 							<h3 class="h4">Informations personnelles</h3>
 							<ul class="list-unstyled">
-								<li>Nom complet : <strong>{{ player.user.firstname }} {{ player.user.lastname }}</strong></li>
-								<li>Date de Naissance : <strong>{{ player.user.birthday | date('d/m/y') }}</strong></li>
-								<li>Lieu de Naissance : <strong>{{ player.user.country }}</strong></li>
-								<li>Age : <strong>{{ player.age }} Ans</strong></li>
-								<li>Taille : <strong>{{ player.length }} Cm</strong></li>
-								<li>Poids : <strong>{{ player.weight }} Kg</strong></li>
+								<li>Nom complet : <strong>{{ player.firstname }} {{ player.lastname }}</strong></li>
+								<li>Date de Naissance : <strong>{{ player.birthday | date('d/m/y') }}</strong></li>
+								<li>Pays de Résidence : <strong>{{ player.country }}</strong></li>
+								<li>Age : <strong>{{ player.age }} ans</strong></li>
+								<li>Taille : <strong>{{ player.length }} cm</strong></li>
+								<li>Poids : <strong>{{ player.weight }} kg</strong></li>
 								<li>Position : <strong>{% for poste in player.postes %}{{ poste }}{% endfor %}</strong></li>
 								<li>Pieds : <strong>{% for strongFeet in player.strongFeets %}{{ strongFeet }}{% endfor %}</strong></li>
 								<li>Club Actuel : <strong>{{ player.currentClub }}</strong></li>
+								<li>Club d'appartenance : <strong>{{ player.currentClub }}</strong></li>
 								<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
 								<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
 								<li>Niveau : <strong>{{ player.level }}</strong></li>

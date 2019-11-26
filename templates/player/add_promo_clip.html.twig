@@ -18,14 +18,14 @@
 						  <h6 class="h6">Conseils :</h6>
 						  <ol>
 						  	<li>La vidéo ne doit pas dépasser 50 Mégabytes.</li>
-						  	<li>Pour une meilleur efficacité votre vidéo promotionnelle doit avoir une durée d'au plus ou moins 4 minutes</li>
+						  	<li>Pour une meilleur efficacité, votre vidéo promotionnelle doit avoir une durée d'au plus ou moins 4 minutes</li>
 						  	<li>Séléctionnez des séquences pertinentes de vos moments de jeux</li>
 						  </ol>
 						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						    <span aria-hidden="true">&times;</span>
 						  </button>
 						</div>
-						<form action="{{ path('add_promo_clip') }}" enctype="multipart/form-data" method="post">
+						<form action="{{ path('add_promo_clip', {'id': player.id}) }}" enctype="multipart/form-data" method="post">
 							<div id="custom-file" class="row col mx-auto form-group">
 				        		<input type="file" class="custom-file-input" name="promo_clip" id="customFile">
 				        		<label for="customFile" class="custom-file-label"><i class="fas fa-camera"></i></label>

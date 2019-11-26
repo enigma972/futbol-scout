@@ -19,7 +19,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use App\Entity\AbstractUserCategory;
 
 class AppAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -30,7 +29,12 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator
     private $csrfTokenManager;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+            EntityManagerInterface $entityManager, 
+            UrlGeneratorInterface $urlGenerator, 
+            CsrfTokenManagerInterface $csrfTokenManager, 
+            UserPasswordEncoderInterface $passwordEncoder
+        )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
@@ -84,10 +88,6 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $user = $token->getUser();
-        
-        if ($user->getCategory() == AbstractUserCategory::PLAYER && !$user->getIsComplete()) {
-            return new RedirectResponse($this->urlGenerator->generate('complete_player_data'));
-        }
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

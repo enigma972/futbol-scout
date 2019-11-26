@@ -17,17 +17,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\UserRepository;
 use App\Repository\ResetPasswordRepository;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use App\Entity\AbstractUserCategory;
-use App\Entity\Player;
-use App\Entity\Fans;
-use App\Entity\Other;
 use App\Entity\Avatar;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SecurityController extends AbstractController
 {
     private $eventDispatcher;
-    private $redirectIfIsLogin;
     private $em;
     
 
@@ -54,21 +49,12 @@ class SecurityController extends AbstractController
             $userOld = $userRepository->findOneByMail($form->get('mail')->getData());
 
             if (!$userOld instanceOf User) {
-                // set the user in category
                 $category = $form->get('category')->getData();
+                $user->setCategory($category);
                 
-                if ($category == AbstractUserCategory::PLAYER) {
-                    $category = new Player();
-                }elseif ($category == AbstractUserCategory::FANS) {
-                    $category = new Fans();
-                }else{
-                    $category = new Other();
-                }
-
                 $avatar = new Avatar();
                 $user->setAvatar($avatar);
 
-                $category->setUser($user);
 
                 // encode the plain password
                 $user->setPassword(
@@ -81,7 +67,6 @@ class SecurityController extends AbstractController
                 
                 $this->em->persist($avatar);
                 $this->em->persist($user);
-                $this->em->persist($category);
                 $this->em->flush();
 
                 // When triggering an event, you can optionally pass some information.
@@ -245,7 +230,6 @@ class SecurityController extends AbstractController
             }
             else {$isValideToken = false;}
         }
-
         
 
         return $this->render('security/reset_pass_new.html.twig', [

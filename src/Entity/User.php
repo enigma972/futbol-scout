@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\AbstractUserCategory;
 use App\Utils\Slugger;
 
 /**
@@ -115,6 +114,11 @@ class User implements UserInterface
      */
     private $favoritesPlayer;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PlayerPageManager", mappedBy="user")
+     */
+    private $managedPlayers;
+
 
     public function __construct()
     {
@@ -125,6 +129,7 @@ class User implements UserInterface
         $this->nbFollowers = 0;
         $this->nbFollows = 0;
         $this->favoritesPlayer = new ArrayCollection();
+        $this->managedPlayers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,7 +137,7 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->firstname .' '. $this->lastname;
     }
@@ -299,9 +304,9 @@ class User implements UserInterface
         return $this->category;
     }
 
-    public function setCategory(AbstractUserCategory $category): self
+    public function setCategory(string $category): self
     {
-        $this->category = $category->getLabel();
+        $this->category = $category;
 
         return $this;
     }
@@ -459,6 +464,37 @@ class User implements UserInterface
     {
         if ($this->favoritesPlayer->contains($favoritesPlayer)) {
             $this->favoritesPlayer->removeElement($favoritesPlayer);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlayerPageManager[]
+     */
+    public function getManagedPlayers(): Collection
+    {
+        return $this->managedPlayers;
+    }
+
+    public function addManagedPlayer(PlayerPageManager $managedPlayer): self
+    {
+        if (!$this->managedPlayers->contains($managedPlayer)) {
+            $this->managedPlayers[] = $managedPlayer;
+            $managedPlayer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeManagedPlayer(PlayerPageManager $managedPlayer): self
+    {
+        if ($this->managedPlayers->contains($managedPlayer)) {
+            $this->managedPlayers->removeElement($managedPlayer);
+            // set the owning side to null (unless already changed)
+            if ($managedPlayer->getUser() === $this) {
+                $managedPlayer->setUser(null);
+            }
         }
 
         return $this;

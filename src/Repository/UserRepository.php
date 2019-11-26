@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Type;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,9 +27,11 @@ class UserRepository extends ServiceEntityRepository
     public function findByUserForSuggest($user)
     {
         return $this->createQueryBuilder('u')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+                    ->andWhere('u.id != :userId')
+                    ->setParameter(':userId', $user->getId(), Type::INTEGER)
+                    ->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult()
         ;
     }
     

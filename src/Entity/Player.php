@@ -2,15 +2,51 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\AbstractUserCategory;
+use App\Utils\Slugger;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
  */
-class Player extends AbstractUserCategory
+class Player
 {
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $nickname;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $birthday;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $country;
+
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -82,15 +118,41 @@ class Player extends AbstractUserCategory
      */
     private $nbNotices;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PlayerPicture", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $picture;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PlayerPage", mappedBy="player", cascade={"persist", "remove"})
+     */
+    private $page;
+
 
     public function __construct()
     {
-        // set the user category label with the constant defined in AbstractUserCategory
-        $this->setLabel(self::PLAYER);
+        $this->birthday = new \DateTime();
         $this->fans = new ArrayCollection();
         $this->nbFans = 0;
         $this->notices = new ArrayCollection();
         $this->nbNotices = 0;
+        $this->managers = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function getLength(): ?int
@@ -269,7 +331,7 @@ class Player extends AbstractUserCategory
 
     public function getAge(): ?int
     {
-        $birthYear = $this->getUser()->getBirthday()->format('Y');
+        $birthYear = $this->getBirthday()->format('Y');
         $currentYear = date('Y');
         $age = $currentYear - $birthYear;
 
@@ -326,5 +388,123 @@ class Player extends AbstractUserCategory
                 return true;
             }
         });
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPicture(): ?PlayerPicture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(PlayerPicture $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): self
+    {
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return Slugger::slugify($this->getName(), '.');
+    }
+
+    public function getPage(): ?PlayerPage
+    {
+        return $this->page;
+    }
+
+    public function setPage(PlayerPage $page): self
+    {
+        $this->page = $page;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $page->getPlayer()) {
+            $page->setPlayer($this);
+        }
+
+        return $this;
     }
 }

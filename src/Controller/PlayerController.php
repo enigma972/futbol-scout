@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Player;
+use App\Entity\PlayerPage;
 use App\Entity\PlayerPromoClip;
 use App\Form\PlayerDataFormType;
+use App\Entity\PlayerPageManager;
 use App\Repository\UserRepository;
 use App\Repository\PlayerRepository;
+use App\Entity\PlayerPicture as Picture;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\PlayerPromoClipRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -27,17 +29,66 @@ class PlayerController extends AbstractController
     }
 
     /**
+     * @Route("/player/page/create", name="create_player")
+     */
+    public function create(Request $request)
+    {
+        $user = $this->getUser();
+
+        $player = new Player;
+
+        $form = $this->createForm(PlayerDataFormType::class, $player);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Create the first manager with ADMIN default role
+            $manager = new PlayerPageManager;
+
+            $manager->setRoles(['ADMIN']);
+            $manager->setUser($user);
+
+            // Create the page related to this player and add the ADMIN manager
+            $page = new PlayerPage;
+            
+            $page->addManager($manager);
+            $page->setPlayer($player);
+
+
+            // set player picture
+            $file = $form->get('file')->getData();
+
+            $picture = new Picture();
+            $picture->preUpload($file);
+            $player->setPicture($picture);
+            
+            $this->em->persist($manager);
+            $this->em->persist($page);
+            $this->em->persist($player);
+            $this->em->flush();
+
+            $picture->upload();
+
+            return $this->redirectToRoute('player', [
+                'id'    =>  $player->getId(),
+                'slug'  => $player->getSlug(),
+            ]);
+        }
+
+        return $this->render('player/create_player.html.twig', [
+            'playerDataFormType'    =>    $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/joueur/{slug}-{id}", name="player")
      */
-    public function index(User $user, PlayerRepository $players, UserRepository $users)
+    public function index(Player $player, UserRepository $users)
     {
-        if ($user instanceOf User) {
-            $player = $players->findOneByUser($user);
+        if (!$player) {
+            throw $this->createNotFoundException("Le joueur que vous cherchez n'existe pas !");
+        }
+        if ($player instanceOf Player) {
             
-            if (!$player) {
-                return $this->redirectToRoute('home');
-            }
-
             $usersSuggest = $users->findByUserForSuggest($this->getUser());
 
             return $this->render('player/player_page.html.twig', [
@@ -45,8 +96,6 @@ class PlayerController extends AbstractController
                 'usersSuggest' =>   $usersSuggest,
             ]);
         }
-
-        $this->createNotFoundException();
     }
 
     /**
@@ -67,7 +116,7 @@ class PlayerController extends AbstractController
             ]);
     }
 
-     /**
+    /**
      * @Route("/joueur/{id}/disfollow", name="player_disfollow")
      */
     public function disfollow(Player $player)
@@ -117,9 +166,10 @@ class PlayerController extends AbstractController
     }
 
     /**
-     * @Route("/joueur/ajouter/clip-de-promo", name="add_promo_clip")
+     * @Route("/joueur/{id}/ajouter/clip-de-promo", name="add_promo_clip")
+     * @Security("player.getPage().isGranted(user, 'ADMIN')")
      */
-    public function addPromoClip(Request $request, PlayerRepository $players)
+    public function addPromoClip(Player $player, Request $request)
     {
         $user = $this->getUser();
 
@@ -130,9 +180,6 @@ class PlayerController extends AbstractController
                 $promoClip->preUpload($file);
 
                 if ($promoClip->getSize() <= 70) {
-                    $player = $players->findOneByUser($user);
-                
-                    if ($player) {
                         $player->setPromoClip($promoClip);
 
                         $this->em->flush();
@@ -142,21 +189,22 @@ class PlayerController extends AbstractController
                             'id'    =>  $user->getId(),
                             'slug'  =>  $user->getSlug(),
                         ]);
-                        
-                    }
                 }
                 
             }
             
         }
 
-        return $this->render('player/add_promo_clip.html.twig');
+        return $this->render('player/add_promo_clip.html.twig', [
+            'player'    =>  $player,
+        ]);
     }
 
     /**
-     * @Route("/joueur/modifier/clip-de-promo", name="update_promo_clip")
+     * @Route("/joueur/{id}/modifier/clip-de-promo", name="update_promo_clip")
+     * @Security("player.getPage().isGranted(user, 'ADMIN')")
      */
-    public function updatePromoClip(Request $request, PlayerRepository $players)
+    public function updatePromoClip(Request $request, Player $player)
     {
         $user = $this->getUser();
 
@@ -164,9 +212,6 @@ class PlayerController extends AbstractController
             $file = $request->files->get('promo_clip');
 
             if ($file) {
-                $player = $players->findOneByUser($user);
-
-                if ($player) {
                     $promoClip = $player->getPromoClip();
 
                     if (null === $promoClip) {
@@ -183,7 +228,6 @@ class PlayerController extends AbstractController
                         'id'    =>  $user->getId(),
                         'slug'  =>  $user->getSlug(),
                     ]);
-                }
             }
         }
 

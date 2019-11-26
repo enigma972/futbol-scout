@@ -6,11 +6,13 @@ use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class PlayerDataFormType extends AbstractType
@@ -18,6 +20,39 @@ class PlayerDataFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('firstname', TextType::class, [
+                'label' => 'Prenom',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('nickname', TextType::class, [
+                'label' => 'Postnom',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('pseudo', TextType::class, [
+                'label' => 'Pseudo',
+                'attr'  => ['class' =>  'form-control rounded-0'],
+                'required'  =>  false
+            ])
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Sexe',
+                'attr'  => ['class' =>  'form-control rounded-0'],
+                'choices'   =>  [
+                    'Homme' =>  'homme',
+                    'Femme' =>  'femme'
+                ]
+            ])
+            ->add('birthday', BirthdayType::class, [
+                'label' => 'Date de naissance',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
+            ->add('country', CountryType::class, [
+                'label' => 'Pays de naissance',
+                'attr'  => ['class' =>  'form-control rounded-0']
+            ])
             ->add('length', IntegerType::class, [
                 'label' => 'Taille',
                 'attr'  => ['class' =>  'form-control rounded-0']

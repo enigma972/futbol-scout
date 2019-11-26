@@ -20,9 +20,6 @@
 				<li class="nav-item mx-2 text-center"><a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-"> {{ app.user.firstname|capitalize }} </a></li>
 				<li class="nav-item mx-2 text-center"><a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a></li>
 				<li class="nav-item mx-2 text-center"><a href="#" class="nav-link border-right-">Notifications</a></li>
-				{% if app.user.category == 'player' %}
-				<li class="nav-item mx-2 text-center"><a href="{{ path('player', {'slug': app.user.slug, 'id': app.user.id})}}" class="nav-link">Ma page (Joueur)</a></li>
-				{% endif %}
 			{% endif %}
 			<li class="nav-item">
 				{% if app.user %}
@@ -34,9 +31,19 @@
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ path('account_settings') }}">Préférences du Compte</a>
 					<a class="dropdown-item disabled" href="#">Vie privée</a>
-					<a class="dropdown-item disabled" href="#">Foire aux questions</a>
-					<a class="dropdown-item disabled" href="#">Termes & Conditions</a>
 					<div class="dropdown-divider"></div>
+					<h6 class="dropdown-header">Vos pages</h6>
+					<div class="dropdown-divider"></div>
+					{% for managedplayer in app.user.managedplayers %}
+						{% set player = managedplayer.page.player %}
+						<a class="dropdown-item text-capitalize" href="{{ path('player', {'id': player.id, 'slug': player.slug}) }}">{{ player.name }}</a>
+					{% else %}
+						<div class="dropdown-item">Vous n'avez aucune page</div>
+					{% endfor %}
+					<a class="dropdown-item font-weight-bold-" href="{{ path('create_player') }}"><i class="fas fa-plus fa-xs"></i> Créer une page</a>
+					<div class="dropdown-divider"></div>
+					{# <a class="dropdown-item disabled" href="#">Foire aux questions</a> #}
+					<a class="dropdown-item disabled" href="#">Termes & Conditions</a>
 					<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnecxion <i class="fas fa-sign-out-alt"></i></a>
 				</div>
 				{% else %}
@@ -48,3 +55,76 @@
 		</div>
 	</div>
 </nav>
+
+<!-- todo: change old navbar for this -->
+<!--
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow bg-custom-red" id="navbar">
+    <a class="navbar-brand font-weight-bold" href="{{ path('home') }}" style="color: white;">futbol-scout</a>
+    {% if app.user %}
+        <form action="#" class="form-inline justify-content-start">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Recherche"/>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            {% if app.user %}
+                <li class="nav-item mx-2 text-center">
+                    <a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-">
+                        {{ app.user.firstname|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item mx-2 text-center">
+                    <a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a>
+                </li>
+                <li class="nav-item mx-2 text-center">
+                    <a href="#" class="nav-link border-right-">Notifications</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                {% if app.user %}
+                    <a href="#" class="btn btn-not-focus dropdown-toggle not-caret my-0 nav-btn" data-toggle="dropdown">
+                        <img src="{{ asset(app.user.avatar.path)}}" alt="{{app.user.avatar.alt}}" class="rounded-circle" style="width: 30px;height: 30px;">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right rounded-0  my-0" style="font-size: small;">
+                        <h6 class="dropdown-header">Préférences</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('account_settings') }}">Préférences du Compte</a>
+                        <a class="dropdown-item disabled" href="#">Vie privée</a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Vos pages</h6>
+                        <div class="dropdown-divider"></div>
+                        {% for managedplayer in app.user.managedplayers %}
+                            {% set player = managedplayer.page.player %}
+                            <a class="dropdown-item text-capitalize" href="{{ path('player', {'id': player.id, 'slug': player.slug}) }}">{{ player.name }}</a>
+                        {% else %}
+                            <div class="dropdown-item">Vous n'avez aucune page</div>
+                        {% endfor %}
+                        <a class="dropdown-item font-weight-bold-" href="{{ path('create_player') }}">
+                            <i class="fas fa-plus fa-xs"></i>
+                            Créer une page</a>
+                        <div class="dropdown-divider"></div>
+                        {# <a class="dropdown-item disabled" href="#">Foire aux questions</a> #}
+                        <a class="dropdown-item disabled" href="#">Termes & Conditions</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnecxion
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Connexion</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-outline-light rounded-0 shadow-sm nav-btn">Inscription</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+-->
