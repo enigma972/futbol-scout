@@ -16,9 +16,11 @@
 		        	<div class="form-group">
 		        		<textarea name="post_content" id="" cols="" rows="" class="form-control"></textarea>
 		        	</div>
-		        	<div id="custom-file" class="row col mx-auto form-group">
-		        		<input type="file" class="custom-file-input" name="post_attach" id="customFile">
-		        		<label for="customFile" class="custom-file-label"><i class="fas fa-camera"></i></label>
+		        	<div id="" class="row mx-auto form-group">
+		        		<div class="custom-file">
+							<input type="file" class="custom-file-input text-wrap" name="post_attach" id="customFile">
+		        			<label for="customFile" class="custom-file-label" style="overflow: hidden;">Choisissez un fichier</label>
+						</div>
 		        	</div>
 		        	<button type="submit" class="btn btn-custom-outline mt-1 rounded-0"><i class="fas fa-envelop"></i>Publier</button>
 		        </form>
@@ -38,9 +40,11 @@
 		      </div>
 		      <div class="modal-body">
 		        <form action="{{ path('post_add') }}" method="post" enctype="multipart/form-data">
-		        	<div id="custom-file" class="row col mx-auto form-group">
-		        		<input type="file" class="custom-file-input" name="post_attach" id="customFile">
-		        		<label for="customFile" class="custom-file-label"><i class="fas fa-camera"></i></label>
+		        	<div id="" class="row mx-auto form-group">
+		        		<div class="custom-file">
+							<input type="file" class="custom-file-input text-wrap" name="post_attach" id="customFile">
+		        			<label for="customFile" class="custom-file-label" style="overflow: hidden;">Choisissez un fichier</label>
+						</div>
 		        	</div>
 		        	<div class="form-group">
 		        		<textarea name="post_content" id="" cols="" rows="" class="form-control"></textarea>
@@ -53,7 +57,7 @@
 		</div>
 		<button style="color: #696c6f;" class="btn btn-not-focus col text-center"><i class="fas fa-video fa-lg"></i></button>
 	</div>
-	<div class="card-footer" style="font-size: small;">
+	{# <div class="card-footer" style="font-size: small;">
 		Vous êtes blogueur ? Accedez à <a href="#" class="text-decoration-none">l'espace de blogging par ici <i class="fas fa-pen fa-sm"></i></a>
-	</div>
+	</div> #}
 </div>

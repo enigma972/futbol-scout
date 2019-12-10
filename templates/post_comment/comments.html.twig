@@ -7,16 +7,17 @@
             <div class="col-10">
                 <h6 class="mb-0">
                     <a href="{{ path('user_profil', {'slug': comment.author.slug, 'id': comment.author.id})}}" class="text-decoration-none" style="font-size: small; color: black;">{{ comment.author.username|capitalize }}</a>
+                    <span class="text-right d-none" style="font-size: 10px;">26 min</span>
                 </h6>
                 <p class="pt-0" style="font-size: small;">
                     {{ comment.content }}
                 </p>
             </div>
             <div class="col-2 text-right">
-                <button class="btn btn-not-focus dropdown-toggle not-caret my-0" data-toggle="dropdown">
+                <button class="btn btn-not-focus dropdown-toggle not-caret my-0 d-inline" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-h fa-sm align-text-top"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right rounded-0  my-0">
+                <div class="dropdown-menu dropdown-menu-right rounded-0  my-0" style="font-size: small;">
                     {% if comment.isAuthor(app.user) %}
                         <a class="dropdown-item" href="{{ path('comment_edit', {'id': comment.id}) }}">
                             <i class="fas fa-pencil-alt fa-sm"></i>

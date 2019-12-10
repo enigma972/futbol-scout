@@ -68,16 +68,31 @@ class PostController extends AbstractController
 	public function show(Request $request, Post $post)
 	{
 		return $this->render('post/show.html.twig', [
-            	'post' => $post
+				'post' 			=> $post,
         	]);
 	}
 
 	/**
 	 * @Route("/{id}/update", name="post_update")
+	 * @Security("post.isAuthor(user)")
 	 */
-	public function update(Request $request)
+	public function update(Post $post, Request $request)
 	{
-		
+		$content = $request->request->get('notice_content');
+
+		if ($request->isMethod('post') && null != $content) {
+			$post->setContent($content);
+
+			$this->em->flush();
+
+			return $this->redirectToRoute('post_show', [
+				'id'    =>  $post->getId(),
+			]);
+		}
+
+		return $this->render('post/edit.html.twig', [
+			'post' =>  $post,
+		]);
 	}
 
 	/**

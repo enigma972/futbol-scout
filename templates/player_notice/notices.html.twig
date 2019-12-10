@@ -29,7 +29,7 @@
                         <a class="dropdown-item" href="{{ path('player_notice_delete', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('delete' ~ notice.author.id) }) }}">
                             <i class="fas fa-trash-alt fa-sm"></i> Supprimer la publication</a>
                     {% endif %}
-                    {% if app.user == player.user %}
+                    {% if   player.page.isGranted(app.user, 'ADMIN') %}
                         <a class="dropdown-item" href="{{ path('player_notice_lock', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('lock' ~ notice.author.id) }) }}">
                             <i class="fas fa-trash-alt fa-sm"></i> Bloquer cette avis</a>
                     {% endif %}

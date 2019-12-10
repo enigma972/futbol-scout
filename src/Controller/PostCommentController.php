@@ -61,18 +61,20 @@ class PostCommentController extends AbstractController
      */
     public function edit(Request $request, PostComment $postComment): Response
     {
-        $form = $this->createForm(PostCommentType::class, $postComment);
-        $form->handleRequest($request);
+        $content = $request->request->get('comment_content');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($request->isMethod('post') && null != $content) {
+            $postComment->setContent($content);
 
-            return $this->redirectToRoute('post_comment_index');
+            $this->em->flush();
+
+            return $this->redirectToRoute('post_show', [
+                'id'    =>  $postComment->getPost()->getId(),
+            ]);
         }
 
         return $this->render('post_comment/edit.html.twig', [
-            'post_comment' => $postComment,
-            'form' => $form->createView(),
+            'comment' =>  $postComment,
         ]);
     }
 

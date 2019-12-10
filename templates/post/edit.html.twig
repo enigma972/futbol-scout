@@ -1,7 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Page d'acceuil
-{% endblock %}
+{% block title %}Page d'acceuil {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
@@ -14,10 +13,10 @@
             <div class="col-md-6 offset-md-3 my-4">
                 <div class="row">
                     <div class="col shadow p-3 bg-white">
-                        <h3 class="h5 text-center ">Modifier votre avis sur ce joueur</h3>
+                        <h3 class="h5 text-center">Modifier le contenu de votre publication</h3>
                         <hr>
-                        <form action="{{ path('player_notice_edit', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('delete' ~ notice.author.id) }) }}" method="post">
-                            <textarea class="form-control mb-1" name="notice_content" rows=5>{{ notice.content }}</textarea>
+                        <form action="{{ path('post_update', {'id': post.id}) }}" method="post">
+                            <textarea class="form-control mb-1" name="notice_content" rows=5>{{ post.content }}</textarea>
                             <button class="btn btn-custom-outline-danger btn-block">Modifier</button>
                             <a class="btn btn-outline-secondary btn-block" href="{{ path('post_show', {'id': post.id}) }}">Annuler</a>
                         </form>

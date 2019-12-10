@@ -4,7 +4,7 @@
 	<title>
 		Futbol-scout, la plateforme de football.
     </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# <meta name="viewport" content="width=device-width, initial-scale=1"> #}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('lp/css/bootstrap.min.css')}}">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 </head>
 <body>
-	<div class="section" style="background-image: url('lp/images/jhan-castillon-610652-unsplash.jpg');background-size:cover;text-align: center; height: 100vh;">
+	<div class="section" style="background-image: url('lp/images/jhan-castillon-610652-unsplash.jpg');background-size:cover;text-align: center; width: 100vw;">
 		
 		<br>
 		<div class="container">
@@ -42,11 +42,11 @@
 					<div class="">
 						<h3 class="h4" style="color: white;">Connectez-vous! Des bonnes choses vous attendent</h3>
 						<form action="{{ path('app_login') }}" class="form-inline justify-content-center" method="post">
-							<input type="text" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mail" name="mail">
-							<input type="password" class="form-control form-control-lg rounded-0 mr-1" placeholder="Mot de passe" current-password name="password">
+							<input type="text" class="form-control form-control-lg rounded-0 mr-1 mb-1" placeholder="Mail" name="mail">
+							<input type="password" class="form-control form-control-lg rounded-0 mr-1 mb-1" placeholder="Mot de passe" current-password name="password">
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-							<button type="submit" class="btn btn-primary btn-lg rounded-0 mr-1">Se connecter</button>
-							<a href="{{ path('app_register') }}" class="btn btn-primary btn-lg rounded-0">S'inscrire</a>
+							<button type="submit" class="btn btn-primary btn-lg rounded-0 mr-1 mb-1">Se connecter</button>
+							<a href="{{ path('app_register') }}" class="btn btn-primary btn-lg rounded-0 mb-1">S'inscrire</a>
 						</form>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 			<br><br><br>
 		</div>
 	</div>
-	<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-custom-red" id="navbar">
+	<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-custom-red" id="navbar">
 	<div class="container">
 		<a class="navbar-brand font-weight-bold" href="{{ path('home') }}" style="color: white;">futbol-scout</a>
 		{% if app.user %}
@@ -67,19 +67,16 @@
 			</div>
 		</form>
 		{% endif %}
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		{# <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+		</button> #}
+		<div class="collapse-navbar-collapse justify-content-end" id="navbarNav">
 			<ul class="navbar-nav">
 			   {% if app.user %}
 				<li class="nav-item mx-2 text-center"><a href="{{ path('user_profil', {'slug': app.user.slug, 'id':app.user.id})}}" class="nav-link border-right-"> {{ app.user.firstname|capitalize }} </a></li>
 				<li class="nav-item mx-2 text-center"><a href="{{ path('home')}}" class="nav-link border-right-">Fil d'actualités</a></li>
 				<li class="nav-item mx-2 text-center"><a href="#" class="nav-link border-right-">Notifications</a></li>
-				{% if app.user.category == 'player' %}
-				<li class="nav-item mx-2 text-center"><a href="{{ path('player', {'slug': app.user.slug, 'id': app.user.id})}}" class="nav-link">Ma page (Joueur)</a></li>
 				{% endif %}
-			{% endif %}
 			<li class="nav-item">
 				{% if app.user %}
 				<a href="#" class="btn btn-not-focus dropdown-toggle not-caret my-0 nav-btn" data-toggle="dropdown">
@@ -326,7 +323,7 @@
 			$('.carousel').carousel({ interval: 10000 });
 		});
 
-		var $navbar = $('#navbar');
+		{# var $navbar = $('#navbar');
 		$navbar.removeClass('bg-custom-red');
 		$navbar.removeClass('sticky-top');
 		$navbar.addClass('fixed-top');
@@ -342,7 +339,7 @@
 			if (top < 175) {
 				$navbar.removeClass('bg-custom-red');
 			}
-		});
+		}); #}
 
 	</script>
 </body>

@@ -1,5 +1,10 @@
 body {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
+	font-family: 'Century gothic' !important;
+}
+
+.disabled {
+	pointer-events: none;
 }
 
 .bg-custom-red {
@@ -52,9 +57,9 @@ body {
 	box-shadow: 0 0 0 0;
 }
 
-.custom-container {
+/* .custom-container {
 	width: 85%;
-}
+} */
 
 .not-caret::after {
 	display: none;

@@ -49,8 +49,8 @@ class PlayerNoticeController extends AbstractController
 
 
         return $this->redirectToRoute('player', [
-            'id'    =>  $player->getUser()->getId(),
-            'slug'  =>  $player->getUser()->getSlug(),
+            'id'    =>  $player->getId(),
+            'slug'  =>  $player->getSlug(),
         ]);
     }
 
@@ -59,7 +59,7 @@ class PlayerNoticeController extends AbstractController
      * @ParamConverter("playerNotice", options={"mapping": {"player_id": "player", "author_id": "author"}})
      * @ParamConverter("player", options={"mapping": {"player_id": "id"}})
      */
-    public function edit(Request $request, PlayerNotice $playerNotice): Response
+    public function edit(Request $request, PlayerNotice $playerNotice, Player $player): Response
     {
         $noticeContent = $request->request->get('notice_content');
 
@@ -69,8 +69,8 @@ class PlayerNoticeController extends AbstractController
             $this->em->flush();
 
             return $this->redirectToRoute('player', [
-                'id'    =>  $playerNotice->getPlayer()->getUser()->getId(),
-                'slug'  =>  $playerNotice->getPlayer()->getUser()->getSlug(),
+                'id'    =>  $player->getId(),
+                'slug'  =>  $player->getSlug(),
             ]);
         }
 
@@ -99,8 +99,8 @@ class PlayerNoticeController extends AbstractController
         $this->em->flush();
 
         return $this->redirectToRoute('player', [
-            'id'    =>  $player->getUser()->getId(),
-            'slug'  =>  $player->getUser()->getSlug(),
+            'id'    =>  $player->getId(),
+            'slug'  =>  $player->getSlug(),
         ]);
     }
 
@@ -109,16 +109,18 @@ class PlayerNoticeController extends AbstractController
      * @ParamConverter("playerNotice", options={"mapping": {"player_id": "player", "author_id": "author"}})
      * @ParamConverter("player", options={"mapping": {"player_id": "id"}})
      */
-    public function lock(Request $request, PlayerNotice $playerNotice): Response
+    public function lock(Request $request, PlayerNotice $playerNotice, Player $player): Response
     {
-        if ($this->getUser() === $playerNotice->getPlayer()->getUser()) {
+        $user = $this->getUser();
+        
+        if ($player->getPage()->isGranted($user, 'ADMIN')) {
             $playerNotice->setIsLocked(true);
 
             $this->em->flush();
 
             return $this->redirectToRoute('player', [
-                'id'    =>  $playerNotice->getPlayer()->getUser()->getId(),
-                'slug'  =>  $playerNotice->getPlayer()->getUser()->getSlug(),
+                'id'    =>  $player->getId(),
+                'slug'  =>  $player->getSlug(),
             ]);
         }
 

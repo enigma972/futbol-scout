@@ -83,9 +83,9 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Vous êtes ?',
                 'attr'  => ['class' =>  'form-control rounded-0'],
                 'choices' => [
-                    'Joueur' => 'player',
-                    'Recruteur' => 'recruteur',
-                    'Fans' => 'fans',
+                    'Joueur'    => 'player',
+                    // 'Recruteur' => 'recruteur',
+                    'Autre'     => 'autre'
                 ]
             ])
             /*->add('reservation', EntityType::class, [

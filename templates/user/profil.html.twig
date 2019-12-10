@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block section %}
-	<div class="container-fluid" id="user-cover-img" style="background: url('/cdn/images/cover-img.jpg');background-size: cover; height: 380px;">
+	<div class="container-fluid" id="user-cover-img" style="background: url('/cdn/images/about_1.jpg');background-size: cover; height: 300px;">
 		<a href="#" class="btn rounded-0 btn-custom-outline-danger bg-white mt-3 p-2 float-right" id="p-c-i"><i class="fas fa-camera fa-lg"></i> <span class="font-weight-bold">Changer l'image</span></a>
 		<style>
 			#p-c-i:hover {
@@ -25,15 +25,19 @@
 						{% if app.user == user %}
 						<div><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
 						{% endif %}
+
 						{% if app.user != user and user not in app.user.follows %}
 						<div class="mt-2">
 							<a href="{{path('user_follow', {'id': user.id})}}" class="font-weight-bold text-decoration-none">S'abonner <i class="fas fa-plus fa-sm"></i></a>
 						</div>
+						{% elseif app.user == user %}
+							{# This condition block the message : Se désabonner #}
 						{% else %}
-						    <div class="mt-2">
+						<div class="mt-2">
 							<a href="{{path('user_disfollow', {'id': user.id})}}" class="font-weight-bold text-decoration-none">Se désabonner</a>
 						</div>
 						{% endif %}
+						
 					</div>
 					<div class="card-footer" style="color: #696c6f;">
 						<div class="row">
