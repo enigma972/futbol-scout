@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Utils\Slugger;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Intl\Countries;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
@@ -440,7 +441,7 @@ class Player
 
     public function getCountry(): ?string
     {
-        return $this->country;
+        return $countries = Countries::getName($this->country);
     }
 
     public function setCountry(string $country): self

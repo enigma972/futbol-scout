@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('build/player.css') }}">
+	<link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
 {% endblock %}
 
 {% block section %}
@@ -81,7 +82,9 @@
 							{% endif %}
 							
 							{% if player.promoclip is not null %}
-								<video src="{{ asset(player.promoclip.path)}}" controls class="w-100"></video>
+								<video id="player" playsinline preload="none" controls class="w-100">
+									<source src="{{ asset(player.promoclip.path)}}" type="video/mp4" size=360 />
+								</video>
 							{% else %}
 								<div class="h6">{% if app.user not in player.page.managers %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
 							{% endif %}
@@ -158,4 +161,11 @@
 
 {% block javascripts %}
     <script src="{{ asset('build/player.js') }}"></script>
+	<script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
+	<script>
+		const player = new Plyr('#player', {
+			controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+			settings: ['captions', 'quality', 'speed', 'loop']
+		});
+	</script>
 {% endblock %}
