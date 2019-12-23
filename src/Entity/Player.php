@@ -441,7 +441,7 @@ class Player
 
     public function getCountry(): ?string
     {
-        return $countries = Countries::getName($this->country);
+        return is_null($this->country) ? null : Countries::getName($this->country);
     }
 
     public function setCountry(string $country): self
