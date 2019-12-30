@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Utils\Slugger;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -24,7 +25,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     private $roles = [];
 
@@ -45,6 +46,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
+     * @Assert\Email()
      * @ORM\Column(type="string", length=100, unique=true)
      */
     private $mail;

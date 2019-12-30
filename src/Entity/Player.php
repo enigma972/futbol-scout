@@ -6,6 +6,7 @@ use App\Utils\Slugger;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Intl\Countries;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
@@ -34,6 +35,7 @@ class Player
     private $nickname;
 
     /**
+     * @Assert\Date
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $birthday;
@@ -44,6 +46,7 @@ class Player
     private $gender;
 
     /**
+     * @Assert\Country
      * @ORM\Column(type="string", length=255)
      */
     private $country;
@@ -69,7 +72,8 @@ class Player
     private $postes = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerClub")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $currentClub;
 
@@ -185,7 +189,7 @@ class Player
         return $this->strongFeets;
     }
 
-    public function setStrongFeets(array $strongFeets): self
+    public function setStrongFeets(?array $strongFeets): self
     {
         $this->strongFeets = $strongFeets;
 
@@ -197,19 +201,19 @@ class Player
         return $this->postes;
     }
 
-    public function setPostes(array $postes): self
+    public function setPostes(?array $postes): self
     {
         $this->postes = $postes;
 
         return $this;
     }
 
-    public function getCurrentClub(): ?string
+    public function getCurrentClub(): ?PlayerClub
     {
         return $this->currentClub;
     }
 
-    public function setCurrentClub(string $currentClub): self
+    public function setCurrentClub(?PlayerClub $currentClub): self
     {
         $this->currentClub = $currentClub;
 
@@ -221,7 +225,7 @@ class Player
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 
@@ -288,7 +292,6 @@ class Player
     {
         if (!$this->fans->contains($fan)) {
             $this->fans[] = $fan;
-            $this->increaseFans();
             $fan->addFavoritesPlayer($this);
         }
 
@@ -299,7 +302,6 @@ class Player
     {
         if ($this->fans->contains($fan)) {
             $this->fans->removeElement($fan);
-            $this->decreaseFans();
             $fan->removeFavoritesPlayer($this);
         }
 
@@ -420,7 +422,7 @@ class Player
         return $this->birthday;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): self
+    public function setBirthday(?\DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
 
@@ -441,7 +443,7 @@ class Player
 
     public function getCountry(): ?string
     {
-        return is_null($this->country) ? null : Countries::getName($this->country);
+        return $this->country;
     }
 
     public function setCountry(string $country): self
@@ -497,13 +499,14 @@ class Player
         return $this->page;
     }
 
-    public function setPage(PlayerPage $page): self
+    public function setPage(?PlayerPage $page): self
     {
         $this->page = $page;
 
-        // set the owning side of the relation if necessary
-        if ($this !== $page->getPlayer()) {
-            $page->setPlayer($this);
+        // set (or unset) the owning side of the relation if necessary
+        $newPlayer = null === $page ? null : $this;
+        if ($page->getPlayer() !== $newPlayer) {
+            $page->setPlayer($newPlayer);
         }
 
         return $this;
