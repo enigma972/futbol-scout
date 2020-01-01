@@ -292,6 +292,7 @@ class Player
     {
         if (!$this->fans->contains($fan)) {
             $this->fans[] = $fan;
+            $this->increaseFans();
             $fan->addFavoritesPlayer($this);
         }
 
@@ -302,6 +303,7 @@ class Player
     {
         if ($this->fans->contains($fan)) {
             $this->fans->removeElement($fan);
+            $this->decreaseFans();
             $fan->removeFavoritesPlayer($this);
         }
 
@@ -439,6 +441,11 @@ class Player
         $this->gender = $gender;
 
         return $this;
+    }
+
+    public function getCountryName()
+    {
+        return is_null($this->country) ? null : Countries::getName($this->country);
     }
 
     public function getCountry(): ?string
