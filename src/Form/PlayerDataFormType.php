@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\PlayerClub as Club;
 
 
 class PlayerDataFormType extends AbstractType
@@ -89,9 +91,12 @@ class PlayerDataFormType extends AbstractType
                     'aliqua'        => 'aliqua',
                 ],
             ])
-            ->add('currentClub', TextType::class, [
-                'label' => 'Club actuel',
-                'attr'  => ['class' =>  'form-control rounded-0']
+            ->add('currentClub', EntityType::class, [
+                'class' =>  Club::class,
+                'choice_label' =>  function($club) {
+                    return $club->getLabel();
+                },
+                'attr'  =>  ['class' =>  'form-control rounded-0']
             ])
             ->add('status', ChoiceType::class, [
                 'attr'      => ['class' =>  'form-control rounded-0'],
@@ -112,11 +117,11 @@ class PlayerDataFormType extends AbstractType
             ->add('level', ChoiceType::class, [
                 'attr'      => ['class' =>  'form-control rounded-0'],
                 'choices'   => [
-                    'Amateur'     => 'amateur',
-                    'Professionel'     => 'pro',
+                    'Amateur'       => 'amateur',
+                    'Professionel'  => 'pro',
                 ]
             ])
-            ->add('file', FileType::class, [
+            /*->add('file', FileType::class, [
                 'mapped'    =>  false,
                 'attr'      =>  [
                     'class' =>  'custom-file-input',
@@ -124,9 +129,10 @@ class PlayerDataFormType extends AbstractType
                 ],
                 'label_attr'=>  [
                     'class' =>  'custom-file-label',
-                    'for'   =>  'customFile'
+                    'for'   =>  'customFile',
+                    'style' =>  'overflow: hidden',
                 ]
-            ])
+            ])*/
         ;
     }
 

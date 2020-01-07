@@ -41,6 +41,7 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             // Create the first manager with ADMIN default role
             $manager = new PlayerPageManager;
 
@@ -55,11 +56,12 @@ class PlayerController extends AbstractController
 
 
             // set player picture
-            $file = $form->get('file')->getData();
+            $file = $request->request->get('file');
 
             $picture = new Picture();
             $picture->preUpload($file);
             $player->setPicture($picture);
+
             
             $this->em->persist($manager);
             $this->em->persist($page);

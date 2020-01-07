@@ -50,7 +50,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('phone', TelType::class, [
                 'label' => 'Téléphone',
-                'attr'  => ['class' =>  'form-control rounded-0']
+                'attr'  => [
+                    'class'         =>  'form-control rounded-0',
+                    'placeHolder'   =>  '+234813849555',
+                ]
             ])
             ->add('mail', EmailType::class, [
                 'attr'  =>  ['class' => 'form-control rounded-0']

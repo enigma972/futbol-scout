@@ -28,13 +28,8 @@
                                     <div class="row">
                                         <div class="col-md-9">
                                             <div class="custom-file">
-                                                {% if form_errors(playerDataFormType.file) %}
-                                                    <div class="alert alert-warning">
-                                                        {{ form_errors(playerDataFormType.file) }}
-                                                    </div>
-                                                {% endif %}
-                                                {{ form_widget(playerDataFormType.file)}}
-                                                {{ form_label(playerDataFormType.file, "Choisissez") }}
+                                                <input type="file" class="custom-file-input text-wrap" name="post_attach" id="customFile">
+                                                <label for="customFile" class="custom-file-label" style="overflow: hidden;"></label>
                                             </div>
                                         </div>
                                     </div>
