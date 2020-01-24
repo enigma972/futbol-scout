@@ -254,10 +254,8 @@ class PlayerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $players = $playerRepository->findAllByQuery($form->getData(), $page);
-            dump($players);
         }else {
             $players = $playerRepository->findAll();
-            dump($players);
         }
 
         return $this->render('player/search_player.html.twig',[
