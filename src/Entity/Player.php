@@ -129,7 +129,7 @@ class Player
     private $pseudo;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PlayerPicture", cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\PlayerPicture", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $picture;

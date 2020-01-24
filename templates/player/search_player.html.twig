@@ -1,0 +1,40 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Touver un joueur{% endblock %}
+
+{% block section %}
+    <div class="container pt-3">
+        <h5 class="text-center font-weight-bold">Trouvez facilement des joueurs en comobinant plusieurs critères.</h5>
+        <hr/>
+        <form action="" method="post" class="form-inline justify-content-center">
+            {{ form_widget(searchForm.name)}}
+            {{ form_widget(searchForm.minAge)}}
+            {{ form_widget(searchForm.maxAge)}}
+            {{ form_widget(searchForm.license)}}
+            {{ form_widget(searchForm.level)}}
+            {{ form_widget(searchForm.name)}}
+            
+            <button class="btn btn-lg- btn-primary rounded-0 mt-md-0 mt-1" type="submit">Chercher</button>
+        </form>
+        <hr/>
+    </div>
+
+    <div class="container mt-3">
+        <div class="list-group">
+            {% for player in players %}
+                <div class="list-group-item">
+                    <span class="text-capitalize">{{ player.name }}</span>, <a href="{{ path("player", {slug: player.slug, id: player.id}) }}">cliquez pour voir sa page promotionnelle.</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if page <= nbParPage %}
+        <div class="row my-4">
+            <div class="col text-center">
+                <a href="{{ path('home', {'page': page}) }}" class="btn btn-custom-outline-danger rounded-pill text-decoration-none">Voir plus</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

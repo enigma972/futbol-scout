@@ -10,6 +10,8 @@ use App\Entity\PlayerPageManager;
 use App\Repository\UserRepository;
 use App\Repository\PlayerRepository;
 use App\Entity\PlayerPicture as Picture;
+use App\Entity\PlayerSearch;
+use App\Form\PlayerSearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -234,5 +236,35 @@ class PlayerController extends AbstractController
         }
 
         return $this->render('player/update_promo_clip.html.twig');
+    }
+
+    /**
+     * @Route("/trouver-un-joueur", name="search_player")
+     */
+    public function search(Request $request, PlayerRepository $playerRepository)
+    {
+        $page = (int) $request->query->get('page');
+
+        if ($page < 1)  { $page = 1; }
+
+        $playerSearch = new PlayerSearch;
+        $form = $this->createForm(PlayerSearchType::class, $playerSearch);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $players = $playerRepository->findAllByQuery($form->getData(), $page);
+            dump($players);
+        }else {
+            $players = $playerRepository->findAll();
+            dump($players);
+        }
+
+        return $this->render('player/search_player.html.twig',[
+            'searchForm'    =>  $form->createView(),
+            'players'       =>  $players,
+            'page'          =>  $page + 1,
+            'nbParPage'     =>  ceil(count($players) / 12),
+        ]);
     }
 }

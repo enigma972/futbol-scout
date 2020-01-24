@@ -77,18 +77,15 @@ class PlayerDataFormType extends AbstractType
                 'expanded'      =>  true,
                 'attr'          => ['class' =>  'rounded-0'],
                 'choices'       => [
-                    'Lorem'         => 'Lorem',
-                    'Ipsum'         => 'Ipsum',
-                    'Sit'           => 'Sit',
-                    'Amet'          => 'Amet',
-                    'Dolor'         => 'Dolor',
-                    'consectetur'   => 'consectetur',
-                    'elit'          => 'elit',
-                    'tempor'        => 'tempor',
-                    'incididunt'    => 'incididunt',
-                    'labore'        => 'labore',
-                    'magna'         => 'magna',
-                    'aliqua'        => 'aliqua',
+                    'Gardien'         => 'Gardien',
+                    'Lateral gauche'         => 'Lateral gauche',
+                    'Lateral droit'           => 'Lateral droit',
+                    'Milieu defensif'          => 'Milieu defensif',
+                    'Milieu offensif'         => 'Milieu offensif',
+                    'Attaquant de pointe'   => 'Attaquant de pointe',
+                    'Elié droit'          => 'Elié droit',
+                    'Elié gauche'        => 'Elié gauche',
+                    'Attaquant axial'    => 'Attaquant axial',
                 ],
             ])
             ->add('currentClub', EntityType::class, [
@@ -107,12 +104,14 @@ class PlayerDataFormType extends AbstractType
                 ]
             ])
             ->add('ambition', TextareaType::class, [
-                'label' => 'Status',
-                'attr'  => ['class' =>  'form-control rounded-0']
+                'required'  =>  false,
+                'label'     => 'Status',
+                'attr'      => ['class' =>  'form-control rounded-0']
             ])
             ->add('biographie', TextareaType::class, [
-                'label' => 'Status',
-                'attr'  => ['class' =>  'form-control rounded-0']
+                'required'  =>  false,
+                'label'     => 'Status',
+                'attr'      => ['class' =>  'form-control rounded-0']
             ])
             ->add('level', ChoiceType::class, [
                 'attr'      => ['class' =>  'form-control rounded-0'],
