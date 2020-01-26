@@ -26,7 +26,7 @@
 					<img src="{{ asset(player.picture.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
 					<div class="h6">{{ player.name|capitalize }}</div>
 					{% if player.page.isGranted(app.user, 'ADMIN') %}
-					<div class="mb-2"><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
+					<div class="mb-2"><a href="{{path('player_change_picture', {id: player.id})}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
 					{% endif %}
 					<div>
 						{% if app.user in player.fans %}
