@@ -4,8 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/complete_player_data.css') }}">
+{{ encore_entry_link_tags('complete_player_data') }}
 {% endblock %}
 
 {% block section %}
@@ -207,20 +206,31 @@
                                 </div>
                             </div>
 
+                            <fieldset>
+                                <div class="form-group row">
+                                    <div class="col-md-3 text-right">
+                                        {{ form_label(playerDataFormType.currentClub, "Club actuel") }}
+                                    </div>
+                                    <div class="col-md-9">
+                                        {% if form_errors(playerDataFormType.currentClub) %}
+                                            <div class="alert alert-warning">
+                                                {{ form_errors(playerDataFormType.currentClub) }}
+                                            </div>
+                                        {% endif %}
+                                        {{ form_widget(playerDataFormType.currentClub)}}
+                                    </div>
+                                </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-3 text-right">
-                                    {{ form_label(playerDataFormType.currentClub, "Club actuel") }}
+                                <div class="form-group row">
+                                    <div
+                                        class="col-md-9 offset-md-3">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#clubModalCenter">
+                                            Ajoutez votre club dans la liste
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-md-9">
-                                    {% if form_errors(playerDataFormType.currentClub) %}
-                                        <div class="alert alert-warning">
-                                            {{ form_errors(playerDataFormType.currentClub) }}
-                                        </div>
-                                    {% endif %}
-                                    {{ form_widget(playerDataFormType.currentClub)}}
-                                </div>
-                            </div>
+                            </fieldset>
 
                             <div class="form-group row">
                                 <div class="col-md-3 text-right">
@@ -290,8 +300,39 @@
                     {{ form_rest(playerDataFormType)}}
 
                 </form>
+
+                <!-- Modal -->
+                <div class="modal fade" id="clubModalCenter" tabindex="-1" role="dialog" aria-labelledby="clubModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="clubModalCenterTitle">Ajouter un nouveau club</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ path('player_club_store') }}" method="post" id="store_club_form">
+                                    {{ render(path('player_club_store')) }}
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    Assurez-vous que votre club ne figure pas déjà dans la liste !
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 {% endblock %}
 
+{% block javascripts %}
+{{ encore_entry_script_tags('complete_player_data') }}
+{% endblock %}

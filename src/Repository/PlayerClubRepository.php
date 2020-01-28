@@ -19,6 +19,34 @@ class PlayerClubRepository extends ServiceEntityRepository
         parent::__construct($registry, PlayerClub::class);
     }
 
+    /**
+     * @return bool Returns a boolean of existing status
+     */
+    public function notExist(PlayerClub $club)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $result = $qb->where(
+                        $qb->expr()->orX(
+                            $qb->expr()->in('c.label', ':label'),
+                            $qb->expr()->in('c.abbrLabel', ':abbrLabel')
+                        )
+                    )
+                    ->setParameters([
+                        'label'     =>  $club->getLabel(),
+                        'abbrLabel' =>  $club->getAbbrLabel(),
+                    ])
+                    ->getQuery()
+                    ->getOneOrNullResult()
+                ;
+
+
+        if (null === $result) {
+            return true;
+        }
+        return false;
+    }
+
     // /**
     //  * @return PlayerClub[] Returns an array of PlayerClub objects
     //  */
