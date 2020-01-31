@@ -115,8 +115,8 @@ class PlayerController extends AbstractController
         }
 
         return $this->redirectToRoute('player', [
-            'id'    =>  $connectedUser->getId(),
-            'slug'  =>  $connectedUser->getSlug(),
+                'id'    =>  $player->getId(),
+                'slug'  => $player->getSlug(),
             ]);
     }
 
@@ -133,9 +133,9 @@ class PlayerController extends AbstractController
         }
 
         return $this->redirectToRoute('player', [
-            'id'    =>  $connectedUser->getId(),
-            'slug'  =>  $connectedUser->getSlug(),
-            ]);
+            'id'    =>  $player->getId(),
+            'slug'  => $player->getSlug(),
+        ]);
     }
 
     /**
@@ -175,8 +175,6 @@ class PlayerController extends AbstractController
      */
     public function addPromoClip(Player $player, Request $request)
     {
-        $user = $this->getUser();
-
         if ($request->isMethod('POST')) {
             $file = $request->files->get('promo_clip');
             if ($file) {
@@ -188,10 +186,10 @@ class PlayerController extends AbstractController
 
                         $this->em->flush();
                         $promoClip->upload();
-                        
+
                         return $this->redirectToRoute('player', [
-                            'id'    =>  $user->getId(),
-                            'slug'  =>  $user->getSlug(),
+                            'id'    =>  $player->getId(),
+                            'slug'  => $player->getSlug(),
                         ]);
                 }
                 
@@ -210,8 +208,6 @@ class PlayerController extends AbstractController
      */
     public function updatePromoClip(Request $request, Player $player)
     {
-        $user = $this->getUser();
-
         if ($request->isMethod('post')) {
             $file = $request->files->get('promo_clip');
 
@@ -229,8 +225,8 @@ class PlayerController extends AbstractController
                     $promoClip->upload();
 
                     return $this->redirectToRoute('player', [
-                        'id'    =>  $user->getId(),
-                        'slug'  =>  $user->getSlug(),
+                        'id'    =>  $player->getId(),
+                        'slug'  => $player->getSlug(),
                     ]);
             }
         }
