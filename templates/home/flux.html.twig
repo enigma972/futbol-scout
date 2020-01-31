@@ -18,6 +18,17 @@
 						{% include 'post/post-form.html.twig' %}
 					</div>
 				</div>
+				
+				{% if app.user.category == 'player' and app.user.managedplayers.count() == 0 %}
+				<div class="row mt-1">
+					<div class="col">
+						<div class="card rounded-0 border p-2" style="font-size: 14px;">
+							Booster votre carriere de footballeur pour tenter de se faire recruter par des clubs, recruteurs, managers, etc. <a href="{{ path('create_player') }}" class="btn btn-sm btn-primary"><i class="fas fa-flag fa-sm"></i> Créer votre page de promotion pour joueur</a>
+							
+						</div>
+					</div>
+				</div>
+				{% endif %}
 				{% include "default/_flash-message.html.twig" %}
 				<hr>
 				{% for post in posts %}
