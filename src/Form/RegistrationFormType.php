@@ -62,7 +62,7 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrez un mot de passe',
+                        'message' => 'Choisissez un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
@@ -78,7 +78,7 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Mot de passe'
                 ],
                 'second_options' => [
-                    'label' => 'Repetez mot de passe'
+                    'label' => 'Repetez le mot de passe'
                 ],
             ])
             ->add('category', ChoiceType::class, [
