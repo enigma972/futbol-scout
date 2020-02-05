@@ -4,7 +4,7 @@
 
 {% block section %}
     <div class="container pt-3">
-        <h5 class="text-center font-weight-bold">Trouvez facilement des joueurs en comobinant plusieurs critères.</h5>
+        <h5 class="text-center font-weight-bold">Trouvez facilement des joueurs en combinant plusieurs critères.</h5>
         <hr/>
         <form action="" method="post" class="form-inline justify-content-center">
             {{ form_widget(searchForm.name)}}
@@ -22,8 +22,8 @@
     <div class="container mt-3">
         <div class="list-group">
             {% for player in players %}
-                <div class="list-group-item">
-                    <span class="text-capitalize">{{ player.name }}</span>, <a href="{{ path("player", {slug: player.slug, id: player.id}) }}">cliquez pour voir sa page promotionnelle.</a>
+                <div class="list-group-item mb-1">
+                    <span class="text-capitalize font-weight-bold">{{ player.name }}</span>, <a href="{{ path("player", {slug: player.slug, id: player.id}) }}">cliquez pour voir sa page promotionnelle.</a>
                 </div>
             {% endfor %}
         </div>

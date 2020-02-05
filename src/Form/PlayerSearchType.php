@@ -48,10 +48,9 @@ class PlayerSearchType extends AbstractType
                 ],
                 'choices'   =>  [
                     'permanent'     =>  'permanent',
-                    'prete'         =>  'prete',
+                    'preté'         =>  'prete',
                     'libre'         =>  'libre',
-                    'definitif'     =>  'definitif',
-                    'all'           =>  'toutes',
+                    'tout'        =>  'all',
                     
                 ],
 
@@ -66,7 +65,7 @@ class PlayerSearchType extends AbstractType
                 'choices'   =>  [
                     'professionel'    =>  'professionel',
                     'amateur'         =>  'amateur',
-                    'all'             =>  'tous',
+                    'tout'            =>  'all',
                     
                 ],
 

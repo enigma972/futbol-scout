@@ -2,7 +2,7 @@
 	<div class="card-header p-5"></div>
 	<div class="card-body text-center">
 		<img src="{{ asset(app.user.avatar.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
-		<div class="h6">Bonjour {{ app.user.username|capitalize }}</div>
+		<div class="h6">Bonjour <span class="font-weight-bold">{{ app.user.username|capitalize }}</span></div>
 		<div><a href="{{path('user_change_avatar')}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
 	</div>
 	<div class="card-footer" style="color: #696c6f;">

@@ -6,7 +6,6 @@ use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -23,23 +22,28 @@ class PlayerDataFormType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Prenom',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('lastname', TextType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Nom',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('nickname', TextType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Postnom',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo',
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
+                'label' => 'Surnom',
                 'attr'  => ['class' =>  'form-control rounded-0'],
                 'required'  =>  false
             ])
             ->add('gender', ChoiceType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Sexe',
                 'attr'  => ['class' =>  'form-control rounded-0'],
                 'choices'   =>  [
@@ -48,18 +52,22 @@ class PlayerDataFormType extends AbstractType
                 ]
             ])
             ->add('birthday', BirthdayType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Date de naissance',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('country', CountryType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Pays de naissance',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('length', IntegerType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Taille',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
             ->add('weight', IntegerType::class, [
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label' => 'Poids',
                 'attr'  => ['class' =>  'form-control rounded-0']
             ])
@@ -71,45 +79,51 @@ class PlayerDataFormType extends AbstractType
                     'Gauche'     => 'left',
                     'Droite'     => 'right'
                 ],
+                'label_attr' =>  ['class'    =>  'font-weight-bold'],
             ])
             ->add('postes', ChoiceType::class, [
                 'multiple'      =>  true,
                 'expanded'      =>  true,
                 'attr'          => ['class' =>  'rounded-0'],
                 'choices'       => [
-                    'Gardien'         => 'Gardien',
-                    'Lateral gauche'         => 'Lateral gauche',
-                    'Lateral droit'           => 'Lateral droit',
-                    'Milieu defensif'          => 'Milieu defensif',
-                    'Milieu offensif'         => 'Milieu offensif',
-                    'Attaquant de pointe'   => 'Attaquant de pointe',
-                    'Elié droit'          => 'Elié droit',
-                    'Elié gauche'        => 'Elié gauche',
-                    'Attaquant axial'    => 'Attaquant axial',
+                    'Gardien'                   => 'Gardien',
+                    'Lateral gauche'            => 'Lateral gauche',
+                    'Lateral droit'             => 'Lateral droit',
+                    'Milieu defensif'           => 'Milieu defensif',
+                    'Milieu offensif'           => 'Milieu offensif',
+                    'Attaquant de pointe'       => 'Attaquant de pointe',
+                    'Elié droit'                => 'Elié droit',
+                    'Elié gauche'               => 'Elié gauche',
+                    'Attaquant axial'           => 'Attaquant axial',
                 ],
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
             ])
             ->add('currentClub', EntityType::class, [
                 'class' =>  Club::class,
                 'choice_label' =>  function($club) {
                     return $club->getLabel();
                 },
-                'attr'  =>  ['class' =>  'form-control rounded-0']
+                'attr'  =>  ['class' =>  'form-control rounded-0'],
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
             ])
             ->add('status', ChoiceType::class, [
                 'attr'      => ['class' =>  'form-control rounded-0'],
                 'choices'   => [
-                    'Libre'     => 'libre',
-                    'Prêté'     => 'lent',
-                    'Licence'   =>  'licence'
-                ]
+                    'Libre'         => 'libre',
+                    'Prêté'         => 'lent',
+                    'Permanent'     => 'permanent'
+                ],
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
             ])
             ->add('ambition', TextareaType::class, [
                 'required'  =>  false,
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label'     => 'Status',
                 'attr'      => ['class' =>  'form-control rounded-0']
             ])
             ->add('biographie', TextareaType::class, [
                 'required'  =>  false,
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
                 'label'     => 'Status',
                 'attr'      => ['class' =>  'form-control rounded-0']
             ])
@@ -118,20 +132,9 @@ class PlayerDataFormType extends AbstractType
                 'choices'   => [
                     'Amateur'       => 'amateur',
                     'Professionel'  => 'pro',
-                ]
-            ])
-            /*->add('file', FileType::class, [
-                'mapped'    =>  false,
-                'attr'      =>  [
-                    'class' =>  'custom-file-input',
-                    'id'    =>  'customFile'
                 ],
-                'label_attr'=>  [
-                    'class' =>  'custom-file-label',
-                    'for'   =>  'customFile',
-                    'style' =>  'overflow: hidden',
-                ]
-            ])*/
+                'label_attr'=>  ['class'    =>  'font-weight-bold'],
+            ])
         ;
     }
 
