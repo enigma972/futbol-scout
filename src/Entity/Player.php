@@ -52,6 +52,12 @@ class Player
     private $country;
 
     /**
+     * @Assert\Range(
+     *      min = 100,
+     *      max = 300,
+     *      minMessage = "You must be at least {{ limit }}cm tall to enter",
+     *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $length;
