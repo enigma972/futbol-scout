@@ -55,6 +55,25 @@ class PlayerRepository extends ServiceEntityRepository
         return  new Paginator($query);
     }
 
+    public function findByIdWithRelatedData($id): ?Player
+    {
+        $qb = $this->createQueryBuilder('p');
+        
+        $query = $qb->leftJoin('p.currentClub', 'c')->addSelect('c')
+                    ->leftJoin('p.promoClip', 'cl')->addSelect('cl')
+                    ->leftJoin('p.picture', 'pict')->addSelect('pict')
+                    ->leftJoin('p.notices', 'n')->addSelect('n')
+                    ->leftJoin('p.page', 'pg')->addSelect('pg')
+                    ->leftJoin('pg.managers', 'm')->addSelect('m')
+                    // ->leftJoin('m.user', 'u')->addSelect('u')
+                    ->andWhere($qb->expr()->eq('p.id', ':id'))
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ;
+
+        return $query->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Player[] Returns an array of Player objects
     //  */

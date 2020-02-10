@@ -20,7 +20,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-3 -offset-md-1" >
-			<div class="card mb-2 shadow-sm rounded-0 -position-fixed">
+			<div class="card mb-2 shadow-sm rounded-0">
 				<div class="card-header p-5"></div>
 				<div class="card-body text-center">
 					<img src="{{ asset(player.picture.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
@@ -89,37 +89,75 @@
 								<div class="h6">{% if app.user not in player.page.managers %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
 							{% endif %}
 							
-							{% if player.promoclip and app.user in player.page.managers %}
+							{% if player.promoclip is not null and app.user in player.page.managers %}
 								<a href="{{ path('update_promo_clip') }}" class="btn btn-block btn-primary">Mettre a jour ma video promo</a>
 							{% endif %}
 						</div>
-						<div class="col-md-5 shadow-sm bg-white p-4">
-							<h3 class="h4">Informations générales</h3>
-							<ul class="list-unstyled">
-								<li>Nom complet : <strong>{{ player.firstname }} {{ player.lastname }}</strong></li>
-								<li>Date de Naissance : <strong>le {{ player.birthday | date('d/m/Y') }}</strong></li>
-								<li>Pays de Résidence : <strong>{{ player.countryName }}</strong></li>
-								<li>Age : <strong>{{ player.age }} ans</strong></li>
-								<li>Taille : <strong>{{ player.length }} cm</strong></li>
-								<li>Poids : <strong>{{ player.weight }} kg</strong></li>
-								<li>Position : <strong>{% for poste in player.postes %}{{ poste }}{% endfor %}</strong></li>
-								<li>Pieds : <strong>{% for strongFeet in player.strongFeets %}{{ strongFeet }}{% endfor %}</strong></li>
-								<li>Club Actuel : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
-								<li>Club d'appartenance : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
-								<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
-								<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
-								<li>Niveau : <strong>{{ player.level }}</strong></li>
-							</ul>
-							<h3 class="h4">Biographie</h3>
-							<p>
-								{{ player.biographie }}
-							</p>
-							<h3 class="h4">Ambitions</h3>
-							<p>
-								{{ player.ambition }}
-							</p>
-							<h3 class="h4">Langues parlées</h3>
-							<p></p>
+						<div class="col-md-5">
+							<div class="row">
+								<div class="col py-1 my-1 shadow-sm bg-white">
+									<h5 class="h4">Informations générales</h3>
+									<hr/>
+									<ul class="list-unstyled">
+										<li>Nom complet : <strong>{{ player.firstname }} {{ player.lastname }}</strong></li>
+										<li>Date de Naissance : <strong>le {{ player.birthday | date('d/m/Y') }}</strong></li>
+										<li>Pays de Résidence : <strong>{{ player.countryName }}</strong></li>
+										<li>Age : <strong>{{ player.age }} ans</strong></li>
+										<li>Taille : <strong>{{ player.length }} cm</strong></li>
+										<li>Poids : <strong>{{ player.weight }} kg</strong></li>
+										<li>Position :
+											<strong>
+												{% for poste in player.postes %}
+													{{ poste }}
+												{% endfor %}
+											</strong>
+										</li>
+										<li>Pieds :
+											<strong>
+												{% for strongFeet in player.strongFeets %}
+													{{ strongFeet }}
+												{% endfor %}
+											</strong>
+										</li>
+										<li>Club Actuel : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
+										<li>Club d'appartenance : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
+										<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
+										<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
+										<li>Niveau : <strong>{{ player.level }}</strong></li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col py-1 my-1 shadow-sm bg-white">
+									<h5 class="h4">Biographie</h3>
+									<hr/>
+									<p>
+										{{ player.biographie }}
+									</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col py-1 my-1 shadow-sm bg-white">
+									<h5 class="h4">Mes ambitions</h3>
+									<hr/>
+									<p>
+										{{ player.ambition }}
+									</p>
+								</div>
+							</div>
+
+							
+
+							{# <div class="row">
+								<div class="col py-1 my-1 shadow-sm bg-white">
+									<h5 class="h4">Langues parlées</h3>
+									<hr/>
+									<p></p>
+								<div>
+							</div> #}
+
 						</div>
 					</div>
 				</div>

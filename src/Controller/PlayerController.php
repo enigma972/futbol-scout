@@ -86,20 +86,18 @@ class PlayerController extends AbstractController
     /**
      * @Route("/joueur/{slug}-{id}", name="player")
      */
-    public function index(Player $player, UserRepository $users)
+    public function index(int $id, PlayerRepository $players)
     {
-        if (!$player) {
-            throw $this->createNotFoundException("Le joueur que vous cherchez n'existe pas !");
-        }
-        if ($player instanceOf Player) {
-            
-            $usersSuggest = $users->findByUserForSuggest($this->getUser());
+        /** @var Player $player */
+        $player = $players->findByIdWithRelatedData($id);
 
-            return $this->render('player/player_page.html.twig', [
-                'player'    =>      $player,
-                'usersSuggest' =>   $usersSuggest,
-            ]);
+        if (!$player instanceOf Player) {
+            throw $this->createNotFoundException("La page de joueur que vous cherchez n'existe pas !");
         }
+
+        return $this->render('player/player_page.html.twig', [
+                'player'    =>      $player,
+            ]);
     }
 
     /**
