@@ -19,7 +19,7 @@
                         <form action="{{ path('player_notice_edit', {'author_id': notice.author.id, 'player_id': notice.player.id, '_token': csrf_token('delete' ~ notice.author.id) }) }}" method="post">
                             <textarea class="form-control mb-1" name="notice_content" rows=5>{{ notice.content }}</textarea>
                             <button class="btn btn-custom-outline-danger btn-block">Modifier</button>
-                            <a class="btn btn-outline-secondary btn-block" href="{{ path('post_show', {'id': post.id}) }}">Annuler</a>
+                            <a class="btn btn-outline-secondary btn-block" href="{{ path('player', {'id': notice.player.id, slug: notice.player.slug}) }}">Annuler</a>
                         </form>
                     </div>
                 </div>

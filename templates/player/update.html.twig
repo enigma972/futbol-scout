@@ -1,0 +1,309 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Page d'acceuil
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('complete_player_data') }}
+{% endblock %}
+
+{% block section %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 offset-md-3 my-4">
+				<form action="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" enctype="multipart/form-data" method="post">
+
+					<div class="row bg-white border shadow-sm">
+						<div class="col p-4 m-2">
+							<div class="row mx-1 mb-3">
+								<h6 class="font-weight-bold">Informations personnelle</h6>
+								<p style="font-size: small;">En renseignant ces données vous permettez aux recruteurs de vous trouver plus facilement.</p>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.lastname) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.lastname) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.lastname) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.lastname)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.nickname) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.nickname) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.nickname) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.nickname)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.firstname) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.firstname) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.firstname) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.firstname)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.pseudo) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.pseudo) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.pseudo) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.pseudo)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.birthday) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.birthday) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.birthday) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.birthday)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.gender) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.gender) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.gender) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.gender)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.country) }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.country) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.country) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.country)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.length, "Taille (en cm)") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.length) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.length) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.length)}}
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.weight, "Poids (en Kg)") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.weight) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.weight) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.weight)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.strongFeets, "Pieds fort") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.strongFeets) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.strongFeets) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.strongFeets)}}
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.postes, "Postes") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.postes) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.postes) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.postes)}}
+								</div>
+							</div>
+
+							<fieldset>
+								<div class="form-group row">
+									<div class="col-md-3 text-right">
+										{{ form_label(playerDataFormType.currentClub, "Club actuel") }}
+									</div>
+									<div class="col-md-9">
+										{% if form_errors(playerDataFormType.currentClub) %}
+											<div class="alert alert-warning">
+												{{ form_errors(playerDataFormType.currentClub) }}
+											</div>
+										{% endif %}
+										{{ form_widget(playerDataFormType.currentClub)}}
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div
+										class="col-md-9 offset-md-3">
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#clubModalCenter">
+											Ajoutez votre club dans la liste
+										</button>
+									</div>
+								</div>
+							</fieldset>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.status, "Statut") }}
+								</div>
+								<div class="col-md-4">
+									{% if form_errors(playerDataFormType.status) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.status) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.status)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.level, "Niveau") }}
+								</div>
+								<div class="col-md-4">
+									{% if form_errors(playerDataFormType.level) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.level) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.level)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.ambition, "ambition") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.ambition) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.ambition) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.ambition)}}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-3 text-right">
+									{{ form_label(playerDataFormType.biographie, "biographie") }}
+								</div>
+								<div class="col-md-9">
+									{% if form_errors(playerDataFormType.biographie) %}
+										<div class="alert alert-warning">
+											{{ form_errors(playerDataFormType.biographie) }}
+										</div>
+									{% endif %}
+									{{ form_widget(playerDataFormType.biographie)}}
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col">
+									<button class="btn btn-custom-outline-danger btn-block rounded-0 my-3">Modifier</button>
+									<a href="{{ path('player', {id: player.id, slug: player.slug}) }}" class="btn btn-outline-secondary btn-block rounded-0 my-3">Annuler</a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					{{ form_rest(playerDataFormType)}}
+
+				</form>
+
+				<!-- Modal -->
+				<div class="modal fade" id="clubModalCenter" tabindex="-1" role="dialog" aria-labelledby="clubModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="clubModalCenterTitle">Ajouter un nouveau club</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form action="{{ path('player_club_store') }}" method="post" id="store_club_form">
+									{{ render(path('player_club_store')) }}
+								</form>
+							</div>
+							<div class="modal-footer">
+								<div class="alert alert-warning alert-dismissible fade show" role="alert">
+									Assurez-vous que votre club ne figure pas déjà dans la liste !
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('complete_player_data') }}
+{% endblock %}

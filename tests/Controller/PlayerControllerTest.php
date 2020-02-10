@@ -17,4 +17,12 @@ class PlayerControllerTest extends WebTestCase
         $this->assertPageTitleContains('Touver un joueur');
         $this->assertContains('Trouvez facilement des joueurs en comobinant plusieurs critères.', $output);
     }
+
+    public function testUpdatePageIsUp()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/accounts/joueur/1/update');
+
+        $this->assertResponseIsSuccessful();
+    }
 }

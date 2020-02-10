@@ -26,7 +26,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ path('update_promo_clip') }}" enctype="multipart/form-data" method="post">
+                        <form action="{{ path('update_promo_clip', {id: player.promoclip.id}) }}" enctype="multipart/form-data" method="post">
                             <div id="custom-file" class="row col mx-auto form-group">
                                 <input type="file" class="custom-file-input" name="promo_clip" id="customFile">
                                 <label for="customFile" class="custom-file-label">

@@ -89,8 +89,8 @@
 								<div class="h6">{% if app.user not in player.page.managers %}Ce joueur n'a pas encore de video promotionnelle{% endif %}</div>
 							{% endif %}
 							
-							{% if player.promoclip is not null and app.user in player.page.managers %}
-								<a href="{{ path('update_promo_clip') }}" class="btn btn-block btn-primary">Mettre a jour ma video promo</a>
+							{% if player.promoclip is not null and player.page.isGranted(app.user, "ADMIN") %}
+								<a href="{{ path('update_promo_clip', {id: player.promoclip.id}) }}" class="btn btn-block rounded-0 btn-primary">Mettre a jour ma video promo</a>
 							{% endif %}
 						</div>
 						<div class="col-md-5">
@@ -120,11 +120,14 @@
 											</strong>
 										</li>
 										<li>Club Actuel : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
-										<li>Club d'appartenance : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
+										{# <li>Club d'appartenance : <strong>{{ player.currentClub.abbrLabel }}</strong></li> #}
 										<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
 										<li>Durée du contrat : <strong>{{ player.status }}</strong></li>
 										<li>Niveau : <strong>{{ player.level }}</strong></li>
 									</ul>
+									{% if player.page.isGranted(app.user, "ADMIN") %}
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+									{% endif %}
 								</div>
 							</div>
 							
@@ -135,6 +138,9 @@
 									<p>
 										{{ player.biographie }}
 									</p>
+									{% if player.page.isGranted(app.user, "ADMIN") %}
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+									{% endif %}
 								</div>
 							</div>
 
@@ -145,6 +151,9 @@
 									<p>
 										{{ player.ambition }}
 									</p>
+									{% if player.page.isGranted(app.user, "ADMIN") %}
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+									{% endif %}
 								</div>
 							</div>
 

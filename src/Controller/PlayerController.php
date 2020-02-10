@@ -229,7 +229,9 @@ class PlayerController extends AbstractController
             }
         }
 
-        return $this->render('player/update_promo_clip.html.twig');
+        return $this->render('player/update_promo_clip.html.twig', [
+            'player'    =>  $player,
+        ]);
     }
 
     /**
@@ -257,6 +259,25 @@ class PlayerController extends AbstractController
             'players'       =>  $players,
             'page'          =>  $page + 1,
             'nbParPage'     =>  ceil(count($players) / 12),
+        ]);
+    }
+
+    /**
+     * @Route("/joueur/{slug}-{id}/update", name="update_player_data")
+     * @Security("player.getPage().isGranted(user, 'ADMIN')")
+     */
+    public function update(Player $player, Request $request)
+    {
+        $form = $this->createForm(PlayerDataFormType::class, $player);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+        }
+
+        return $this->render('player/update.html.twig', [
+            'playerDataFormType'    =>  $form->createView(),
+            'player'                =>  $player,
         ]);
     }
 }
