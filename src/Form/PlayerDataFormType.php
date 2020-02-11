@@ -87,6 +87,7 @@ class PlayerDataFormType extends AbstractType
                 'attr'          => ['class' =>  'rounded-0'],
                 'choices'       => [
                     'Gardien'                   => 'Gardien',
+                    'Defenseur central'         => 'Defenseur central',
                     'Lateral gauche'            => 'Lateral gauche',
                     'Lateral droit'             => 'Lateral droit',
                     'Milieu defensif'           => 'Milieu defensif',
