@@ -83,9 +83,11 @@ class SecurityController extends AbstractController
                 // See https://symfony.com/doc/current/components/event_dispatcher.html
                 $this->eventDispatcher->dispatch($event, Events::USER_CREATED);
 
+                $flashBag->add('info', 'Votre compte a bien été créé!');
+
                 return $this->redirectToRoute('app_login');
             }else{
-                $flashBag->add('info', 'Cette adresse email est déjà utiliser par un autre compte !');
+                $flashBag->add('success', 'Cette adresse email est déjà utiliser par un autre compte !');
             }
         }
 

@@ -18,6 +18,7 @@
                     <a class="btn btn-outline-info rounded-0 flex-fill d-inline-block" style="cursor: pointer;">Google</a>
                 </div>
                 <hr>
+                {% include "default/_flash-message.html.twig" %}
                 {% if error %}
                     <div class="alert alert-warning rounded-0">
                         {{ error }}
