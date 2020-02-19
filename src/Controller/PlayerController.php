@@ -272,7 +272,12 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $this->em->flush();
+
+            return $this->redirectToRoute('player', [
+                'id'    =>  $player->getId(),
+                'slug'  => $player->getSlug(),
+            ]);
         }
 
         return $this->render('player/update.html.twig', [
