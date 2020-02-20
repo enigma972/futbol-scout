@@ -91,8 +91,6 @@ class PostAttachement
         
         $name = self::rand().'.'.$this->file->guessExtension();
 
-        dump($this->file->move(self::UPLOAD_DIR, $name));
-
         $this->setPath(self::PUBLIC_UPLOAD_DIR.'/'.$name);
     }
 
