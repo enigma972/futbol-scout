@@ -24,7 +24,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}", name="user_profil")
+     * @Route("/{slug}-{id}", name="user_profil", requirements={"id"="\d+"})
      */
     public function profil(PostRepository $posts, User $user, UserRepository $users)
     {
@@ -108,15 +108,27 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/users-suggestion", name="user_suggestions")
-     */
-    public function userSuggestion(User $user, UserRepository $users)
-    {
-        $usersSuggest = $users->findByUserForSuggest($user);
+    // /**
+    //  * @Route("/users-suggestion", name="users_suggestion_old")
+    //  */
+    // public function userSuggestion(UserRepository $users)
+    // {
+    //     $usersSuggest = $users->findUsersForSuggest($this->getUser());
 
-        return $this->render('user/user_suggestions.html.twig', [
-            'usersSuggest'  => $usersSuggest
-            ]);
+    //     return $this->render('user/users_suggestion.html.twig', [
+    //         'usersSuggest'  => $usersSuggest
+    //         ]);
+    // }
+
+    /**
+     * @Route("/users-suggestion", name="users_suggestion")
+     */
+    public function suggestion(UserRepository $users)
+    {
+        $usersSuggest = $users->findUsersForSuggest($this->getUser());
+
+        return  $this->render('user/users_suggestion.html.twig', [
+            'usersSuggest'  =>  $usersSuggest,
+        ]);
     }
 }

@@ -30,7 +30,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text rounded-0" id="btnGroupAddon2"><i class="fas fa-user"></i></div>
                         </div>
-                        <input type="text" name="mail" placeholder="Mail ou Téléphone" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                        <input required="required" type="text" name="mail" placeholder="Mail" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
                     </div>
                     
                     <label for="password">Mot de passe  <a href="{{ path('app_reset_pass') }}" style="font-size: small; text-decoration-line: underline; text-decoration-style: none;
@@ -39,9 +39,9 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text rounded-0" id="btnGroupAddon2"><i class="fas fa-lock"></i></div>
                         </div>
-                        <input type="password" name="password" placeholder="Mot de passe" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                        <input required="required" type="password" name="password" placeholder="Mot de passe" class="form-control rounded-0" aria-label="Input group example" aria-describedby="btnGroupAddon2">
                     </div>
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <input required="required" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     {#
                         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
                         See https://symfony.com/doc/current/security/remember_me.html 

@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, AuthorizationCheckerInterface $authChecker, PostRepository $posts, UserRepository $users)
+    public function index(Request $request, AuthorizationCheckerInterface $authChecker, PostRepository $posts)
     {
         $page = $request->query->get('page');
         //$nbParPage = $request->query->get('nbParPage');

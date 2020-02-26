@@ -23,7 +23,7 @@
 			<div class="card mb-2 shadow-sm rounded-0">
 				<div class="card-header p-5"></div>
 				<div class="card-body text-center">
-					<img src="{{ asset(player.picture.path) }}" alt="" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
+					<img src="{{ asset(player.picture.path) }}" alt=""  style="width: 200px!important; height: 200px!important;" class="rounded-circle card-custom-img border border-white shodow-sm" style="">
 					<div class="h6">{{ player.name|capitalize }}</div>
 					{% if player.page.isGranted(app.user, 'ADMIN') %}
 					<div class="mb-2"><a href="{{path('player_change_picture', {id: player.id})}}" class="text-decoration-none" style="font-size: small;">Modifier votre photo</a></div>
@@ -119,7 +119,7 @@
 												{% endfor %}
 											</strong>
 										</li>
-										<li>Club Actuel : <strong>{{ player.currentClub.abbrLabel }}</strong></li>
+										<li>Club Actuel : <strong><a href="#">{{ player.currentClub.abbrLabel }}</a></strong></li>
 										{# <li>Club d'appartenance : <strong>{{ player.currentClub.abbrLabel }}</strong></li> #}
 										<li>Type de contrat avec le Club : <strong>{{ player.status }}</strong></li>
 										<li>Durée du contrat : <strong>{{ player.status }}</strong></li>

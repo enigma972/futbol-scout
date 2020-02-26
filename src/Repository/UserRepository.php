@@ -24,16 +24,18 @@ class UserRepository extends ServiceEntityRepository
      * @return User[] Returns an array of User objects
      */
     
-    public function findByUserForSuggest($user)
+    public function findUsersForSuggest($user)
     {
         return $this->createQueryBuilder('u')
                     ->andWhere('u.id != :userId')
                     ->setParameter(':userId', $user->getId(), Type::INTEGER)
-                    ->setMaxResults(10)
+                    ->setMaxResults(5)
                     ->getQuery()
                     ->getResult()
         ;
     }
+
+    
     
 
     // /**
