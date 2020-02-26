@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Player;
 use App\Entity\PlayerPage;
+use App\Entity\PlayerSearch;
+use App\Form\PlayerSearchType;
 use App\Entity\PlayerPromoClip;
 use App\Form\PlayerDataFormType;
 use App\Entity\PlayerPageManager;
-use App\Repository\UserRepository;
 use App\Repository\PlayerRepository;
 use App\Entity\PlayerPicture as Picture;
-use App\Entity\PlayerSearch;
-use App\Form\PlayerSearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -278,6 +278,18 @@ class PlayerController extends AbstractController
         return $this->render('player/update.html.twig', [
             'playerDataFormType'    =>  $form->createView(),
             'player'                =>  $player,
+        ]);
+    }
+
+    /**
+     * @Route("/players-suggestion", name="players_suggestion")
+     */
+    public function suggestion(PlayerRepository $players)
+    {
+        $playersSuggest = $players->findPlayersForSuggest($this->getUser());
+
+        return $this->render('player/players_suggestion.html.twig', [
+            'playersSuggest'  => $playersSuggest
         ]);
     }
 }

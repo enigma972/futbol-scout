@@ -74,6 +74,20 @@ class PlayerRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    /**
+     * @return User[] Returns an array of User objects
+     */
+
+    public function findPlayersForSuggest($user)
+    {
+        return $this->createQueryBuilder('p')
+            // ->andWhere('u.id != :userId')
+            // ->setParameter(':userId', $user->getId(), Type::INTEGER)
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Player[] Returns an array of Player objects
     //  */

@@ -50,7 +50,8 @@
 				{% endif %}
 			</div>
 			<div class="col-lg-4 .d-none .d-lg-block .d-xl-none">
-				{{ render(path('user_suggestions', {'id': app.user.id }))}}
+				{{ render(path('players_suggestion')) }}
+				{# {{ render(path('users_suggestion')) }} #}
 			</div>
 		</div>
 	</div>
