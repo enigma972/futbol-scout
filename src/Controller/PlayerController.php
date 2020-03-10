@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * @Route("/accounts")
@@ -92,7 +93,7 @@ class PlayerController extends AbstractController
         $player = $players->findByIdWithRelatedData($id);
 
         if (!$player instanceOf Player) {
-            throw $this->createNotFoundException("La page de joueur que vous cherchez n'existe pas !");
+            throw $this->createNotFoundException("La page de joueur que vous cherchez n'est pas accessible pour le moment!");
         }
 
         return $this->render('player/player_page.html.twig', [
@@ -296,5 +297,54 @@ class PlayerController extends AbstractController
         return $this->render('player/players_suggestion.html.twig', [
             'playersSuggest'  => $playersSuggest
         ]);
+    }
+
+    /**
+     * @Route("/joueur/{id}/delete", name="delete_player_page")
+     */
+    public function delete(Player $player, FlashBagInterface $flashBag)
+    {   /** @var PlayerPage $page */
+        // $page = $player->getPage();
+
+        // $entityManager->remove($page);
+
+        // if (!$player->isSuspended()) {
+        //     $player->suspend();
+        // }
+
+        $player->suspend();
+        $this->em->flush();
+        
+        $flashBag->add('warning', 'Votre demande de suppression est en examen et sera confirmé dans 30jours.');
+
+        return  $this->redirectToRoute('account_settings');
+    }
+
+    /**
+     * @Route("/joueur/{id}/suspend", name="suspend_player_page")
+     */
+    public function suspend(Player $player, FlashBagInterface $flashBag)
+    {
+        /** @var Player $player */
+        $player->suspend();
+        $this->em->flush();
+        
+        $flashBag->add('warning', 'Vous venez de mettre cette page en suspension.');
+
+        return  $this->redirectToRoute('account_settings');
+    }
+
+    /**
+     * @Route("/joueur/{id}/desuspend", name="desuspend_player_page")
+     */
+    public function deSuspend(Player $player, FlashBagInterface $flashBag)
+    {
+        /** @var Player $player */
+        $player->deSuspend();
+        $this->em->flush();
+        
+        $flashBag->add('success', 'Votre page a été réactiver');
+
+        return  $this->redirectToRoute('account_settings');
     }
 }

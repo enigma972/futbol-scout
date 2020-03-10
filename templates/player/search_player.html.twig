@@ -23,14 +23,20 @@
         <div class="list-group">
             {% for player in players %}
                 <div class="list-group-item mb-1">
-                    <a href="{{ path("player", {slug: player.slug, id: player.id}) }}"><img src="{{ asset(player.picture.path) }}" class="rounded-circle" style="width: 70px; height: 70px;" /></a>
+                    <a href="{{ path("player", {slug: player.slug, id: player.id}) }}"><img src="{{ asset(player.picture.path) }}" class="rounded-circle" style="width: 55px; height: 55px;" /></a>
                     <span class="text-capitalize font-weight-bold">{{ player.name }}</span>, <a href="{{ path("player", {slug: player.slug, id: player.id}) }}">cliquez pour voir sa page promotionnelle.</a>
-                    {# <a href="/accounts/user/3/follow" class="text-decoration-none font-weight-bold mr-auto" style="font-size: small;">S'abonner</a> #}
-                    {% if app.user in player.fans %}
-						<a href="{{ path('player_disfollow', {'id': player.id}) }}" class="btn btn-sm btn-primary rounded-0">Je ne suis plus fan</a>
-                    {% else %}
-                        <a href="{{ path('player_follow', {'id': player.id}) }}" class="btn btn-sm btn-primary rounded-0">Devenir fan</a>
-                    {% endif %}
+                    
+                    <span class="float-right">
+                        {% if app.user in player.fans %}
+                            <a href="{{ path('player_disfollow', {'id': player.id}) }}" class="btn btn-sm btn-primary rounded-0">Je ne suis plus fan</a>
+                        {% else %}
+                            <a href="{{ path('player_follow', {'id': player.id}) }}" class="btn btn-sm btn-primary rounded-0">Devenir fan</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% else %}
+                <div class="list-group-item">
+                    Nous n'avons pas trouvé de joueur avec vos critères, veuillez les affiner pour en trouver plus.
                 </div>
             {% endfor %}
         </div>

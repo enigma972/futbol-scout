@@ -21,6 +21,32 @@ class PlayerRepository extends ServiceEntityRepository
         parent::__construct($registry, Player::class);
     }
 
+    // public function createQueryBuilder($alias, $indexBy = null)
+    // {
+    //     // dd(__METHOD__);
+    //     $qb = parent::createQueryBuilder($alias, $indexBy = null);
+    //     $expr = $qb->expr();
+
+    //     return $qb->andWhere($expr->eq("$alias.isSuspended", ':isSuspended'))->setParameter(':isSuspended', false);
+    //     // return $qb->andWhere("$alias.isSuspended = :isSuspended")->setParameter(':isSuspended', false);
+    // }
+
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        // dd(__METHOD__);
+        $criteria['isSuspended'] = false;
+
+        return parent::findBy($criteria, $orderBy = null, $limit = null, $offset = null);
+    }
+
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        // dd(__METHOD__);
+        $criteria['isSuspended'] = false;
+
+        return parent::findOneBy($criteria, $orderBy = null);
+    }
+
     public function findAllByQuery(PlayerSearch $search, $page, $nbrParPage = 12)
     {
         $qb = $this->createQueryBuilder('p');
@@ -41,13 +67,13 @@ class PlayerRepository extends ServiceEntityRepository
                     ->orWhere(
                         $expr->between('p.birthday', ':maxAge', ':minAge')
                     )
-                    ->setParameters([
-                        'fullname'  =>  $search->getExplodedName(),
-                        'minAge'    =>  PlayerSearch::getYearFromAge($search->getMinAge()),
-                        'maxAge'    =>  PlayerSearch::getYearFromAge($search->getMaxAge()),
-                        // 'license'   =>  $search->getLicense(),
-                        'level'     =>  $search->getLevel(),
-                    ])
+                    ->andWhere("p.isSuspended = :isSuspended")
+                    ->setParameter(':isSuspended', false)
+                    ->setParameter('fullname', $search->getExplodedName())
+                    ->setParameter('minAge', PlayerSearch::getYearFromAge($search->getMinAge()))
+                    ->setParameter('maxAge', PlayerSearch::getYearFromAge($search->getMaxAge()))
+                    // ->setParameter('license', $search->getLicense())
+                    ->setParameter('level', $search->getLevel())
                     ->setFirstResult(($page-1) * $nbrParPage)
                     ->setMaxResults($nbrParPage)
                     ->getQuery();
@@ -67,6 +93,8 @@ class PlayerRepository extends ServiceEntityRepository
                     ->leftJoin('pg.managers', 'm')->addSelect('m')
                     // ->leftJoin('m.user', 'u')->addSelect('u')
                     ->andWhere($qb->expr()->eq('p.id', ':id'))
+                    ->andWhere("p.isSuspended = :isSuspended")
+                    ->setParameter(':isSuspended', false)
                     ->setParameter('id', $id)
                     ->getQuery()
                     ;

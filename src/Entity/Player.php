@@ -145,6 +145,11 @@ class Player
      */
     private $page;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $isSuspended;
+
 
     public function __construct()
     {
@@ -154,6 +159,7 @@ class Player
         $this->notices = new ArrayCollection();
         $this->nbNotices = 0;
         $this->managers = new ArrayCollection();
+        $this->isSuspended = false;
     }
 
     public function getId(): ?int
@@ -523,5 +529,20 @@ class Player
         }
 
         return $this;
+    }
+
+    public function suspend(): bool
+    {
+        return $this->isSuspended = true;
+    }
+
+    public function deSuspend(): bool
+    {
+        return $this->isSuspended = false;
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->isSuspended;
     }
 }

@@ -7,12 +7,13 @@
 {% endblock %}
 
 {% block section %}
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <div class="row">
             <div class="col-lg-3 mb-3">
                 <!-- List group -->
                 <div class="list-group bg-white shadow-sm rounded-0" id="myList" role="tablist">
                     <a class="list-group-item list-group-item-action active  rounded-0" data-toggle="list" href="#pref" role="tab"><i class="fas fa-cogs mr-2"></i> Préférences du Compte</a>
+                    <a class="list-group-item list-group-item-action rounded-0" data-toggle="list" href="#pages" role="tab"><i class="fas fa-flag mr-2"></i> Vos pages de joueur</a>
                     <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Statistiques</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#chngpass" role="tab"><i class="fas fa-lock mr-2"></i> Changer de Mot de Passe</a>
                     <a class="list-group-item disabled list-group-item-action" data-toggle="list" href="#messages" role="tab"><i class="fas fa-cc-diners-club mr-2"></i> Notifications</a>
@@ -56,7 +57,7 @@
                                 <div class="save-stngs">
                                     <ul>
                                         <li>
-                                            <button type="submit" class="mb-2">Enregister les préférences</button>
+                                            <button class="disabled mb-2" type="submit">Enregister les préférences</button>
                                         </li>
                                         <li>
                                             <button class="disabled" type="submit">Restorer les valeurs défauts</button>
@@ -67,6 +68,45 @@
                             </form>
                         </div>
                     </div>
+
+                    <div class="tab-pane" id="pages" role="tabpanel">
+                        <div class="acc-setting bg-white shadow-sm">
+                            <h5>Vos pages de joueur <span class="float-right"><a href="#" class="text-decoration-none" style="font-size: medium;">Créer une page promotionnelle de joueur <i class="fas fa-plus"></i></a></span></h5>
+                            <ul class="list-group border-0">
+                            {% for managedplayer in app.user.managedplayers %}
+                                {% set player = managedplayer.page.player %}
+
+                                <li class="list-group-item {% if loop.index == 1 %}border-top-0{% endif %}">
+                                    <a href="{{ path("player", {slug: player.slug, id: player.id}) }}" class="text-decoration-none"><img src="{{ asset(player.picture.path) }}" class="rounded-circle" style="width: 30px; height: 30px;"/> <span class="text-capitalize font-weight-bold">{{ player.name }}</span></a> 
+                                    <span style="font-size: small;">{% if player.issuspended %}(Cette page est suspendu){% endif %}</span>
+
+                                    <span class="float-right">
+                                        <a href="#" class="btn btn-sm btn-primary">Ajouter un manager</a>
+                                        <a href="{{ path('player', {id: player.id, slug: player.slug}) }}" class="btn btn-sm btn-info">Visiter la page</a>
+
+                                        {% if player.isSuspended %}
+                                            <a href="{{ path('desuspend_player_page', {id: player.id}) }}" class="btn btn-sm btn-secondary">Réactiver la page</a>
+                                        {% else %}
+                                            <a href="{{ path('suspend_player_page', {id: player.id}) }}" class="btn btn-sm btn-secondary">Suspendre la page</a>
+                                        {% endif %}
+                                        
+                                        {# <a href="{{ path('delete_player_page', {id: player.id, slug: player.slug}) }}?" class="btn btn-sm btn-danger">Supprimer la page</a> #}
+                                        <form method="post" action="{{ path('delete_player_page', {id: player.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette page de joueur?');" class="d-inline">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ player.id) }}">
+                                            <button class="btn btn-sm btn-danger d-inline">Supprimer la page</button>
+                                        </form>
+                                    </span>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">Vous n'avez pas encore de page.
+                                    <a href="{{ path('create_player') }}">Cliquez ici pour en créer !</a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="tab-pane" id="chngpass" role="tabpanel">
                         <div class="acc-setting bg-white shadow-sm">
                             <h5>Préférences du Compte</h5>
@@ -105,10 +145,10 @@
                                 <div class="save-stngs">
                                     <ul>
                                         <li>
-                                            <button type="submit" class="mb-2">Enregister les préférences</button>
+                                            <button type="submit" class="disabled mb-2">Enregistrer les préférences</button>
                                         </li>
                                         <li>
-                                            <button class="disabled" type="submit">Restorer les valeurs défauts</button>
+                                            <button type="submit" class="disabled">Restorer les valeurs défauts</button>
                                         </li>
                                     </ul>
                                 </div>
