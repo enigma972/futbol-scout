@@ -3,46 +3,50 @@
 		<div class="card shadow-sm bg-white rounded-0">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-lg-8"><div class="h6" style="color: #bcbab9;">Suggestions pour vous</div></div>
-					<div class="col-lg-4 text-right"><a href="#" class="text-decoration-none font-weight-bold" style="font-size: small; color: black;">Voir tout</a></div>
+					<div class="col-lg-8">
+						<div class="h6" style="color: #bcbab9;">Suggestions pour vous</div>
+					</div>
+					{# <div class="col-lg-4 text-right">
+						<a href="#" class="text-decoration-none font-weight-bold" style="font-size: small; color: black;">Voir tout</a>
+					</div> #}
 				</div>
 				<div class="row mt-3">
-					<div class="col">
+					<div
+						class="col">
 						<!-- list of suggestions -->
 						{% for user in usersSuggest %}
-						    {% if user not in app.user.follows and user != app.user  %}
-							<div class="row my-3">
-						    	<div class="col-lg-auto">
-									<img 
-										src="{{ asset(user.avatar.path) }}" 
-										alt="{{ user.avatar.alt }}" 
-										class="rounded-circle m-0 float-left" 
-										style="width: 45px;height: 45px;"
-										/>
-									<h6 class="d-inline mb-0 mx-2 pb-0">
-										<a 
-											href="{{ path('user_profil', {'slug': user.slug, 'id': user.id})}}" 
-											class="text-decoration-none font-weight-bold"
-											style="color: #696c6f;font-size: 14px;" 
-										>{{ user.username|capitalize }}</a>
-									</h6>
-									<br class="p-0 m-0">
-								    <span class="pt-0 mx-2 mt-0"  style="font-size: small; color: #bcbab9;">Description</span>
+							{% if user not in app.user.follows and user != app.user  %}
+								<div class="row my-3">
+									<div class="col-lg-9">
+										<img src="{{ asset(user.avatar.path) }}" alt="{{ user.avatar.alt }}" class="rounded-circle m-0 float-left" style="width: 45px;height: 45px;"/>
+										<h6 class="d-inline mb-0 mx-2 pb-0">
+											<a href="{{ path('user_profil', {'slug': user.slug, 'id': user.id})}}" class="text-decoration-none font-weight-bold" style="color: #696c6f;font-size: 14px;">{{ user.username|capitalize }}</a>
+										</h6>
+										<br class="p-0 m-0">
+										<span class="pt-0 mx-2 mt-0" style="font-size: 11px; color: #bcbab9;">
+											{% if user.nbFollowers > 0 %}
+												Suivi par
+												{{user.nbFollowers}}
+												personne
+												{% if user.nbFollowers > 1 %}s
+												{% endif %}
+											{% else %}
+												Il n'a pas encore de followers
+											{% endif %}
+										</span>
+									</div>
+									<div class="col-lg-3 text-right align-middle">
+										<a href="{{ path('user_follow', {'id': user.id}) }}" class="text-decoration-none align-middle font-weight-bold" style="font-size: small;"><i class="fas fa-plus fa-xs border p-1 shadow-sm"></i></a>
+									</div>
 								</div>
-								<div class="col-lg text-right align-middle">
-									<a href="{{ path('user_follow', {'id': user.id}) }}" class="text-decoration-none align-middle font-weight-bold" style="font-size: small;">S'abonner</a>	
+							{% endif %}
+						{% else %}
+							<div class="row">
+								<div class="col" style="font-size: small;">
+									Vous n'avez pas encore de suggestions
 								</div>
 							</div>
-						    {% endif %}
-						{% else %}
-							    <div class="row">
-							    	<div class="col" style="font-size: small;">
-							    		Vous n'avez pas encore de suggestions
-							    	</div>
-							    </div>
 						{% endfor %}
-						    </div>
-
 					</div>
 				</div>
 			</div>

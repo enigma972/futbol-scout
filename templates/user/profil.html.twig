@@ -73,7 +73,9 @@
 				{% endfor %}
 			</div>
 			<div class="col-md-4">
-				{{ render(path('user_suggestions', {'id': app.user.id }))}}
+				{{ render(path('players_suggestion', {'id': app.user.id })) }}
+				<div class="m-2"></div>
+				{{ render(path('users_suggestion', {'id': app.user.id })) }}
 			</div>
 		</div>
 	</div>
