@@ -124,9 +124,6 @@
     "egulias/email-validator": {
         "version": "2.1.10"
     },
-    "fig/link-util": {
-        "version": "1.0.0"
-    },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -199,11 +196,11 @@
     "php-http/client-common": {
         "version": "2.1.0"
     },
-    "php-http/curl-client": {
-        "version": "2.0.0"
-    },
     "php-http/discovery": {
         "version": "1.7.0"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
     },
     "php-http/httplug": {
         "version": "v2.0.0"
@@ -249,9 +246,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
-    },
-    "ramsey/uuid": {
-        "version": "3.9.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -519,6 +513,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.14.0"
+    },
     "symfony/process": {
         "version": "v4.3.2"
     },
@@ -706,9 +703,6 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.1"
-    },
-    "zendframework/zend-diactoros": {
-        "version": "2.2.1"
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
