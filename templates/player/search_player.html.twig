@@ -23,7 +23,7 @@
         <div class="list-group">
             {% for player in players %}
                 <div class="list-group-item mb-1">
-                    <a href="{{ path("player", {slug: player.slug, id: player.id}) }}"><img src="{{ asset(player.picture.path) }}" class="rounded-circle" style="width: 55px; height: 55px;" /></a>
+                    <a href="{{ path("player", {slug: player.slug, id: player.id}) }}"><img src="{{ asset(player.picture.path) }}" title="image" class="rounded-circle" style="width: 55px; height: 55px;" /></a>
                     <span class="text-capitalize font-weight-bold">{{ player.name }}</span>, <a href="{{ path("player", {slug: player.slug, id: player.id}) }}">cliquez pour voir sa page promotionnelle.</a>
                     
                     <span class="float-right">
