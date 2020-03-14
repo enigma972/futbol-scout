@@ -45,7 +45,7 @@
     {% if page <= nbParPage %}
         <div class="row my-4">
             <div class="col text-center">
-                <a href="{{ path('home', {'page': page}) }}" class="btn btn-custom-outline-danger rounded-pill text-decoration-none">Voir plus</a>
+                <a href="{{ path('search_player', {'page': page}) }}" class="btn btn-custom-outline-danger rounded-pill text-decoration-none">Voir plus</a>
             </div>
         </div>
     {% endif %}
