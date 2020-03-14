@@ -27,9 +27,7 @@
 											{% if player.nbFans > 0 %}
 												Suivi par
 												{{player.nbFans}}
-												personne
-												{% if player.nbFans > 1 %}s
-												{% endif %}
+												personne{% if player.nbFans > 1 %}s{% endif %}
 											{% else %}
 												Il n'a pas encore de followers
 											{% endif %}

@@ -27,9 +27,7 @@
 											{% if user.nbFollowers > 0 %}
 												Suivi par
 												{{user.nbFollowers}}
-												personne
-												{% if user.nbFollowers > 1 %}s
-												{% endif %}
+												personne{% if user.nbFollowers > 1 %}s{% endif %}
 											{% else %}
 												Il n'a pas encore de followers
 											{% endif %}
