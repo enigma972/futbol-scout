@@ -15,6 +15,7 @@ use App\Entity\PlayerPicture as Picture;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -58,13 +59,16 @@ class PlayerController extends AbstractController
             $page->setPlayer($player);
 
 
-            // set player picture
-            $file = $request->request->get('file');
+
+
+            /** @var UploadedFile $file */
+            $file = $request->files->get('file');
 
             $picture = new Picture();
             $picture->preUpload($file);
-            $player->setPicture($picture);
 
+            $player->setPicture($picture);
+            
             
             $this->em->persist($manager);
             $this->em->persist($page);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerPictureRepository")
@@ -34,6 +35,7 @@ class PlayerPicture
      */
     private $path;
 
+    /** @var UploadedFile $file */
     private $file;
 
     private $name;
@@ -105,7 +107,7 @@ class PlayerPicture
         return uniqid(sha1(microtime()), true);
     }
 
-    public function preUpload($file)
+    public function preUpload(?UploadedFile $file)
     {
         $this->file = $file;
 
