@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostAttachementRepository")
@@ -34,12 +35,16 @@ class PostAttachement
      */
     private $path;
 
-    public $file;
+    /** @var UploadedFile $file */
+    private $file;
+
+    private $name;
+
 
 
     public function __construct()
     {
-        $this->path = null;
+        $this->path = '';
     }
 
     public function getId(): ?int
@@ -52,7 +57,7 @@ class PostAttachement
         return $this->url;
     }
 
-    public function setUrl(?string $url): self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -64,7 +69,7 @@ class PostAttachement
         return $this->alt;
     }
 
-    public function setAlt(?string $alt): self
+    public function setAlt(string $alt): self
     {
         $this->alt = $alt;
 
@@ -76,26 +81,47 @@ class PostAttachement
         return $this->path;
     }
 
-    public function setPath(?string $path): self
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
         return $this;
     }
 
-    public function upload()  {    
+    public function upload()
+    {
         // Si jamais il n'y a pas de fichier (champ facultatif)    
         if (null === $this->file) {
-              return;    
+            return;
         }
-        
-        $name = self::rand().'.'.$this->file->guessExtension();
 
-        $this->setPath(self::PUBLIC_UPLOAD_DIR.'/'.$name);
+        $this->file->move(self::UPLOAD_DIR, $this->name);
+
+        // On le met manuellement à null pour des eventuels problèmes de serialization
+        $this->file = '';
     }
 
     static public function rand(): string
     {
         return uniqid(sha1(microtime()), true);
+    }
+
+    public function preUpload(?UploadedFile $file)
+    {
+        $this->file = $file;
+
+        // Si jamais il n'y a pas de fichier (champ facultatif)    
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->name = self::rand() . '.' . $this->file->guessExtension();
+
+        $this->setPath(self::PUBLIC_UPLOAD_DIR . '/' . $this->name);
+    }
+
+    public function file()
+    {
+        return $this->file;
     }
 }
