@@ -259,6 +259,9 @@ class PlayerController extends AbstractController
             $players = $playerRepository->findAll();
         }
 
+        // Randomize players indexation
+        shuffle($players);
+
         return $this->render('player/search_player.html.twig',[
             'searchForm'    =>  $form->createView(),
             'players'       =>  $players,

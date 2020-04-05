@@ -110,14 +110,14 @@
 										<li>Position :
 											<strong>
 												{% for poste in player.postes %}
-													{{ poste }}
+													{{ poste }}{% if not loop.last %}, {% endif %}
 												{% endfor %}
 											</strong>
 										</li>
 										<li>Pieds :
 											<strong>
 												{% for strongFeet in player.strongFeets %}
-													{{ strongFeet }}
+													{{ strongFeet }}{% if not loop.last %}, {% endif %}
 												{% endfor %}
 											</strong>
 										</li>
