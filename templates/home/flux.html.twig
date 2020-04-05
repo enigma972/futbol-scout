@@ -9,7 +9,7 @@
 {% block section %}
 	<div class="custom-container container-fluid">
 		<div class="row my-2">
-			<div class="col-lg-3 mb-2 .d-none .d-lg-block .d-xl-none">
+			<div class="col-lg-3 mb-2">
 				{% include 'user/user-summary.html.twig' %}
 			</div>
 			<div class="col-lg-5">
@@ -49,7 +49,7 @@
 				</div>
 				{% endif %}
 			</div>
-			<div class="col-lg-4 .d-none .d-lg-block .d-xl-none">
+			<div class="col-lg-4">
 				{{ render(path('players_suggestion', {'id': app.user.id })) }}
 				<div class="m-2"></div>
 				{{ render(path('users_suggestion', {'id': app.user.id })) }}

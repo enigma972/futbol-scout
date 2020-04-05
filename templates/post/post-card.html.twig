@@ -4,7 +4,7 @@
 			<div class="mx-3 my-2">
 				<div class="row">
 					<div class="col-10">
-						<img src="{{ asset(post.author.avatar.path) }}" alt="{{ post.author.avatar.alt }}" class="rounded-circle m-0 float-left" style="width: 50px;height: 50px;"/>
+						<img src="{{ asset(post.author.avatar.path) }}" alt="Image" class="rounded-circle m-0 float-left" style="width: 50px;height: 50px;"/>
 						<h6 class="d-inline mb-0 mx-2"> <a href="{{ path('user_profil', {'slug': post.author.slug, 'id': post.author.id})}}" class="text-decoration-none">{{ post.author.username|capitalize }}</a></h6>
 					    <span class="d-block align-top "  style="font-size: 10.3px; margin-left: 3.75rem;">
 					    	{% if post.author.nbFollowers > 0 %}
