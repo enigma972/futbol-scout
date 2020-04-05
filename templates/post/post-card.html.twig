@@ -85,7 +85,9 @@
 			</div>
 			<div class="mx-3 my-2">
 				{% for comment in post.comments %}
-					{% include "post_comment/comments.html.twig" %}
+					{% if loop.index <= 2 or app.request.attributes.get('_route') == 'post_show' %}
+						{% include "post_comment/comments.html.twig" %}
+					{% endif %}
 				{% else %}
 				<div class="" style="font-size: small;">
 					Soyez le premier à commenter ceci
