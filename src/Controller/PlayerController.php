@@ -271,7 +271,7 @@ class PlayerController extends AbstractController
     }
 
     /**
-     * @Route("/joueur/{slug}-{id}/update", name="update_player_data")
+     * @Route("/joueur/{id}/update", name="update_player_data")
      * @Security("player.getPage().isGranted(user, 'ADMIN')")
      */
     public function update(Player $player, Request $request)
