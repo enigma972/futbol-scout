@@ -190,6 +190,9 @@
     "league/oauth2-facebook": {
         "version": "2.0.1"
     },
+    "liip/test-fixtures-bundle": {
+        "version": "1.7.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

@@ -20,7 +20,7 @@ class HomeControllerTest extends WebTestCase
     public function testHomePageWhenUserIsLogin()
     {
         $client = static::createClient();
-        
+
         $users = $this->loadFixtureFiles([__DIR__.'users.yaml']);
 
         $this->login($client, $users['user_user'], 'main');
