@@ -310,7 +310,8 @@ class PlayerController extends AbstractController
      * @Route("/joueur/{id}/delete", name="delete_player_page")
      */
     public function delete(Player $player, FlashBagInterface $flashBag)
-    {   /** @var PlayerPage $page */
+    {   
+        /** @var PlayerPage $page */
         // $page = $player->getPage();
 
         // $entityManager->remove($page);

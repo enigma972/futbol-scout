@@ -108,18 +108,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/users-suggestion", name="users_suggestion_old")
-    //  */
-    // public function userSuggestion(UserRepository $users)
-    // {
-    //     $usersSuggest = $users->findUsersForSuggest($this->getUser());
-
-    //     return $this->render('user/users_suggestion.html.twig', [
-    //         'usersSuggest'  => $usersSuggest
-    //         ]);
-    // }
-
     /**
      * @Route("/users-suggestion", name="users_suggestion")
      */

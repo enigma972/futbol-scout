@@ -2,27 +2,30 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
+use App\Tests\NeedLogin;
+use App\DataFixtures\Users;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PlayerControllerTest extends WebTestCase
 {
+    use FixturesTrait;
+    use NeedLogin;
+
+
     public function testSearch()
     {
+        $em = ($this->loadFixtures([Users::class]))->getObjectManager();
+        $user = $em->getRepository(User::class)->findOneByMail('john@gmail.com');
+
         $client = static::createClient();
+        $this->login($client, $user, 'main');
         $client->request('GET', '/accounts/trouver-un-joueur');
 
         $output = $client->getResponse()->getContent();
 
         $this->assertResponseIsSuccessful();
-        $this->assertPageTitleContains('Touver un joueur');
-        $this->assertContains('Trouvez facilement des joueurs en comobinant plusieurs critères.', $output);
-    }
-
-    public function testUpdatePageIsUp()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/accounts/joueur/1/update');
-
-        $this->assertResponseIsSuccessful();
+        $this->assertContains('Trouvez facilement des joueurs en combinant plusieurs critères.', $output);
     }
 }

@@ -1,11 +1,15 @@
 <?php
 namespace Tests\Controller;
 
+use App\Entity\User;
 use App\Tests\NeedLogin;
+use App\DataFixtures\Users;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
+    use FixturesTrait;
     use NeedLogin;
 
 
@@ -19,11 +23,13 @@ class HomeControllerTest extends WebTestCase
 
     public function testHomePageWhenUserIsLogin()
     {
+        /** @var EntityManagerInterface $em */
+        $em = $this->loadFixtures([Users::class])->getObjectManager();
+        $user = $em->getRepository(User::class)->findOneByMail('john@gmail.com');
+
         $client = static::createClient();
 
-        $users = $this->loadFixtureFiles([__DIR__.'users.yaml']);
-
-        $this->login($client, $users['user_user'], 'main');
+        $this->login($client, $user, 'main');
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
