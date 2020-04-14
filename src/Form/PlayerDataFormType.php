@@ -76,8 +76,8 @@ class PlayerDataFormType extends AbstractType
                 'expanded'  =>  true,
                 'attr'      => ['class' =>  'rounded-0'],
                 'choices'   => [
-                    'Gauche'     => 'left',
-                    'Droite'     => 'right'
+                    'Gauche'     => 'gauche',
+                    'Droite'     => 'droite'
                 ],
                 'label_attr' =>  ['class'    =>  'font-weight-bold'],
             ])
