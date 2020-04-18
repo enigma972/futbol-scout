@@ -19,7 +19,7 @@
                         <form action="{{ path('comment_edit', {'id': comment.id, '_token': csrf_token('delete' ~ comment.id) }) }}" method="post">
                             <textarea class="form-control mb-1" name="comment_content" rows="5">{{ comment.content }}</textarea>
                             <button class="btn btn-custom-outline-danger btn-block">Modifier</button>
-                            <a class="btn btn-outline-secondary btn-block" href="{{ path('post_show', {'id': comment.id}) }}">Annuler</a>
+                            <a class="btn btn-outline-secondary btn-block" href="{{ path('post_show', {'id': comment.post.id}) }}">Annuler</a>
                         </form>
                     </div>
                 </div>
