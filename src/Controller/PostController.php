@@ -39,11 +39,12 @@ class PostController extends AbstractController
 			if (null !== $postAttach) {
 				$postAttachement = new PostAttachement();
 				$postAttachement->preUpload($postAttach);
+				$postAttach = $postAttachement;
 			}
 
 			$post
 				->setContent($postContent)
-				->setAttachement($postAttachement)
+				->setAttachement($postAttach)
 				->setAuthor($user)
 				;
 
@@ -51,7 +52,9 @@ class PostController extends AbstractController
 			$this->em->persist($post);
 			$this->em->flush();
 
-			$postAttachement->upload();
+			if (null !== $postAttach) {
+				$postAttach->upload();
+			}
 
 			return $this->redirectToRoute('post_show', [
 				'id'	=>	$post->getId()
