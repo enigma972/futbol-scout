@@ -128,7 +128,7 @@
 										<li>Niveau : <strong>{{ player.level }}</strong></li>
 									</ul>
 									{% if player.page.isGranted(app.user, "ADMIN") %}
-										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="">Modifier</a>
 									{% endif %}
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 										{{ player.biographie }}
 									</p>
 									{% if player.page.isGranted(app.user, "ADMIN") %}
-										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="">Modifier</a>
 									{% endif %}
 								</div>
 							</div>
@@ -154,7 +154,7 @@
 										{{ player.ambition }}
 									</p>
 									{% if player.page.isGranted(app.user, "ADMIN") %}
-										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="btn btn-block btn-outline-primary mb-1">Modifier</a>
+										<a href="{{ path('update_player_data', {id: player.id, slug: player.slug}) }}" class="">Modifier</a>
 									{% endif %}
 								</div>
 							</div>
@@ -202,7 +202,26 @@
 					</div>	
 				</div>
 				<div class="tab-pane fade" id="transfert" role="tabpanel" aria-labelledby="transfert-tab">Il y a pas encore des données de transferts sur ce joueur.</div>
-				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Cette section est vide pour l'instant.</div>
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div class="card shadow-sm">
+						<div class="p-2">
+							<h6 class="">Information de contact</h6>
+							<hr/>
+
+							<div class="row">
+								<div class="col-md-3">
+									<img src=" {{ asset(player.referent.avatar.path) }} " alt="" style="width: 125px; heigth: 125px;" class="img-thumbnail">
+								</div>
+								<div class="col-md-9">
+									<p><span>Prenom et Nom :</span> <a href="{{ path('user_profil', {id: player.referent.id , slug: player.referent.slug }) }}">{{ player.referent.name }}</a></p>
+									<p><span>Téléphone :</span>  <a href="#">{{ player.referent.phone }}</a></p>
+									<p><span>Email 	   :</span> <a href="#">{{ player.referent.mail }}</a></p>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

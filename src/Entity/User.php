@@ -121,6 +121,11 @@ class User implements UserInterface
      */
     private $managedPlayers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Player", mappedBy="referent")
+     */
+    private $referentedPlayers;
+
 
     public function __construct()
     {
@@ -132,6 +137,7 @@ class User implements UserInterface
         $this->nbFollows = 0;
         $this->favoritesPlayer = new ArrayCollection();
         $this->managedPlayers = new ArrayCollection();
+        $this->referentedPlayers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -496,6 +502,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($managedPlayer->getUser() === $this) {
                 $managedPlayer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Player[]
+     */
+    public function getReferentedPlayers(): Collection
+    {
+        return $this->referentedPlayers;
+    }
+
+    public function addReferentedPlayer(Player $referentedPlayer): self
+    {
+        if (!$this->referentedPlayers->contains($referentedPlayer)) {
+            $this->referentedPlayers[] = $referentedPlayer;
+            $referentedPlayer->setReferent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReferentedPlayer(Player $referentedPlayer): self
+    {
+        if ($this->referentedPlayers->contains($referentedPlayer)) {
+            $this->referentedPlayers->removeElement($referentedPlayer);
+            // set the owning side to null (unless already changed)
+            if ($referentedPlayer->getReferent() === $this) {
+                $referentedPlayer->setReferent(null);
             }
         }
 

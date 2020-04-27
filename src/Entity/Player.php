@@ -150,6 +150,12 @@ class Player
      */
     private $isSuspended;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="referentedPlayers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $referent;
+
 
     public function __construct()
     {
@@ -544,5 +550,17 @@ class Player
     public function isSuspended(): bool
     {
         return $this->isSuspended;
+    }
+
+    public function getReferent(): ?User
+    {
+        return $this->referent;
+    }
+
+    public function setReferent(?User $referent): self
+    {
+        $this->referent = $referent;
+
+        return $this;
     }
 }

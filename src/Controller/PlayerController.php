@@ -45,6 +45,7 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $player->setReferent($user);
             
             // Create the first manager with ADMIN default role
             $manager = new PlayerPageManager;
