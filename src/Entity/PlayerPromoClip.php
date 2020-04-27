@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlayerPromoClipRepository")
@@ -35,6 +37,7 @@ class PlayerPromoClip
     private $path;
 
     /**
+     * @Assert\LessThanOrEqual(50)
      * @ORM\Column(type="integer", nullable=true)
      */
     private $size;
