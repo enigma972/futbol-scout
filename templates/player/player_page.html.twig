@@ -203,23 +203,26 @@
 				</div>
 				<div class="tab-pane fade" id="transfert" role="tabpanel" aria-labelledby="transfert-tab">Il y a pas encore des données de transferts sur ce joueur.</div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-					<div class="card shadow-sm">
-						<div class="p-2">
-							<h6 class="">Information de contact</h6>
-							<hr/>
+					<div>
+						<div class="card shadow-sm">
+							<div class="p-2">
+								<h5 class="h5">Information de contact</h5>
+								<hr/>
 
-							<div class="row">
-								<div class="col-md-3">
-									<img src=" {{ asset(player.referent.avatar.path) }} " alt="" style="width: 125px; heigth: 125px;" class="img-thumbnail">
-								</div>
-								<div class="col-md-9">
-									<p><span>Prenom et Nom :</span> <a href="{{ path('user_profil', {id: player.referent.id , slug: player.referent.slug }) }}">{{ player.referent.name }}</a></p>
-									<p><span>Téléphone :</span>  <a href="#">{{ player.referent.phone }}</a></p>
-									<p><span>Email 	   :</span> <a href="#">{{ player.referent.mail }}</a></p>
+								<div class="row">
+									<div class="col-md-3">
+										<img src=" {{ asset(player.referent.avatar.path) }} " alt="" style="width: 125px; heigth: 125px;" class="img-thumbnail">
+									</div>
+									<div class="col-md-9">
+										<ul class="list-unstyled list-group">
+											<li class="mb-3"><span>Prenom et Nom :</span> <a href="{{ path('user_profil', {id: player.referent.id , slug: player.referent.slug }) }}">{{ player.referent.name }}</a></li>
+											<li class="mb-3"><span>Téléphone :</span>  <a href="#">{{ player.referent.phone }}</a></li>
+											<li class="mb-3"><span>Email :</span> <a href="#">{{ player.referent.mail }}</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
